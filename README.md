@@ -1,0 +1,25 @@
+# FlowSpace Landing Page
+
+AI-Powered Investment Education Platform
+
+## Features
+
+- Interactive card carousel with 4 feature sections
+- Responsive design with Tailwind CSS
+- 3D Spline background animation
+- Email waitlist capture
+- Touch and mouse drag interactions
+
+## Live Demo
+
+Visit the live site at: [Your GitHub Pages URL]
+
+## Local Development
+
+Simply open `index.html` in your browser or run a local server:
+
+```bash
+python -m http.server 8000
+```
+
+Then visit `http://localhost:8000`
