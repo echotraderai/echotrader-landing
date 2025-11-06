@@ -1,4 +1,4 @@
-# FlowSpace Landing Page
+# Echotrader Landing Page
 
 AI-Powered Investment Education Platform
 
@@ -7,12 +7,15 @@ AI-Powered Investment Education Platform
 - Interactive card carousel with 4 feature sections
 - Responsive design with Tailwind CSS
 - 3D Spline background animation
-- Email waitlist capture
+- Email waitlist capture with Google Sheets integration
 - Touch and mouse drag interactions
+- Custom domain with SSL
 
 ## Live Demo
 
-Visit the live site at: https://echotraderai.github.io/echotrader-landing/
+Visit the live site at: **https://www.echotrader.ai**
+
+Alternative URL: https://echotraderai.github.io/echotrader-landing/
 
 ## Local Development
 
