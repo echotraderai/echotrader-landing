@@ -403,9 +403,8 @@ background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
         // Initialize Lucide icons
         lucide.createIcons();
 
-        // Email Waitlist Form Handler
-        // IMPORTANT: Replace 'YOUR_APPS_SCRIPT_URL' with your deployed Google Apps Script URL
-        const APPS_SCRIPT_URL = 'YOUR_APPS_SCRIPT_URL';
+        // Email Waitlist Form Handler using Google Apps Script
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbygOTMrLckoiBkbeS6p86IEcA0_4N0cQy8zGTLE4HYLxAZMeDNrOLgM50gxiwcdwnz5/exec';
 
         const form = document.getElementById('waitlist-form');
         const emailInput = document.getElementById('email-input');
@@ -430,19 +429,18 @@ background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
             try {
                 const response = await fetch(APPS_SCRIPT_URL, {
                     method: 'POST',
-                    mode: 'no-cors', // Google Apps Script requires no-cors
+                    mode: 'no-cors',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({ email: email })
                 });
 
-                // Since no-cors mode doesn't allow reading response, assume success
+                // no-cors mode doesn't allow reading response, so assume success
                 showMessage('Thank you! You\'ve been added to the waitlist.', 'success');
                 emailInput.value = '';
                 buttonText.textContent = 'Joined!';
 
-                // Reset button after 3 seconds
                 setTimeout(() => {
                     buttonText.textContent = 'Join Waitlist';
                     submitBtn.disabled = false;
