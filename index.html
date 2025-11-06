@@ -174,14 +174,15 @@ background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
                             <p class="text-sm text-gray-400 font-sans">Be among the first to experience AI-powered investment education. Limited spots available.</p>
                         </div>
                         <form class="flex flex-col sm:flex-row gap-3" id="waitlist-form">
-                            <input type="email" placeholder="Enter your email address" class="flex-1 px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent font-sans">
-                            <button type="submit" class="button cursor-pointer select-none transition-colors hover:bg-gray-100 text-base font-medium text-[#0f172a] bg-white border-transparent border rounded-lg relative whitespace-nowrap" style="padding: 1rem 2rem; font-weight: 400; font-size: 1rem; color: #0f172a; border-radius: 0.5rem; position: relative; cursor: pointer; border: 1px solid transparent">
-                                Join Waitlist
+                            <input type="email" id="email-input" name="email" placeholder="Enter your email address" required class="flex-1 px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent font-sans">
+                            <button type="submit" id="submit-btn" class="button cursor-pointer select-none transition-colors hover:bg-gray-100 text-base font-medium text-[#0f172a] bg-white border-transparent border rounded-lg relative whitespace-nowrap" style="padding: 1rem 2rem; font-weight: 400; font-size: 1rem; color: #0f172a; border-radius: 0.5rem; position: relative; cursor: pointer; border: 1px solid transparent">
+                                <span id="button-text">Join Waitlist</span>
                                 <span class="button-border" style="position: absolute; top: 0; left: 0; height: 100%; width: 100%; border-radius: 0.5rem; z-index: -1; pointer-events: none;">
                                     <span style="content: ''; position: absolute; border-radius: 0.5rem; padding: 1px; inset: 0; background: linear-gradient(180deg, rgba(184, 238, 255, 0.24) 0%, rgba(184, 238, 255, 0) 100%), linear-gradient(0deg, rgba(184, 238, 255, 0.32), rgba(184, 238, 255, 0.32)); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor;"></span>
                                 </span>
                             </button>
                         </form>
+                        <div id="form-message" class="hidden text-sm font-sans"></div>
                         <style>
                             #waitlist-form button.button::before {
                                 content: "";
@@ -402,6 +403,68 @@ background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
     <script>
         // Initialize Lucide icons
         lucide.createIcons();
+
+        // Email Waitlist Form Handler
+        // IMPORTANT: Replace 'YOUR_APPS_SCRIPT_URL' with your deployed Google Apps Script URL
+        const APPS_SCRIPT_URL = 'YOUR_APPS_SCRIPT_URL';
+
+        const form = document.getElementById('waitlist-form');
+        const emailInput = document.getElementById('email-input');
+        const submitBtn = document.getElementById('submit-btn');
+        const buttonText = document.getElementById('button-text');
+        const formMessage = document.getElementById('form-message');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const email = emailInput.value.trim();
+
+            if (!email) {
+                showMessage('Please enter a valid email address.', 'error');
+                return;
+            }
+
+            // Disable form during submission
+            submitBtn.disabled = true;
+            buttonText.textContent = 'Submitting...';
+
+            try {
+                const response = await fetch(APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors', // Google Apps Script requires no-cors
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email: email })
+                });
+
+                // Since no-cors mode doesn't allow reading response, assume success
+                showMessage('Thank you! You\'ve been added to the waitlist.', 'success');
+                emailInput.value = '';
+                buttonText.textContent = 'Joined!';
+
+                // Reset button after 3 seconds
+                setTimeout(() => {
+                    buttonText.textContent = 'Join Waitlist';
+                    submitBtn.disabled = false;
+                }, 3000);
+
+            } catch (error) {
+                showMessage('Something went wrong. Please try again.', 'error');
+                buttonText.textContent = 'Join Waitlist';
+                submitBtn.disabled = false;
+            }
+        });
+
+        function showMessage(message, type) {
+            formMessage.textContent = message;
+            formMessage.className = `text-sm font-sans ${type === 'success' ? 'text-green-400' : 'text-red-400'}`;
+            formMessage.classList.remove('hidden');
+
+            setTimeout(() => {
+                formMessage.classList.add('hidden');
+            }, 5000);
+        }
 
         // Card interaction system
         const cardsSection = document.querySelector('.cards-section');
