@@ -12,7 +12,7 @@ AI-Powered Investment Education Platform
 
 ## Live Demo
 
-Visit the live site at: [Your GitHub Pages URL]
+Visit the live site at: https://echotraderai.github.io/echotrader-landing/
 
 ## Local Development
 
