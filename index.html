@@ -1,593 +1,2665 @@
-<html lang="en"><head><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Echotrader - AI-Powered Investment Education</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
-<style>
-* { font-family: 'Inter', sans-serif; }
-.cards-section {
---_offset-steps: 5rem;
---_scale-steps: 12;
---_opacity-steps: 18;
---_offset-steps-two: calc(var(--_offset-steps) * -1);
---_offset-steps-three: calc(var(--_offset-steps) * -2);
---scale-steps-two: calc(1 - var(--_scale-steps) * 0.01);
---scale-steps-three: calc(1 - var(--_scale-steps) * 0.02);
---opacity-steps-two: calc(1 - var(--_opacity-steps) * 0.015);
---opacity-steps-three: calc(1 - var(--_opacity-steps) * 0.03);
-display: grid;
-grid-template-areas: "stack";
-width: min(calc(100% - 2rem), 28rem);
-perspective: 1000px;
-}
-.feature-card {
-grid-area: stack;
-transition: 600ms cubic-bezier(0.4, 0, 0.2, 1);
-translate: var(--_offset) 0;
-order: var(--_order);
-z-index: var(--_order);
-scale: var(--_scale);
-opacity: var(--_opacity);
-cursor: grab;
-user-select: none;
-transform-style: preserve-3d;
-}
-.feature-card:active { cursor: grabbing; }
-.feature-card:nth-of-type(1) {
---_order: var(--_1-order);
---_scale: var(--_1-scale);
---_opacity: var(--_1-opacity);
---_offset: var(--_1-offset);
-}
-.feature-card:nth-of-type(2) {
---_order: var(--_2-order);
---_scale: var(--_2-scale);
---_opacity: var(--_2-opacity);
---_offset: var(--_2-offset);
-}
-.feature-card:nth-of-type(3) {
---_order: var(--_3-order);
---_scale: var(--_3-scale);
---_opacity: var(--_3-opacity);
---_offset: var(--_3-offset);
-}
-.feature-card:nth-of-type(4) {
---_order: var(--_4-order);
---_scale: var(--_4-scale);
---_opacity: var(--_4-opacity);
---_offset: var(--_4-offset);
-}
-.cards-section.feature-1-active {
---_1-order: 4; --_1-scale: 1; --_1-opacity: 1; --_1-offset: 0;
---_2-order: 3; --_2-scale: var(--scale-steps-two); --_2-opacity: var(--opacity-steps-two); --_2-offset: var(--_offset-steps-two);
---_3-order: 2; --_3-scale: var(--scale-steps-three); --_3-opacity: var(--opacity-steps-three); --_3-offset: var(--_offset-steps-three);
---_4-order: 1; --_4-scale: calc(1 - var(--_scale-steps) * 0.025); --_4-opacity: calc(1 - var(--_opacity-steps) * 0.045); --_4-offset: calc(var(--_offset-steps) * -2.5);
-}
-.cards-section.feature-2-active {
---_2-order: 4; --_2-scale: 1; --_2-opacity: 1; --_2-offset: 0;
---_3-order: 3; --_3-scale: var(--scale-steps-two); --_3-opacity: var(--opacity-steps-two); --_3-offset: var(--_offset-steps-two);
---_4-order: 2; --_4-scale: var(--scale-steps-three); --_4-opacity: var(--opacity-steps-three); --_4-offset: var(--_offset-steps-three);
---_1-order: 1; --_1-scale: calc(1 - var(--_scale-steps) * 0.025); --_1-opacity: calc(1 - var(--_opacity-steps) * 0.045); --_1-offset: calc(var(--_offset-steps) * -2.5);
-}
-.cards-section.feature-3-active {
---_3-order: 4; --_3-scale: 1; --_3-opacity: 1; --_3-offset: 0;
---_4-order: 3; --_4-scale: var(--scale-steps-two); --_4-opacity: var(--opacity-steps-two); --_4-offset: var(--_offset-steps-two);
---_1-order: 2; --_1-scale: var(--scale-steps-three); --_1-opacity: var(--opacity-steps-three); --_1-offset: var(--_offset-steps-three);
---_2-order: 1; --_2-scale: calc(1 - var(--_scale-steps) * 0.025); --_2-opacity: calc(1 - var(--_opacity-steps) * 0.045); --_2-offset: calc(var(--_offset-steps) * -2.5);
-}
-.cards-section.feature-4-active {
---_4-order: 4; --_4-scale: 1; --_4-opacity: 1; --_4-offset: 0;
---_1-order: 3; --_1-scale: var(--scale-steps-two); --_1-opacity: var(--opacity-steps-two); --_1-offset: var(--_offset-steps-two);
---_2-order: 2; --_2-scale: var(--scale-steps-three); --_2-opacity: var(--opacity-steps-three); --_2-offset: var(--_offset-steps-three);
---_3-order: 1; --_3-scale: calc(1 - var(--_scale-steps) * 0.025); --_3-opacity: calc(1 - var(--_opacity-steps) * 0.045); --_3-offset: calc(var(--_offset-steps) * -2.5);
-}
-.dragging-left { transform: translateX(-30px) rotateY(-5deg); }
-.dragging-right { transform: translateX(30px) rotateY(5deg); }
-.glass-card {
-background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
-backdrop-filter: blur(20px);
-border: 1px solid rgba(255, 255, 255, 0.15);
-box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-}
-.gradient-text {
-background: linear-gradient(135deg, #ffffff, #e5e7eb);
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
-background-clip: text;
-}
-.hero-gradient {
-background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
-}
-@keyframes float {
-0%, 100% { transform: translateY(0px); }
-50% { transform: translateY(-8px); }
-}
-.float-animation { animation: float 3s ease-in-out infinite; }
-</style>
-<link id="all-fonts-link-font-geist" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-geist">.font-geist { font-family: 'Geist', sans-serif !important; }</style><link id="all-fonts-link-font-roboto" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-roboto">.font-roboto { font-family: 'Roboto', sans-serif !important; }</style><link id="all-fonts-link-font-montserrat" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-montserrat">.font-montserrat { font-family: 'Montserrat', sans-serif !important; }</style><link id="all-fonts-link-font-poppins" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-poppins">.font-poppins { font-family: 'Poppins', sans-serif !important; }</style><link id="all-fonts-link-font-playfair" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&amp;display=swap"><style id="all-fonts-style-font-playfair">.font-playfair { font-family: 'Playfair Display', serif !important; }</style><link id="all-fonts-link-font-instrument-serif" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:wght@400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-instrument-serif">.font-instrument-serif { font-family: 'Instrument Serif', serif !important; }</style><link id="all-fonts-link-font-merriweather" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&amp;display=swap"><style id="all-fonts-style-font-merriweather">.font-merriweather { font-family: 'Merriweather', serif !important; }</style><link id="all-fonts-link-font-bricolage" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-bricolage">.font-bricolage { font-family: 'Bricolage Grotesque', sans-serif !important; }</style><link id="all-fonts-link-font-jakarta" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-jakarta">.font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif !important; }</style><link id="all-fonts-link-font-manrope" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-manrope">.font-manrope { font-family: 'Manrope', sans-serif !important; }</style><link id="all-fonts-link-font-space-grotesk" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-space-grotesk">.font-space-grotesk { font-family: 'Space Grotesk', sans-serif !important; }</style><link id="all-fonts-link-font-work-sans" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-work-sans">.font-work-sans { font-family: 'Work Sans', sans-serif !important; }</style><link id="all-fonts-link-font-pt-serif" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Serif:wght@400;700&amp;display=swap"><style id="all-fonts-style-font-pt-serif">.font-pt-serif { font-family: 'PT Serif', serif !important; }</style><link id="all-fonts-link-font-geist-mono" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-geist-mono">.font-geist-mono { font-family: 'Geist Mono', monospace !important; }</style><link id="all-fonts-link-font-space-mono" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&amp;display=swap"><style id="all-fonts-style-font-space-mono">.font-space-mono { font-family: 'Space Mono', monospace !important; }</style><link id="all-fonts-link-font-quicksand" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-quicksand">.font-quicksand { font-family: 'Quicksand', sans-serif !important; }</style><link id="all-fonts-link-font-nunito" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-nunito">.font-nunito { font-family: 'Nunito', sans-serif !important; }</style></head>
-<body class="bg-slate-900 text-white antialiased"><iframe src="https://my.spline.design/binarymaterialcopy-uzQoq9YUCPK8Sqz8n9uP5qMO" frameborder="0" width="100%" height="100%" class="fixed top-0 w-full h-screen"></iframe>
-    <!-- Header -->
-    <header class="fixed top-0 left-0 right-0 z-50 border-b border-white/10 backdrop-blur-md bg-slate-900/80">
-        <div class="max-w-7xl mx-auto px-6 py-4">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center gap-2">
+<!DOCTYPE html>
+<html lang="en">
 
-                    <span class="text-xl font-semibold tracking-tight font-sans">Echotrader</span>
-                </div>
-            </div>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0a0a0a">
+  <meta name="description" content="EchoTrader is an AI-powered intelligent trading platform combining quantitative analysis, market intelligence, and community insights. Learn institutional investment frameworks, analyze stocks, and make smarter trading decisions.">
+
+  <!-- Open Graph / Social Media Meta Tags -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.echotrader.ai/">
+  <meta property="og:title" content="EchoTrader — Intelligent Trading Platform">
+  <meta property="og:description" content="AI-powered trading platform combining quantitative analysis, market intelligence, and community insights. Learn institutional investment frameworks.">
+  <meta property="og:image" content="https://www.echotrader.ai/icon-192.png">
+
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://www.echotrader.ai/">
+  <meta name="twitter:title" content="EchoTrader — Intelligent Trading Platform">
+  <meta name="twitter:description" content="AI-powered trading platform combining quantitative analysis, market intelligence, and community insights.">
+  <meta name="twitter:image" content="https://www.echotrader.ai/icon-192.png">
+
+  <title>EchoTrader — Intelligent Trading Platform</title>
+  <link rel="icon" type="image/png" href="icon-192.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap"
+    rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@0.294.0"></script>
+  <!-- Essential Fonts Only (Geist for headings, Playfair for logo) -->
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Playfair+Display:wght@600&display=swap">
+  <style>
+    .font-geist {
+      font-family: 'Geist', sans-serif !important;
+    }
+    .font-playfair {
+      font-family: 'Playfair Display', serif !important;
+    }
+    /* Screen reader only utility for accessibility */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border-width: 0;
+    }
+  </style>
+  <script>
+    // Configure Tailwind to include our custom 3D transform utilities
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            // Override defaults for instant premium feel
+            zinc: {
+              50: '#FAFAFA',
+              100: '#F4F4F5',
+              200: '#E4E4E7',
+              300: '#D4D4D8',
+              400: '#A1A1AA',
+              500: '#71717A',
+              600: '#52525B',
+              700: '#3F3F46',   // Border/Active
+              800: '#27272A',   // Surface Hover
+              900: '#18181B',   // Surface
+              950: '#050505',   // Main Background
+            },
+            gray: {
+              900: '#0A0A0A',
+              950: '#050505',
+            },
+            // Premium Dark Theme Palette
+            background: {
+              DEFAULT: '#050505',      // Ultra dark background
+              primary: '#0A0A0A',      // Main background
+              secondary: '#121212',    // Secondary background
+              tertiary: '#1A1A1A',     // Tertiary background
+              elevated: '#222222',     // Elevated surfaces (cards, modals)
+            },
+            brand: {
+              primary: '#3B82F6',      // Blue-500
+              secondary: '#06B6D4',    // Cyan-500
+              accent: '#8B5CF6',       // Violet-500
+              glow: '#60A5FA',         // Blue-400 (for glows)
+              gradient: {
+                start: '#3B82F6',
+                end: '#06B6D4',
+              },
+            },
+            boxShadow: {
+              'glow': '0 0 20px rgba(59, 130, 246, 0.5)',
+              'glow-lg': '0 0 30px rgba(59, 130, 246, 0.6)',
+              'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.37)',
+            },
+            backgroundImage: {
+              'glass-gradient': 'linear-gradient(145deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%)',
+              'brand-gradient': 'linear-gradient(to right, #3B82F6, #06B6D4)',
+            },
+          },
+        }
+      },
+      plugins: [
+        function ({ addUtilities }) {
+          const rotateXUtilities = {};
+          const rotateYUtilities = {};
+          const rotateZUtilities = {};
+          const rotateValues = [0, 5, 10, 15, 20, 30, 45, 75];
+          // Generate rotate-x utilities
+          rotateValues.forEach((value) => {
+            rotateXUtilities[`.rotate-x-${value}`] = {
+              '--tw-rotate-x': `${value}deg`,
+              transform: `
+translate3d(var(--tw-translate-x, 0), var(--tw-translate-y, 0), var(--tw-translate-z, 0))
+rotateX(var(--tw-rotate-x, 0))
+rotateY(var(--tw-rotate-y, 0))
+rotateZ(var(--tw-rotate-z, 0))
+skewX(var(--tw-skew-x, 0))
+skewY(var(--tw-skew-y, 0))
+scaleX(var(--tw-scale-x, 1))
+scaleY(var(--tw-scale-y, 1))
+`.replace(/\\s+/g, ' ').trim(),
+            };
+            if (value !== 0) {
+              rotateXUtilities[`.-rotate-x-${value}`] = {
+                '--tw-rotate-x': `-${value}deg`,
+                transform: `
+translate3d(var(--tw-translate-x, 0), var(--tw-translate-y, 0), var(--tw-translate-z, 0))
+rotateX(var(--tw-rotate-x, 0))
+rotateY(var(--tw-rotate-y, 0))
+rotateZ(var(--tw-rotate-z, 0))
+skewX(var(--tw-skew-x, 0))
+skewY(var(--tw-skew-y, 0))
+scaleX(var(--tw-scale-x, 1))
+scaleY(var(--tw-scale-y, 1))
+`.replace(/\\s+/g, ' ').trim(),
+              };
+            }
+          });
+          // Generate rotate-y utilities
+          rotateValues.forEach((value) => {
+            rotateYUtilities[`.rotate-y-${value}`] = {
+              '--tw-rotate-y': `${value}deg`,
+              transform: `
+translate3d(var(--tw-translate-x, 0), var(--tw-translate-y, 0), var(--tw-translate-z, 0))
+rotateX(var(--tw-rotate-x, 0))
+rotateY(var(--tw-rotate-y, 0))
+rotateZ(var(--tw-rotate-z, 0))
+skewX(var(--tw-skew-x, 0))
+skewY(var(--tw-skew-y, 0))
+scaleX(var(--tw-scale-x, 1))
+scaleY(var(--tw-scale-y, 1))
+`.replace(/\\s+/g, ' ').trim(),
+            };
+            if (value !== 0) {
+              rotateYUtilities[`.-rotate-y-${value}`] = {
+                '--tw-rotate-y': `-${value}deg`,
+                transform: `
+translate3d(var(--tw-translate-x, 0), var(--tw-translate-y, 0), var(--tw-translate-z, 0))
+rotateX(var(--tw-rotate-x, 0))
+rotateY(var(--tw-rotate-y, 0))
+rotateZ(var(--tw-rotate-z, 0))
+skewX(var(--tw-skew-x, 0))
+skewY(var(--tw-skew-y, 0))
+scaleX(var(--tw-scale-x, 1))
+scaleY(var(--tw-scale-y, 1))
+`.replace(/\\s+/g, ' ').trim(),
+              };
+            }
+          });
+          // Generate rotate-z utilities
+          rotateValues.forEach((value) => {
+            rotateZUtilities[`.rotate-z-${value}`] = {
+              '--tw-rotate-z': `${value}deg`,
+              transform: `
+translate3d(var(--tw-translate-x, 0), var(--tw-translate-y, 0), var(--tw-translate-z, 0))
+rotateX(var(--tw-rotate-x, 0))
+rotateY(var(--tw-rotate-y, 0))
+rotateZ(var(--tw-rotate-z, 0))
+skewX(var(--tw-skew-x, 0))
+skewY(var(--tw-skew-y, 0))
+scaleX(var(--tw-scale-x, 1))
+scaleY(var(--tw-scale-y, 1))
+`.replace(/\\s+/g, ' ').trim(),
+            };
+            if (value !== 0) {
+              rotateZUtilities[`.-rotate-z-${value}`] = {
+                '--tw-rotate-z': `-${value}deg`,
+                transform: `
+translate3d(var(--tw-translate-x, 0), var(--tw-translate-y, 0), var(--tw-translate-z, 0))
+rotateX(var(--tw-rotate-x, 0))
+rotateY(var(--tw-rotate-y, 0))
+rotateZ(var(--tw-rotate-z, 0))
+skewX(var(--tw-skew-x, 0))
+skewY(var(--tw-skew-y, 0))
+scaleX(var(--tw-scale-x, 1))
+scaleY(var(--tw-scale-y, 1))
+`.replace(/\\s+/g, ' ').trim(),
+              };
+            }
+          });
+          // Perspective utilities
+          const perspectiveUtilities = {
+            ".perspective-none": { perspective: "none" },
+            ".perspective-dramatic": { perspective: "100px" },
+            ".perspective-near": { perspective: "300px" },
+            ".perspective-normal": { perspective: "500px" },
+            ".perspective-midrange": { perspective: "800px" },
+            ".perspective-distant": { perspective: "1200px" },
+          };
+          // Transform style utilities
+          const transformStyleUtilities = {
+            ".transform-style-preserve-3d": { "transform-style": "preserve-3d" },
+            ".transform-style-flat": { "transform-style": "flat" },
+          };
+          addUtilities({
+            ...rotateXUtilities,
+            ...rotateYUtilities,
+            ...rotateZUtilities,
+            ...perspectiveUtilities,
+            ...transformStyleUtilities,
+          });
+        }
+      ]
+    };
+  </script>
+  <style>
+    :root {
+      --background-primary: #050505;
+      --background-secondary: #0A0A0A;
+      --background-tertiary: #121212;
+      --surface-glass: rgba(24, 24, 27, 0.6);
+      --text-primary: #FAFAFA;
+      --text-secondary: #A1A1AA;
+      --brand-primary: #3B82F6;
+      --brand-secondary: #06B6D4;
+    }
+
+    /* 3D Transform utilities */
+    .rotate-x-30 {
+      --tw-rotate-x: 30deg;
+      transform: translate3d(var(--tw-translate-x, 0), var(--tw-translate-y, 0), var(--tw-translate-z, 0)) rotateX(var(--tw-rotate-x, 0)) rotateY(var(--tw-rotate-y, 0)) rotateZ(var(--tw-rotate-z, 0)) skewX(var(--tw-skew-x, 0)) skewY(var(--tw-skew-y, 0)) scaleX(var(--tw-scale-x, 1)) scaleY(var(--tw-scale-y, 1)) !important;
+    }
+
+    .rotate-y-30 {
+      --tw-rotate-y: 30deg;
+      transform: translate3d(var(--tw-translate-x, 0), var(--tw-translate-y, 0), var(--tw-translate-z, 0)) rotateX(var(--tw-rotate-x, 0)) rotateY(var(--tw-rotate-y, 0)) rotateZ(var(--tw-rotate-z, 0)) skewX(var(--tw-skew-x, 0)) skewY(var(--tw-skew-y, 0)) scaleX(var(--tw-scale-x, 1)) scaleY(var(--tw-scale-y, 1)) !important;
+    }
+
+    .rotate-z-20 {
+      --tw-rotate-z: 20deg;
+      transform: translate3d(var(--tw-translate-x, 0), var(--tw-translate-y, 0), var(--tw-translate-z, 0)) rotateX(var(--tw-rotate-x, 0)) rotateY(var(--tw-rotate-y, 0)) rotateZ(var(--tw-rotate-z, 0)) skewX(var(--tw-skew-x, 0)) skewY(var(--tw-skew-y, 0)) scaleX(var(--tw-scale-x, 1)) scaleY(var(--tw-scale-y, 1)) !important;
+    }
+
+    .-rotate-z-20 {
+      --tw-rotate-z: -20deg;
+      transform: translate3d(var(--tw-translate-x, 0), var(--tw-translate-y, 0), var(--tw-translate-z, 0)) rotateX(var(--tw-rotate-x, 0)) rotateY(var(--tw-rotate-y, 0)) rotateZ(var(--tw-rotate-z, 0)) skewX(var(--tw-skew-x, 0)) skewY(var(--tw-skew-y, 0)) scaleX(var(--tw-scale-x, 1)) scaleY(var(--tw-scale-y, 1)) !important;
+    }
+
+    .perspective-none {
+      perspective: none !important;
+    }
+
+    .perspective-dramatic {
+      perspective: 100px !important;
+    }
+
+    .perspective-near {
+      perspective: 300px !important;
+    }
+
+    .perspective-normal {
+      perspective: 500px !important;
+    }
+
+    .perspective-midrange {
+      perspective: 800px !important;
+    }
+
+    .perspective-distant {
+      perspective: 1200px !important;
+    }
+
+    .transform-style-preserve-3d {
+      transform-style: preserve-3d !important;
+    }
+
+    .transform-style-flat {
+      transform-style: flat !important;
+    }
+
+    .text-gradient {
+      background: linear-gradient(to right, #3B82F6, #06B6D4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: transparent;
+    }
+  </style>
+</head>
+
+<body class="min-h-screen antialiased selection:bg-blue-500/30 selection:text-blue-400 text-zinc-50 bg-[#050505]"
+  style="font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;">
+
+  <!-- Skip Navigation Link for Accessibility -->
+  <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-blue-600 focus:text-white focus:rounded-lg">Skip to main content</a>
+
+  <!-- Nav -->
+  <header class="w-full">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="flex h-16 items-center justify-between">
+        <a href="#" class="inline-flex items-center gap-2">
+          <img src="icon-192.png" alt="EchoTrader" class="h-8 w-8 rounded-lg">
+          <span class="text-2xl font-semibold tracking-tight font-playfair">EchoTrader</span>
+        </a>
+
+        <nav class="hidden md:flex items-center gap-8 text-sm text-zinc-300">
+          <a href="#features" class="hover:text-zinc-100 transition-colors font-sans">Features</a>
+          <a href="#quantlabs" class="hover:text-zinc-100 transition-colors font-sans">Journey</a>
+          <a href="#creators" class="hover:text-zinc-100 transition-colors font-sans">Creators</a>
+          <a href="#pricing" class="hover:text-zinc-100 transition-colors font-sans">Pricing</a>
+          <a href="#" class="hover:text-zinc-100 transition-colors font-sans">Docs</a>
+        </nav>
+
+        <div class="flex items-center gap-3">
+          <button
+            id="mobileMenuButton"
+            aria-label="Open navigation menu"
+            aria-expanded="false"
+            class="md:hidden inline-flex h-9 w-9 items-center justify-center rounded-md ring-1 ring-white/10 hover:bg-white/5">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="menu"
+              class="lucide lucide-menu h-5 w-5">
+              <path d="M4 12h16"></path>
+              <path d="M4 18h16"></path>
+              <path d="M4 6h16"></path>
+            </svg>
+          </button>
         </div>
-    </header>
-
-    <!-- Hero Section -->
-    <section class="hero-gradient min-h-screen flex items-center pt-20">
-        <div class="max-w-7xl mx-auto px-6 py-12 z-10 relative">
-            <div class="grid lg:grid-cols-2 gap-12 items-center">
-                <!-- Left Content -->
-                <div class="space-y-8">
-                    <div class="space-y-2">
-                        <h1 class="lg:text-7xl gradient-text text-5xl tracking-tighter font-manrope" style="">
-                            Master Investing
-                            <span class="block tracking-tighter font-manrope" style="">with AI</span>
-                        </h1>
-                        <p class="max-w-lg text-3xl font-light text-white">
-                            Learn genuine financial competence through AI intelligence, verified insights, and human expertise. Discover institutional-grade education at consumer pricing.
-                        </p>
-                    </div>
-                    
-                    <!-- Navigation Dots -->
-                    <div class="flex items-center gap-3">
-                        <button id="nav-1" class="w-3 h-3 rounded-full bg-white transition-all scale-125"></button>
-                        <button id="nav-2" class="w-3 h-3 rounded-full bg-gray-500 hover:bg-gray-300 transition-all"></button>
-                        <button id="nav-3" class="w-3 h-3 rounded-full bg-gray-500 hover:bg-gray-300 transition-all"></button>
-                        <button id="nav-4" class="w-3 h-3 rounded-full bg-gray-500 hover:bg-gray-300 transition-all"></button>
-                    </div>
-                    
-                    <!-- Feature Details -->
-                    <div id="feature-details" class="space-y-4">
-                        <div class="flex items-center gap-3">
-                            <div class="w-2 h-2 bg-blue-400 rounded-full"></div>
-                            <span class="text-gray-300 font-sans">AI-Powered Education</span>
-                        </div>
-                        <div class="flex items-center gap-3">
-                            <div class="w-2 h-2 bg-green-400 rounded-full"></div>
-                            <span class="text-gray-300 font-sans">Verified Investment Signals</span>
-                        </div>
-                        <div class="flex items-center gap-3">
-                            <div class="w-2 h-2 bg-orange-400 rounded-full"></div>
-                            <span class="text-gray-300 font-sans">Human Mentorship Network</span>
-                        </div>
-                        <div class="flex items-center gap-3">
-                            <div class="w-2 h-2 bg-purple-400 rounded-full"></div>
-                            <span class="text-gray-300 font-sans">Real-Time Portfolio Intelligence</span>
-                        </div>
-                    </div>
-                    
-                    <!-- Email Capture Form -->
-                    <div class="space-y-4 pt-4">
-                        <div>
-                            <h3 class="text-xl font-semibold text-white mb-2 font-sans">Join the Beta Waitlist</h3>
-                            <p class="text-sm text-gray-400 font-sans">Be among the first to experience AI-powered investment education. Limited spots available.</p>
-                        </div>
-                        <form class="flex flex-col sm:flex-row gap-3" id="waitlist-form">
-                            <input type="email" id="email-input" name="email" placeholder="Enter your email address" required class="flex-1 px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent font-sans">
-                            <button type="submit" id="submit-btn" class="button cursor-pointer select-none transition-colors hover:bg-gray-100 text-base font-medium text-[#0f172a] bg-white border-transparent border rounded-lg relative whitespace-nowrap" style="padding: 1rem 2rem; font-weight: 400; font-size: 1rem; color: #0f172a; border-radius: 0.5rem; position: relative; cursor: pointer; border: 1px solid transparent">
-                                <span id="button-text">Join Waitlist</span>
-                                <span class="button-border" style="position: absolute; top: 0; left: 0; height: 100%; width: 100%; border-radius: 0.5rem; z-index: -1; pointer-events: none;">
-                                    <span style="content: ''; position: absolute; border-radius: 0.5rem; padding: 1px; inset: 0; background: linear-gradient(180deg, rgba(184, 238, 255, 0.24) 0%, rgba(184, 238, 255, 0) 100%), linear-gradient(0deg, rgba(184, 238, 255, 0.32), rgba(184, 238, 255, 0.32)); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor;"></span>
-                                </span>
-                            </button>
-                        </form>
-                        <div id="form-message" class="hidden text-sm font-sans"></div>
-                        <style>
-                            #waitlist-form button.button::before {
-                                content: "";
-                                display: block;
-                                position: absolute;
-                                left: 0;
-                                top: 0;
-                                height: 100%;
-                                width: 100%;
-                                border-radius: 0.5rem;
-                                background: linear-gradient(180deg, rgba(8, 77, 126, 0) 0%, rgba(8, 77, 126, 0.42) 100%), rgba(47, 255, 255, 0.24);
-                                box-shadow: inset 0 0 12px rgba(151, 200, 255, 0.44);
-                                z-index: -1;
-                            }
-                            #waitlist-form button.button::after {
-                                content: "";
-                                display: block;
-                                position: absolute;
-                                top: 0;
-                                left: 0;
-                                width: 100%;
-                                height: 100%;
-                                background: linear-gradient(180deg, rgba(8, 77, 126, 0) 0%, rgba(8, 77, 126, 0.42) 100%), rgba(47, 255, 255, 0.24);
-                                box-shadow: inset 0 0 12px rgba(151, 200, 255, 0.44);
-                                border-radius: 0.5rem;
-                                opacity: 0;
-                                z-index: -1;
-                                transition: all 0.3s ease-in;
-                            }
-                            #waitlist-form button.button:hover::after {
-                                opacity: 1;
-                            }
-                        </style>
-                        <div class="flex items-center gap-2 text-xs text-gray-400 font-sans">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-lock"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                            <span>We respect your privacy. No spam, ever.</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Right Content - Interactive Cards -->
-                <div class="flex lg:justify-end justify-center" style="height: 36rem;">
-    <div class="cards-section feature-1-active" style="height: 36rem;">
-        <!-- Education Card -->
-        <div class="feature-card glass-card rounded-2xl p-8 float-animation" style="height: 36rem;">
-            <div class="flex flex-col h-full">
-                <div class="flex items-center gap-3 mb-6">
-                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="graduation-cap" class="lucide lucide-graduation-cap w-6 h-6 text-white"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"></path><path d="M22 10v6"></path><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"></path></svg>
-                    </div>
-                    <div class="">
-                        <span class="text-xs uppercase tracking-wide text-gray-300 font-medium font-sans">Education</span>
-                        <h3 class="text-2xl font-manrope tracking-tighter">Adaptive Learning</h3>
-                    </div>
-                </div>
-                
-                <p class="flex-1 text-2xl text-gray-300 mb-6">
-                    Progressive curriculum from beginner to professional level. Learn investment principles that build genuine financial competence.
-                </p>
-                
-                <div class="space-y-3 mb-6">
-                    <div class="flex items-center justify-between text-sm">
-                        <span class="text-gray-400 font-sans">Content Library</span>
-                        <span class="text-white font-medium font-sans">100+ hours</span>
-                    </div>
-                    <div class="flex items-center justify-between text-sm">
-                        <span class="text-gray-400 font-sans">Time to Proficiency</span>
-                        <span class="text-white font-medium font-sans">3-6 months</span>
-                    </div>
-                </div>
-                
-                <div class="mb-6 text-gray-400 text-sm font-sans space-y-2">
-                    <p></p>
-                    <ul class="list-disc list-inside">
-                        <li class="">Interactive lessons with real market data</li>
-                        <li>Personalized learning paths by skill level</li>
-                        <li class="">Quizzes, case studies, and achievement tracking</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Verification Card -->
-        <div class="feature-card glass-card rounded-2xl p-8" style="height: 36rem;">
-            <div class="flex flex-col h-full">
-                <div class="flex items-center gap-3 mb-6">
-                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-green-500 to-green-600 flex items-center justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check w-6 h-6 text-white"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
-                    </div>
-                    <div class="">
-                        <span class="text-xs uppercase tracking-wide text-gray-300 font-medium font-sans">Verification</span>
-                        <h3 class="text-2xl font-manrope tracking-tighter">Bias Guard System</h3>
-                    </div>
-                </div>
-
-                <p class="flex-1 text-2xl text-gray-300 mb-6">
-                    Real-time fact-checking ensures AI recommendations are backed by verified market data.
-                </p>
-
-                <div class="space-y-3 mb-6">
-                    <div class="flex items-center justify-between text-sm">
-                        <span class="text-gray-400 font-sans">Accuracy Rate</span>
-                        <span class="text-white font-medium font-sans">90-95%</span>
-                    </div>
-                    <div class="flex items-center justify-between text-sm">
-                        <span class="text-gray-400 font-sans">Verification Time</span>
-                        <span class="text-white font-medium font-sans">&lt;2 sec</span>
-                    </div>
-                </div>
-
-                <div class="mb-6 text-gray-400 text-sm font-sans space-y-2">
-                    <ul class="list-disc list-inside">
-                        <li>Dual-layer verification (AI + human oversight)</li>
-                        <li>Confidence scores for every recommendation</li>
-                        <li>Cross-validated against live market data</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <!-- Mentorship Card -->
-        <div class="feature-card glass-card rounded-2xl p-8" style="height: 36rem;">
-            <div class="flex flex-col h-full">
-                <div class="flex items-center gap-3 mb-6">
-                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users w-6 h-6 text-white"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                    </div>
-                    <div class="">
-                        <span class="text-xs uppercase tracking-wide text-gray-300 font-medium font-sans">Community</span>
-                        <h3 class="text-2xl font-manrope tracking-tighter">Social Learning</h3>
-                    </div>
-                </div>
-
-                <p class="flex-1 text-2xl text-gray-300 mb-6">
-                    Learn alongside investors and financial professionals. AI personas and human mentors provide diverse perspectives.
-                </p>
-
-                <div class="space-y-3 mb-6">
-                    <div class="flex items-center justify-between text-sm">
-                        <span class="text-gray-400 font-sans">Mentor Access</span>
-                        <span class="text-white font-medium font-sans">24/7</span>
-                    </div>
-                    <div class="flex items-center justify-between text-sm">
-                        <span class="text-gray-400 font-sans">Expert Advisors</span>
-                        <span class="text-white font-medium font-sans">10-15</span>
-                    </div>
-                </div>
-
-                <div class="mb-6 text-gray-400 text-sm font-sans space-y-2">
-                    <ul class="list-disc list-inside">
-                        <li>AI personas (Buffett, Wood, Dalio styles)</li>
-                        <li>DEBS algorithm prevents echo chambers</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <!-- Portfolio Intelligence Card -->
-        <div class="feature-card glass-card rounded-2xl p-8" style="height: 36rem;">
-            <div class="flex flex-col h-full">
-                <div class="flex items-center gap-3 mb-6">
-                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-line-chart w-6 h-6 text-white"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
-                    </div>
-                    <div class="">
-                        <span class="text-xs uppercase tracking-wide text-gray-300 font-medium font-sans">Portfolio</span>
-                        <h3 class="text-2xl font-manrope tracking-tighter">Investment Analytics</h3>
-                    </div>
-                </div>
-
-                <p class="flex-1 text-2xl text-gray-300 mb-6">
-                    Track your holdings with institutional-grade metrics. Get personalized AI coaching based on your actual portfolio.
-                </p>
-
-                <div class="space-y-3 mb-6">
-                    <div class="flex items-center justify-between text-sm">
-                        <span class="text-gray-400 font-sans">Query Speed</span>
-                        <span class="text-white font-medium font-sans">&lt;200ms</span>
-                    </div>
-                    <div class="flex items-center justify-between text-sm">
-                        <span class="text-gray-400 font-sans">Risk Metrics</span>
-                        <span class="text-white font-medium font-sans">15+</span>
-                    </div>
-                </div>
-
-                <div class="mb-6 text-gray-400 text-sm font-sans space-y-2">
-                    <ul class="list-disc list-inside">
-                        <li>Real-time performance tracking</li>
-                        <li>Risk analysis (Sharpe ratio, beta, volatility)</li>
-                        <li>Brokerage integration for live positions</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
-</div>
-            </div>
+
+    <!-- Mobile Menu Dropdown -->
+    <div id="mobileMenu" class="hidden md:hidden border-t border-white/10 bg-black/95 backdrop-blur-lg">
+      <div class="mx-auto max-w-7xl px-4 py-4 space-y-2">
+        <a href="#features" class="block py-2.5 px-3 text-sm text-zinc-300 hover:text-zinc-100 hover:bg-white/5 rounded-lg transition-colors font-sans">Features</a>
+        <a href="#quantlabs" class="block py-2.5 px-3 text-sm text-zinc-300 hover:text-zinc-100 hover:bg-white/5 rounded-lg transition-colors font-sans">Journey</a>
+        <a href="#creators" class="block py-2.5 px-3 text-sm text-zinc-300 hover:text-zinc-100 hover:bg-white/5 rounded-lg transition-colors font-sans">Creators</a>
+        <a href="#pricing" class="block py-2.5 px-3 text-sm text-zinc-300 hover:text-zinc-100 hover:bg-white/5 rounded-lg transition-colors font-sans">Pricing</a>
+        <a href="#" class="block py-2.5 px-3 text-sm text-zinc-300 hover:text-zinc-100 hover:bg-white/5 rounded-lg transition-colors font-sans">Docs</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section id="main-content" class="relative overflow-hidden h-[850px]">
+    <div data-us-project="X0ErZR3QhPzMHfKgBbJJ" class="absolute top-0 left-0 -z-10 w-full h-full"></div>
+    <script
+      type="text/javascript">!function () { if (!window.UnicornStudio) { window.UnicornStudio = { isInitialized: !1 }; var i = document.createElement("script"); i.src = "https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.4.29/dist/unicornStudio.umd.js", i.onload = function () { window.UnicornStudio.isInitialized || (UnicornStudio.init(), window.UnicornStudio.isInitialized = !0) }, (document.head || document.body).appendChild(i) } }();</script>
+    <div class="max-w-7xl sm:px-6 lg:px-8 sm:pt-20 mr-auto ml-auto pt-14 pr-4 pl-4">
+      <div class="max-w-3xl">
+        <div
+          class="inline-flex gap-2 text-xs text-blue-300 bg-blue-500/10 border-blue-500/20 border rounded-full pt-1 pr-3 pb-1 pl-3 items-center">
+
+          <span class="font-medium font-sans">Launching Soon</span>
         </div>
-    </section>
+        <h1 class="sm:text-6xl md:text-7xl text-4xl font-light tracking-tighter font-geist mt-6">EchoTrader is the <span
+            class="text-gradient font-medium">intelligent platform</span> for modern investors</h1>
+        <p class="max-w-2xl sm:text-lg text-base text-zinc-300 mt-5">
+          Combine advanced quantitative tools, real-time market intelligence, and expert creator insights in one
+          powerful trading platform.
+        </p>
 
-    <script>
-        // Initialize Lucide icons
-        lucide.createIcons();
+        <div class="mt-8 flex flex-col sm:flex-row items-center gap-3">
+          <button type="button" onclick="openWaitlistModal()" role="button" aria-label="Join Waitlist"
+            class="group relative inline-flex shadow-[0_8px_16px_-4px_rgba(59,130,246,0.5)] hover:shadow-[0_12px_20px_-6px_rgba(59,130,246,0.6)] transition duration-300 ease-out select-none cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/60 transform-gpu hover:-translate-y-0.5 text-white rounded-lg pt-[1px] pr-[1px] pb-[1px] pl-[1px] items-center justify-center"
+            style="background-image: linear-gradient(144deg, #3B82F6, #06B6D4);">
+            <span
+              class="flex items-center justify-center gap-2 text-[15px] leading-none min-w-[140px] w-full h-full transition-colors duration-300 group-hover:bg-black/50 font-medium bg-black/80 rounded-lg pt-3 pr-5 pb-3 pl-5">
+              <span class="">Join Waitlist</span>
 
-        // Email Waitlist Form Handler using Google Apps Script
-        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbygOTMrLckoiBkbeS6p86IEcA0_4N0cQy8zGTLE4HYLxAZMeDNrOLgM50gxiwcdwnz5/exec';
+            </span>
+          </button>
+        </div>
+      </div>
 
-        const form = document.getElementById('waitlist-form');
-        const emailInput = document.getElementById('email-input');
-        const submitBtn = document.getElementById('submit-btn');
-        const buttonText = document.getElementById('button-text');
-        const formMessage = document.getElementById('form-message');
+      <!-- Product preview -->
+      <div class="relative sm:mt-20 mt-16 perspective-none">
+        <div
+          class="absolute inset-x-0 -bottom-8 mx-auto h-40 max-w-6xl bg-gradient-to-t from-black/60 to-transparent blur-2xl">
+        </div>
 
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
+        <div class="max-w-6xl mr-auto ml-auto">
+          <div
+            class="relative ring-1 ring-black/10 -translate-x-8 -translate-y-16 shadow-[0_2.8px_2.2px_rgba(0,_0,_0,_0.034),_0_6.7px_5.3px_rgba(0,_0,_0,_0.048),_0_12.5px_10px_rgba(0,_0,_0,_0.06),_0_22.3px_17.9px_rgba(0,_0,_0,_0.072),_0_41.8px_33.4px_rgba(0,_0,_0,_0.086),_0_100px_80px_rgba(0,_0,_0,_0.12)] lg:scale-100 md:scale-75 origin-left w-[1200px] bg-gradient-to-b from-zinc-900/70 to-zinc-950/80 border-white/10 border rounded-2xl backdrop-blur-lg translate-x-8 scale-50 rotate-x-30 rotate-y-30 -rotate-z-20 perspective-none">
+            <!-- Window header -->
+            <div class="flex border-white/10 border-b pt-3 pr-4 pb-3 pl-4 items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span class="h-2.5 w-2.5 rounded-full bg-zinc-600"></span>
+                <span class="h-2.5 w-2.5 rounded-full bg-zinc-700"></span>
+                <span class="h-2.5 w-2.5 rounded-full bg-zinc-800"></span>
+              </div>
+              <div class="flex items-center gap-3 text-xs text-zinc-400">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                  <path d="M2 17l10 5 10-5"></path>
+                  <path d="M2 12l10 5 10-5"></path>
+                </svg>
+                <span class="font-sans">echotrader.app</span>
+              </div>
+            </div>
 
-            const email = emailInput.value.trim();
+            <div class="grid grid-cols-12">
+              <!-- Sidebar -->
+              <aside class="col-span-4 md:col-span-3 sm:p-4 border-white/10 border-r pt-3 pr-3 pb-3 pl-3">
+                <div
+                  class="mb-3 flex items-center gap-2 rounded-md bg-white/5 px-2 py-1.5 text-zinc-300 ring-1 ring-white/10">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    data-lucide="search" class="lucide lucide-search h-4 w-4 text-zinc-400">
+                    <path d="m21 21-4.34-4.34"></path>
+                    <circle cx="11" cy="11" r="8"></circle>
+                  </svg>
+                  <input placeholder="Search"
+                    class="w-full bg-transparent text-xs outline-none placeholder:text-zinc-500">
+                </div>
 
-            if (!email) {
-                showMessage('Please enter a valid email address.', 'error');
-                return;
-            }
+                <div class="space-y-1">
+                  <button class="flex w-full items-center gap-2 px-2 py-1.5 rounded-md text-sm text-zinc-300 hover:bg-white/5 font-sans">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                      <path d="M8 10h.01"></path>
+                      <path d="M12 10h.01"></path>
+                      <path d="M16 10h.01"></path>
+                    </svg> Ask
+                  </button>
+                  <button class="flex w-full items-center gap-2 px-2 py-1.5 rounded-md text-sm text-zinc-300 hover:bg-white/5 font-sans">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                      <circle cx="9" cy="7" r="4"></circle>
+                      <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                      <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg> Socials
+                  </button>
+                  <div
+                    class="flex items-center justify-between px-2 py-1.5 rounded-md bg-gradient-to-r from-blue-500/20 to-cyan-500/20 text-sm text-blue-300 ring-1 ring-blue-400/30">
+                    <div class="flex items-center gap-2">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                      </svg>
+                      <span class="font-medium font-sans">Home</span>
+                    </div>
+                  </div>
+                  <button class="flex w-full items-center gap-2 px-2 py-1.5 rounded-md text-sm text-zinc-300 hover:bg-white/5 font-sans">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                      <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                      <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                    </svg> Education
+                  </button>
+                  <button class="flex w-full items-center gap-2 px-2 py-1.5 rounded-md text-sm text-zinc-300 hover:bg-white/5 font-sans">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                      <line x1="12" y1="1" x2="12" y2="23"></line>
+                      <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                    </svg> Portfolio
+                  </button>
+                </div>
 
-            // Disable form during submission
-            submitBtn.disabled = true;
-            buttonText.textContent = 'Submitting...';
+                <div class="mt-4">
+                  <p class="px-2 text-[11px] uppercase tracking-wide text-zinc-500 font-sans">Watchlist</p>
+                  <div class="mt-1 space-y-1">
+                    <button class="flex w-full justify-between hover:bg-white/5 text-sm text-zinc-300 rounded-md pt-1.5 pr-2 pb-1.5 pl-2 items-center">
+                      <span class="font-medium font-sans">AAPL</span>
+                      <span class="text-emerald-400 text-xs">+2.4%</span>
+                    </button>
+                    <button class="flex w-full justify-between hover:bg-white/5 text-sm text-zinc-300 rounded-md pt-1.5 pr-2 pb-1.5 pl-2 items-center">
+                      <span class="font-medium font-sans">TSLA</span>
+                      <span class="text-red-400 text-xs">-1.2%</span>
+                    </button>
+                    <button class="flex w-full justify-between hover:bg-white/5 text-sm text-zinc-300 rounded-md pt-1.5 pr-2 pb-1.5 pl-2 items-center">
+                      <span class="font-medium font-sans">NVDA</span>
+                      <span class="text-emerald-400 text-xs">+5.8%</span>
+                    </button>
+                  </div>
+                </div>
+              </aside>
 
-            try {
-                const response = await fetch(APPS_SCRIPT_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ email: email })
-                });
+              <!-- Main Content -->
+              <main class="col-span-8 md:col-span-9">
+                <div class="grid grid-cols-12">
+                  <!-- Portfolio Summary & Signals -->
+                  <section class="col-span-6 sm:p-4 border-white/10 border-r pt-3 pr-3 pb-3 pl-3">
+                    <!-- Portfolio Summary Card -->
+                    <div class="rounded-lg bg-gradient-to-br from-blue-500/10 to-cyan-500/10 p-3 ring-1 ring-blue-400/20 mb-3">
+                      <div class="flex items-center justify-between mb-2">
+                        <span class="text-xs text-zinc-400 font-sans">Total Portfolio Value</span>
+                        <span class="text-emerald-400 text-xs font-medium">+12.4%</span>
+                      </div>
+                      <div class="text-2xl font-semibold text-zinc-100 mb-1">$127,450</div>
+                      <div class="text-xs text-zinc-400 font-sans">+$15,230 this month</div>
+                    </div>
 
-                // no-cors mode doesn't allow reading response, so assume success
-                showMessage('Thank you! You\'ve been added to the waitlist.', 'success');
-                emailInput.value = '';
-                buttonText.textContent = 'Joined!';
+                    <!-- Market Intelligence -->
+                    <div class="flex items-center justify-between mb-3">
+                      <h3 class="text-sm font-medium text-zinc-200 tracking-tight font-sans">Market Intelligence</h3>
+                      <div class="flex items-center gap-2 text-zinc-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                          <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+                          <path d="M3 3v5h5"></path>
+                          <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"></path>
+                          <path d="M16 16h5v5"></path>
+                        </svg>
+                      </div>
+                    </div>
 
-                setTimeout(() => {
-                    buttonText.textContent = 'Join Waitlist';
-                    submitBtn.disabled = false;
-                }, 3000);
+                    <!-- Insight Cards -->
+                    <ul class="space-y-2">
+                      <li class="rounded-lg bg-white/5 p-3 ring-1 ring-white/10 hover:bg-white/10">
+                        <div class="flex items-start gap-2">
+                          <div class="flex-shrink-0 mt-0.5">
+                            <div class="h-6 w-6 rounded-full bg-blue-500/20 flex items-center justify-center">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                              </svg>
+                            </div>
+                          </div>
+                          <div class="flex-1">
+                            <p class="text-sm font-medium text-zinc-200">Market Brief</p>
+                            <p class="mt-0.5 text-xs text-zinc-400 font-sans">Tech sector showing strength amid economic data. AI stocks outperforming.</p>
+                          </div>
+                        </div>
+                      </li>
 
-            } catch (error) {
-                showMessage('Something went wrong. Please try again.', 'error');
-                buttonText.textContent = 'Join Waitlist';
-                submitBtn.disabled = false;
-            }
+                      <li class="rounded-lg p-3 hover:bg-white/5 ring-1 ring-white/5">
+                        <div class="flex items-start gap-2">
+                          <div class="flex-shrink-0 mt-0.5">
+                            <div class="h-6 w-6 rounded-full bg-purple-500/20 flex items-center justify-center">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                              </svg>
+                            </div>
+                          </div>
+                          <div class="flex-1">
+                            <div class="flex items-center justify-between">
+                              <p class="text-sm font-medium text-zinc-200 font-sans">Learning Progress</p>
+                              <span class="text-[10px] text-purple-400 font-sans">75%</span>
+                            </div>
+                            <p class="mt-0.5 text-xs text-zinc-400 font-sans">Complete 2 more lessons to unlock Options Trading module</p>
+                          </div>
+                        </div>
+                      </li>
+
+                      <li class="rounded-lg p-3 hover:bg-white/5 ring-1 ring-white/5">
+                        <div class="flex items-start gap-2">
+                          <div class="flex-shrink-0 mt-0.5">
+                            <div class="h-6 w-6 rounded-full bg-cyan-500/20 flex items-center justify-center">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                              </svg>
+                            </div>
+                          </div>
+                          <div class="flex-1">
+                            <div class="flex items-center justify-between">
+                              <p class="text-sm font-medium text-zinc-200 font-sans">Echo Creators</p>
+                              <span class="text-[10px] text-zinc-400 font-sans">3 new</span>
+                            </div>
+                            <p class="mt-0.5 text-xs text-zinc-400 font-sans">@TechTrader shared analysis on semiconductor sector trends</p>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </section>
+
+                  <!-- Holdings & Performance -->
+                  <section class="col-span-6 sm:p-4 pt-3 pr-3 pb-3 pl-3">
+                    <!-- Header -->
+                    <div class="flex items-center justify-between mb-3">
+                      <h3 class="text-sm font-medium text-zinc-200 tracking-tight font-sans">Top Holdings</h3>
+                      <button class="text-xs text-blue-400 hover:text-blue-300 font-sans">View All</button>
+                    </div>
+
+                    <!-- Holdings List -->
+                    <div class="space-y-2 mb-4">
+                      <div class="flex items-center justify-between p-2 rounded-lg bg-white/5 ring-1 ring-white/5">
+                        <div>
+                          <div class="text-sm font-medium text-zinc-200">NVDA</div>
+                          <div class="text-xs text-zinc-400">145 shares</div>
+                        </div>
+                        <div class="text-right">
+                          <div class="text-sm font-medium text-zinc-200">$32,450</div>
+                          <div class="text-xs text-emerald-400">+18.2%</div>
+                        </div>
+                      </div>
+
+                      <div class="flex items-center justify-between p-2 rounded-lg hover:bg-white/5">
+                        <div>
+                          <div class="text-sm font-medium text-zinc-200">AAPL</div>
+                          <div class="text-xs text-zinc-400">280 shares</div>
+                        </div>
+                        <div class="text-right">
+                          <div class="text-sm font-medium text-zinc-200">$28,750</div>
+                          <div class="text-xs text-emerald-400">+12.4%</div>
+                        </div>
+                      </div>
+
+                      <div class="flex items-center justify-between p-2 rounded-lg hover:bg-white/5">
+                        <div>
+                          <div class="text-sm font-medium text-zinc-200">TSLA</div>
+                          <div class="text-xs text-zinc-400">95 shares</div>
+                        </div>
+                        <div class="text-right">
+                          <div class="text-sm font-medium text-zinc-200">$19,240</div>
+                          <div class="text-xs text-red-400">-3.2%</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Performance Chart -->
+                    <div class="rounded-lg bg-black/20 p-3 ring-1 ring-white/5">
+                      <div class="flex items-center justify-between mb-3">
+                        <span class="text-xs text-zinc-400 font-sans">30 Day Performance</span>
+                        <span class="text-xs text-emerald-400 font-medium">+12.4%</span>
+                      </div>
+                      <!-- SVG Chart -->
+                      <svg viewBox="0 0 200 60" class="w-full h-16" preserveAspectRatio="none">
+                        <!-- Grid lines -->
+                        <line x1="0" y1="15" x2="200" y2="15" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+                        <line x1="0" y1="30" x2="200" y2="30" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+                        <line x1="0" y1="45" x2="200" y2="45" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+
+                        <!-- Area gradient -->
+                        <defs>
+                          <linearGradient id="chartGradient" x1="0" x2="0" y1="0" y2="1">
+                            <stop offset="0%" stop-color="#3B82F6" stop-opacity="0.3"/>
+                            <stop offset="100%" stop-color="#3B82F6" stop-opacity="0"/>
+                          </linearGradient>
+                        </defs>
+
+                        <!-- Chart line path -->
+                        <path d="M 0 45 L 20 42 L 40 38 L 60 35 L 80 32 L 100 28 L 120 30 L 140 25 L 160 20 L 180 18 L 200 15"
+                              fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round"/>
+
+                        <!-- Fill area under line -->
+                        <path d="M 0 45 L 20 42 L 40 38 L 60 35 L 80 32 L 100 28 L 120 30 L 140 25 L 160 20 L 180 18 L 200 15 L 200 60 L 0 60 Z"
+                              fill="url(#chartGradient)"/>
+                      </svg>
+                    </div>
+                  </section>
+                </div>
+              </main>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="features" class="py-24 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Section Header -->
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <div
+          class="inline-flex gap-2 text-xs text-zinc-300 bg-white/5 border-white/10 border rounded-full pt-1 pr-3 pb-1 pl-3 items-center mb-6">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3.5 w-3.5">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+          </svg>
+          <span class="font-medium font-sans">Platform Features</span>
+        </div>
+        <h2 class="text-4xl sm:text-5xl font-light tracking-tighter font-geist text-white mb-4">Everything you need to
+          trade smarter</h2>
+        <p class="text-lg text-zinc-300 font-sans">Professional tools that combine quantitative analysis, market
+          intelligence, and community insights.</p>
+      </div>
+
+      <!-- Bento Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+        <!-- Large Feature Card - 2/3 width -->
+        <article
+          class="lg:col-span-2 group relative overflow-hidden transition-all duration-500 hover:shadow-glow hover:border-brand-primary/50 bg-zinc-900/40 border-white/5 border rounded-2xl backdrop-blur-md">
+          <div class="p-6 sm:p-8">
+            <!-- Illustration -->
+            <div
+              class="relative h-auto sm:h-80 rounded-xl bg-gradient-to-br from-zinc-900/90 to-zinc-950/90 ring-1 ring-inset ring-white/5 mb-6">
+              <!-- Main Dashboard -->
+              <div class="rounded-lg bg-zinc-950/90 backdrop-blur border border-white/10">
+                <!-- Header -->
+                <div class="flex items-center px-3 sm:px-4 py-2 sm:py-3 border-b border-white/10">
+                  <div class="flex items-center gap-2 sm:gap-3">
+                    <span class="h-1.5 w-1.5 sm:h-2 sm:w-2 rounded-full bg-red-500/60"></span>
+                    <span class="h-1.5 w-1.5 sm:h-2 sm:w-2 rounded-full bg-yellow-500/60"></span>
+                    <span class="h-1.5 w-1.5 sm:h-2 sm:w-2 rounded-full bg-cyan-500/60"></span>
+                  </div>
+                </div>
+
+                <!-- AI Data Aggregation Dashboard -->
+                <div class="p-2.5 sm:p-4 space-y-2 sm:space-y-3">
+                  <!-- Data Sources Grid -->
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-1.5 sm:gap-2">
+                    <!-- News Feed -->
+                    <div class="bg-white/5 rounded-lg p-2 border border-blue-500/30">
+                      <div class="flex items-center gap-1.5 sm:gap-2 mb-0.5 sm:mb-1">
+                        <div class="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-500 rounded-full animate-pulse"></div>
+                        <span class="text-xs sm:text-[10px] text-blue-400 font-medium">News Feed</span>
+                      </div>
+                      <p class="text-[10px] sm:text-[9px] text-zinc-400 line-clamp-1 sm:line-clamp-2">NVDA earnings beat expectations by 15%...</p>
+                    </div>
+
+                    <!-- Social Sentiment -->
+                    <div class="bg-white/5 rounded-lg p-2 border border-cyan-500/30">
+                      <div class="flex items-center gap-1.5 sm:gap-2 mb-0.5 sm:mb-1">
+                        <div class="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-cyan-500 rounded-full animate-pulse"></div>
+                        <span class="text-xs sm:text-[10px] text-cyan-400 font-medium">Social Sentiment</span>
+                      </div>
+                      <p class="text-[10px] sm:text-[9px] text-zinc-400">Tech sector: 78% bullish</p>
+                    </div>
+
+                    <!-- Earnings Data -->
+                    <div class="bg-white/5 rounded-lg p-2 border border-emerald-500/30">
+                      <div class="flex items-center gap-1.5 sm:gap-2 mb-0.5 sm:mb-1">
+                        <div class="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+                        <span class="text-xs sm:text-[10px] text-emerald-400 font-medium">Earnings</span>
+                      </div>
+                      <p class="text-[10px] sm:text-[9px] text-zinc-400">12 reports today</p>
+                    </div>
+
+                    <!-- Macro Indicators -->
+                    <div class="bg-white/5 rounded-lg p-2 border border-purple-500/30">
+                      <div class="flex items-center gap-1.5 sm:gap-2 mb-0.5 sm:mb-1">
+                        <div class="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-purple-500 rounded-full animate-pulse"></div>
+                        <span class="text-xs sm:text-[10px] text-purple-400 font-medium">Macro Data</span>
+                      </div>
+                      <p class="text-[10px] sm:text-[9px] text-zinc-400">Fed decision pending</p>
+                    </div>
+                  </div>
+
+                  <!-- AI Brief Output -->
+                  <div class="bg-gradient-to-r from-blue-500/10 to-cyan-500/10 rounded-lg p-2 sm:p-3 border border-blue-500/20">
+                    <div class="flex items-center gap-1.5 sm:gap-2 mb-1.5 sm:mb-2">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-blue-400 flex-shrink-0 sm:w-[14px] sm:h-[14px]">
+                        <path d="M12 8V4H8"></path>
+                        <rect width="16" height="12" x="4" y="8" rx="2"></rect>
+                        <path d="M2 14h2"></path>
+                        <path d="M20 14h2"></path>
+                        <path d="M15 13v2"></path>
+                        <path d="M9 13v2"></path>
+                      </svg>
+                      <span class="text-xs sm:text-[10px] text-blue-300 font-medium">AI Market Brief</span>
+                      <span class="text-[9px] sm:text-[8px] text-zinc-500 hidden sm:inline">Updated 2m ago</span>
+                    </div>
+                    <p class="text-[10px] sm:text-[9px] text-zinc-300 leading-relaxed line-clamp-2 sm:line-clamp-3">
+                      Markets showing strength on tech earnings momentum. Semiconductor sector leading with positive institutional flows.
+                    </p>
+                  </div>
+
+                  <!-- Data Sources Counter -->
+                  <div class="flex items-center justify-between text-[10px] sm:text-[9px]">
+                    <span class="text-zinc-500">Active Data Sources:</span>
+                    <span class="text-cyan-400 font-medium">52 connected</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Floating notifications - Hidden on mobile -->
+              <div class="hidden sm:block absolute top-6 right-6 w-48 space-y-2">
+                <div class="bg-zinc-900/95 border border-emerald-500/30 rounded-lg p-2 backdrop-blur">
+                  <div class="flex items-center gap-2">
+                    <div class="h-2 w-2 bg-emerald-500 rounded-full animate-pulse"></div>
+                    <span class="text-xs text-emerald-300">Earnings: NVDA beats</span>
+                  </div>
+                </div>
+                <div class="bg-zinc-900/95 border border-blue-500/30 rounded-lg p-2 backdrop-blur">
+                  <div class="flex items-center gap-2">
+                    <div class="h-2 w-2 bg-blue-500 rounded-full animate-pulse"></div>
+                    <span class="text-xs text-blue-300">Market brief ready</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Content -->
+            <div class="">
+              <div class="flex items-center gap-3 mb-4">
+
+                <h3 class="sm:text-3xl text-2xl font-normal text-white tracking-tight font-geist">AI Context Engine</h3>
+              </div>
+              <p class="text-zinc-300 text-base leading-relaxed font-sans">AI-powered intelligence aggregating 50+ data
+                sources: real-time news, earnings, social sentiment, and macro indicators. Get comprehensive market
+                context and AI-generated briefs instantly.</p>
+              <div class="mt-6">
+                <a href="#"
+                  class="inline-flex items-center gap-2 text-sm font-medium text-white hover:text-zinc-300 transition-colors">
+                  Explore Context Engine
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="h-4 w-4">
+                    <path d="M5 12h14"></path>
+                    <path d="m12 5 7 7-7 7"></path>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Small Feature Card - 1/3 width -->
+        <article
+          class="group relative overflow-hidden transition-all duration-500 hover:shadow-glow hover:border-brand-primary/50 bg-zinc-900/40 border-white/5 border rounded-2xl backdrop-blur-md">
+          <div class="p-6">
+            <!-- Illustration -->
+            <div
+              class="relative h-48 rounded-xl bg-gradient-to-br from-zinc-900/90 to-zinc-950/90 ring-1 ring-inset ring-white/5 mb-6">
+              <!-- Code Editor Mock -->
+              <div
+                class="absolute inset-3 rounded-lg bg-zinc-950/90 backdrop-blur border border-white/10 overflow-hidden">
+                <div class="flex items-center justify-between px-3 py-2 border-b border-white/10">
+                  <div class="flex items-center gap-2">
+                    <div class="h-2 w-2 bg-red-500/60 rounded-full"></div>
+                    <div class="h-2 w-2 bg-yellow-500/60 rounded-full"></div>
+                    <div class="h-2 w-2 bg-cyan-500/60 rounded-full"></div>
+                  </div>
+                  <span class="text-xs text-zinc-400">Insider Trades - NVDA</span>
+                </div>
+                <!-- Insider Trading Table -->
+                <div class="p-3 space-y-2">
+                  <div class="flex items-center justify-between text-[9px] text-zinc-500 border-b border-white/5 pb-1">
+                    <span class="w-16">Date</span>
+                    <span class="w-20">Insider</span>
+                    <span class="w-16">Type</span>
+                    <span class="w-16 text-right">Amount</span>
+                  </div>
+                  <div class="flex items-center justify-between text-[10px]">
+                    <span class="w-16 text-zinc-400">11/20</span>
+                    <span class="w-20 text-zinc-300 truncate">CEO</span>
+                    <span class="w-16">
+                      <span class="px-1 py-0.5 rounded text-[8px] bg-emerald-500/20 text-emerald-400">Buy</span>
+                    </span>
+                    <span class="w-16 text-right text-emerald-400 font-medium">$2.5M</span>
+                  </div>
+                  <div class="flex items-center justify-between text-[10px]">
+                    <span class="w-16 text-zinc-400">11/18</span>
+                    <span class="w-20 text-zinc-300 truncate">CFO</span>
+                    <span class="w-16">
+                      <span class="px-1 py-0.5 rounded text-[8px] bg-emerald-500/20 text-emerald-400">Buy</span>
+                    </span>
+                    <span class="w-16 text-right text-emerald-400 font-medium">$1.2M</span>
+                  </div>
+                  <div class="flex items-center justify-between text-[10px]">
+                    <span class="w-16 text-zinc-400">11/15</span>
+                    <span class="w-20 text-zinc-300 truncate">Director</span>
+                    <span class="w-16">
+                      <span class="px-1 py-0.5 rounded text-[8px] bg-red-500/20 text-red-400">Sell</span>
+                    </span>
+                    <span class="w-16 text-right text-red-400">$800K</span>
+                  </div>
+                  <div class="flex items-center justify-between text-[10px]">
+                    <span class="w-16 text-zinc-400">11/12</span>
+                    <span class="w-20 text-zinc-300 truncate">VP Ops</span>
+                    <span class="w-16">
+                      <span class="px-1 py-0.5 rounded text-[8px] bg-emerald-500/20 text-emerald-400">Buy</span>
+                    </span>
+                    <span class="w-16 text-right text-emerald-400 font-medium">$650K</span>
+                  </div>
+                </div>
+                <!-- Summary -->
+                <div class="px-3 pb-2 flex justify-between text-[9px] border-t border-white/5 pt-2">
+                  <span class="text-zinc-400">Net Buys (30d):</span>
+                  <span class="text-emerald-400 font-medium">+$4.5M</span>
+                </div>
+              </div>
+              <!-- Link indicator -->
+
+            </div>
+
+            <!-- Content -->
+            <div class="">
+              <div class="flex gap-3 mb-4 items-center">
+
+                <h3 class="text-xl font-normal text-white tracking-tight font-geist">Market Intelligence Hub</h3>
+              </div>
+              <p class="text-zinc-300 text-sm leading-relaxed font-sans">Track insider transactions, congressional
+                trades, and institutional holdings in real-time. Automated alerts for SEC filings, 13F disclosures, and
+                unusual options activity. Know what smart money is doing.</p>
+              <div class="mt-6">
+                <a href="#"
+                  class="inline-flex items-center gap-2 text-sm font-medium text-white hover:text-zinc-300 transition-colors">
+                  Track Smart Money
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="h-4 w-4">
+                    <path d="M5 12h14"></path>
+                    <path d="m12 5 7 7-7 7"></path>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <!-- Second Row - Reversed Layout -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+        <!-- Small Feature Card - 1/3 width -->
+        <article
+          class="group relative overflow-hidden transition-all duration-500 hover:shadow-glow hover:border-brand-primary/50 bg-zinc-900/40 border-white/5 border rounded-2xl backdrop-blur-md">
+          <div class="p-6">
+            <!-- Illustration -->
+            <div
+              class="relative h-48 rounded-xl bg-gradient-to-br from-zinc-900/90 to-zinc-950/90 ring-1 ring-inset ring-white/5 mb-6">
+              <!-- Social Feed Mockup -->
+              <div class="absolute inset-3 overflow-hidden">
+                <!-- Post Card 1 -->
+                <div class="bg-zinc-950/95 border border-white/10 rounded-lg p-3 mb-2">
+                  <div class="flex items-start gap-2">
+                    <div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex-shrink-0"></div>
+                    <div class="flex-1 min-w-0">
+                      <div class="flex items-center justify-between mb-1">
+                        <span class="text-xs font-medium text-zinc-200">@TechTrader</span>
+                        <span class="text-[10px] text-zinc-500">2h</span>
+                      </div>
+                      <p class="text-[10px] text-zinc-400 leading-relaxed line-clamp-2">Semiconductor sector showing strong momentum. $NVDA breaking key resistance at $860. Watch for continuation...</p>
+                      <div class="flex items-center gap-3 mt-2 text-[9px] text-zinc-500">
+                        <div class="flex items-center gap-1">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-emerald-400">
+                            <path d="M7 10v12"></path>
+                            <path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z"></path>
+                          </svg>
+                          <span>24</span>
+                        </div>
+                        <div class="flex items-center gap-1">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                          </svg>
+                          <span>8</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Post Card 2 (partial) -->
+                <div class="bg-zinc-950/95 border border-white/10 rounded-lg p-3 opacity-70">
+                  <div class="flex items-start gap-2">
+                    <div class="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex-shrink-0"></div>
+                    <div class="flex-1 min-w-0">
+                      <div class="flex items-center justify-between mb-1">
+                        <span class="text-xs font-medium text-zinc-200">@MarketWizard</span>
+                        <span class="text-[10px] text-zinc-500">5h</span>
+                      </div>
+                      <p class="text-[10px] text-zinc-400 leading-relaxed line-clamp-2">Fed decision tomorrow - expect volatility. Positioning for potential dovish surprise...</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Content -->
+            <div class="">
+              <div class="flex items-center gap-3 mb-4">
+
+                <h3 class="text-xl font-normal text-white tracking-tight font-geist">Echo Creators Network</h3>
+              </div>
+              <p class="text-zinc-300 text-sm leading-relaxed font-sans">Follow verified expert traders, access
+                exclusive research and analysis, and learn from proven track records. Community-driven intelligence with
+                transparent performance metrics and creator insights.</p>
+              <div class="mt-6">
+                <a href="#"
+                  class="inline-flex items-center gap-2 text-sm font-medium text-white hover:text-zinc-300 transition-colors">
+                  Discover Creators
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="h-4 w-4">
+                    <path d="M5 12h14"></path>
+                    <path d="m12 5 7 7-7 7"></path>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Large Feature Card - 2/3 width -->
+        <article
+          class="lg:col-span-2 group relative overflow-hidden transition-all duration-500 hover:shadow-glow hover:border-brand-primary/50 bg-zinc-900/40 border-white/5 border rounded-2xl backdrop-blur-md">
+          <div class="p-6 sm:p-8">
+            <!-- Illustration -->
+            <div
+              class="relative h-64 sm:h-80 rounded-xl bg-gradient-to-br from-zinc-900/90 to-zinc-950/90 ring-1 ring-inset ring-white/5 mb-6">
+              <!-- Automation Flow -->
+              <div class="absolute inset-4">
+                <!-- Nodes -->
+                <div
+                  class="absolute top-4 left-8 w-16 h-12 bg-blue-500/20 border border-blue-500/40 rounded-lg flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="h-5 w-5 text-blue-400">
+                    <polyline points="16 18 22 12 16 6"></polyline>
+                    <polyline points="8 6 2 12 8 18"></polyline>
+                  </svg>
+                </div>
+
+                <div
+                  class="absolute top-4 right-8 w-16 h-12 bg-cyan-500/20 border border-cyan-500/40 rounded-lg flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="h-5 w-5 text-cyan-400">
+                    <path
+                      d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
+                    </path>
+                    <polyline points="7.5 4.21 12 6.81 16.5 4.21"></polyline>
+                    <polyline points="7.5 19.79 7.5 14.6 3 12"></polyline>
+                    <polyline points="21 12 16.5 14.6 16.5 19.79"></polyline>
+                  </svg>
+                </div>
+
+                <div
+                  class="absolute bottom-8 left-1/2 transform -translate-x-1/2 w-16 h-12 bg-purple-500/20 border border-purple-500/40 rounded-lg flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="h-5 w-5 text-purple-400">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"></path>
+                    <path d="m9 12 2 2 4-4"></path>
+                  </svg>
+                </div>
+
+                <!-- Connection Lines -->
+                <svg class="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 300 200">
+                  <defs>
+                    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+                      <polygon points="0 0, 10 3.5, 0 7" fill="rgba(255,255,255,0.4)"></polygon>
+                    </marker>
+                  </defs>
+                  <path d="M 80 25 Q 150 15 220 25" stroke="rgba(255,255,255,0.3)" stroke-width="2" fill="none"
+                    marker-end="url(#arrowhead)" stroke-dasharray="4,4">
+                    <animate attributeName="stroke-dashoffset" values="0;-8" dur="2s" repeatCount="indefinite">
+                    </animate>
+                  </path>
+                  <path d="M 220 40 Q 200 100 150 150" stroke="rgba(255,255,255,0.3)" stroke-width="2" fill="none"
+                    marker-end="url(#arrowhead)" stroke-dasharray="4,4">
+                    <animate attributeName="stroke-dashoffset" values="0;-8" dur="2s" repeatCount="indefinite">
+                    </animate>
+                  </path>
+                  <path d="M 140 150 Q 100 100 80 40" stroke="rgba(255,255,255,0.3)" stroke-width="2" fill="none"
+                    marker-end="url(#arrowhead)" stroke-dasharray="4,4">
+                    <animate attributeName="stroke-dashoffset" values="0;-8" dur="2s" repeatCount="indefinite">
+                    </animate>
+                  </path>
+                </svg>
+
+                <!-- Status Indicators -->
+                <div class="absolute top-20 left-4 space-y-1">
+                  <div class="flex items-center gap-2 text-xs">
+                    <div class="h-2 w-2 bg-cyan-500 rounded-full animate-pulse"></div>
+                    <span class="text-cyan-400">Market Hypothesis</span>
+                  </div>
+                  <div class="flex items-center gap-2 text-xs">
+                    <div class="h-2 w-2 bg-blue-500 rounded-full animate-pulse"></div>
+                    <span class="text-blue-400">Backtesting Engine</span>
+                  </div>
+                  <div class="flex items-center gap-2 text-xs">
+                    <div class="h-2 w-2 bg-emerald-500 rounded-full animate-pulse"></div>
+                    <span class="text-emerald-400">Performance Analysis</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Content -->
+            <div class="">
+              <div class="flex items-center gap-3 mb-4">
+
+                <h3 class="sm:text-3xl text-2xl font-normal text-white tracking-tight font-geist">Desktop TradeLab</h3>
+              </div>
+              <p class="text-zinc-300 text-base leading-relaxed font-sans">Professional-grade terminal with advanced
+                charting, strategy backtesting, and quantitative tools. Build and test trading strategies with
+                institutional-quality analytics and paper trading.</p>
+              <div class="mt-6">
+                <a href="#"
+                  class="inline-flex items-center gap-2 text-sm font-medium text-white hover:text-zinc-300 transition-colors">
+                  Get Desktop App
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="h-4 w-4">
+                    <path d="M5 12h14"></path>
+                    <path d="m12 5 7 7-7 7"></path>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <!-- Third Row - Standard Layout -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Large Feature Card - 2/3 width -->
+        <article
+          class="lg:col-span-2 group relative overflow-hidden transition-all duration-300 hover:shadow-2xl bg-zinc-900/50 border-white/10 border rounded-2xl backdrop-blur-sm">
+          <div class="p-6 sm:p-8">
+            <!-- Illustration -->
+            <div
+              class="relative h-64 sm:h-80 rounded-xl bg-gradient-to-br from-zinc-900/90 to-zinc-950/90 ring-1 ring-inset ring-white/5 mb-6">
+              <!-- Academy Learning Hub -->
+              <div class="absolute inset-4 rounded-lg bg-zinc-950/90 backdrop-blur border border-white/10 overflow-y-auto">
+                <!-- XP Progress Bar -->
+                <div class="p-3 sm:p-3 border-b border-white/10">
+                  <div class="flex items-center justify-between mb-2">
+                    <div class="flex items-center gap-2">
+                      <div class="px-2 py-0.5 rounded-full text-[10px] sm:text-[9px] font-bold border border-cyan-500/30 bg-cyan-500/20 text-cyan-400">
+                        Level 3
+                      </div>
+                      <span class="text-[10px] sm:text-[9px] font-semibold text-cyan-400">Apprentice Trader</span>
+                    </div>
+                    <div class="text-[9px] sm:text-[8px] text-zinc-400">
+                      1,250 / 2,000 XP to Level 4
+                    </div>
+                  </div>
+                  <div class="relative h-2 bg-zinc-900 rounded-full border border-white/5 overflow-hidden">
+                    <div class="h-full rounded-full" style="width: 62%; background: linear-gradient(90deg, #00E3FF, #0099FF)"></div>
+                  </div>
+                </div>
+
+                <!-- Masterclass Cards Grid -->
+                <div class="p-2 sm:p-2 grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  <!-- Tools Masterclass -->
+                  <div class="bg-zinc-900/80 border border-white/5 rounded-lg p-2.5 sm:p-2 hover:border-blue-500/30 transition-colors">
+                    <div class="flex items-center justify-between mb-1">
+                      <h4 class="text-[11px] sm:text-[9px] font-bold text-zinc-200">Tools</h4>
+                      <span class="text-[8px] sm:text-[7px] px-1.5 sm:px-1 py-0.5 rounded bg-cyan-500/20 text-cyan-400 border border-cyan-500/30">BEGINNER</span>
+                    </div>
+                    <p class="text-[9px] sm:text-[7px] text-zinc-400 mb-2 line-clamp-1">Master EchoTrader's platform</p>
+                    <div class="mb-1.5">
+                      <div class="flex items-center justify-between text-[8px] sm:text-[7px] text-zinc-400 mb-0.5">
+                        <span>75% Complete</span>
+                        <span class="text-cyan-400">375/500 XP</span>
+                      </div>
+                      <div class="h-1.5 sm:h-1 bg-zinc-800 rounded-full overflow-hidden">
+                        <div class="h-full bg-gradient-to-r from-cyan-400 to-blue-500" style="width: 75%"></div>
+                      </div>
+                    </div>
+                    <div class="flex items-center justify-between text-[8px] sm:text-[7px] text-zinc-500">
+                      <span>4 modules • 2h</span>
+                      <button class="px-2 sm:px-1.5 py-0.5 bg-blue-500/10 text-blue-400 rounded text-[8px] sm:text-[7px] border border-blue-500/20">Continue</button>
+                    </div>
+                  </div>
+
+                  <!-- Options Masterclass -->
+                  <div class="bg-zinc-900/80 border border-white/5 rounded-lg p-2.5 sm:p-2 hover:border-blue-500/30 transition-colors">
+                    <div class="flex items-center justify-between mb-1">
+                      <h4 class="text-[11px] sm:text-[9px] font-bold text-zinc-200">Options</h4>
+                      <span class="text-[8px] sm:text-[7px] px-1.5 sm:px-1 py-0.5 rounded bg-orange-500/20 text-orange-400 border border-orange-500/30">INTERMEDIATE</span>
+                    </div>
+                    <p class="text-[9px] sm:text-[7px] text-zinc-400 mb-2 line-clamp-1">Options trading strategies</p>
+                    <div class="mb-1.5">
+                      <div class="flex items-center justify-between text-[8px] sm:text-[7px] text-zinc-400 mb-0.5">
+                        <span>42% Complete</span>
+                        <span class="text-cyan-400">420/1000 XP</span>
+                      </div>
+                      <div class="h-1.5 sm:h-1 bg-zinc-800 rounded-full overflow-hidden">
+                        <div class="h-full bg-gradient-to-r from-cyan-400 to-blue-500" style="width: 42%"></div>
+                      </div>
+                    </div>
+                    <div class="flex items-center justify-between text-[8px] sm:text-[7px] text-zinc-500">
+                      <span>6 modules • 4h</span>
+                      <button class="px-2 sm:px-1.5 py-0.5 bg-blue-500/10 text-blue-400 rounded text-[8px] sm:text-[7px] border border-blue-500/20">Continue</button>
+                    </div>
+                  </div>
+
+                  <!-- Technical Analysis -->
+                  <div class="hidden sm:block bg-zinc-900/80 border border-white/5 rounded-lg p-2 hover:border-blue-500/30 transition-colors">
+                    <div class="flex items-center justify-between mb-1">
+                      <h4 class="text-[9px] font-bold text-zinc-200">Technical Analysis</h4>
+                      <span class="text-[7px] px-1 py-0.5 rounded bg-orange-500/20 text-orange-400 border border-orange-500/30">INTERMEDIATE</span>
+                    </div>
+                    <p class="text-[7px] text-zinc-400 mb-2 line-clamp-1">Chart reading mastery</p>
+                    <div class="mb-1.5">
+                      <div class="flex items-center justify-between text-[7px] text-zinc-400 mb-0.5">
+                        <span>Not Started</span>
+                        <span class="text-zinc-500">0/800 XP</span>
+                      </div>
+                      <div class="h-1 bg-zinc-800 rounded-full"></div>
+                    </div>
+                    <div class="flex items-center justify-between text-[7px] text-zinc-500">
+                      <span>5 modules • 3h</span>
+                      <button class="px-1.5 py-0.5 bg-zinc-700/50 text-zinc-300 rounded text-[7px] border border-zinc-600/30">Start</button>
+                    </div>
+                  </div>
+
+                  <!-- Risk Management -->
+                  <div class="hidden sm:block bg-zinc-900/80 border border-white/5 rounded-lg p-2 hover:border-blue-500/30 transition-colors">
+                    <div class="flex items-center justify-between mb-1">
+                      <h4 class="text-[9px] font-bold text-zinc-200">Risk Management</h4>
+                      <span class="text-[7px] px-1 py-0.5 rounded bg-orange-500/20 text-orange-400 border border-orange-500/30">INTERMEDIATE</span>
+                    </div>
+                    <p class="text-[7px] text-zinc-400 mb-2 line-clamp-1">Protect your capital</p>
+                    <div class="mb-1.5">
+                      <div class="flex items-center justify-between text-[7px] text-zinc-400 mb-0.5">
+                        <span>100% Complete</span>
+                        <span class="text-emerald-400">800/800 XP</span>
+                      </div>
+                      <div class="h-1 bg-zinc-800 rounded-full overflow-hidden">
+                        <div class="h-full bg-gradient-to-r from-emerald-400 to-cyan-500" style="width: 100%"></div>
+                      </div>
+                    </div>
+                    <div class="flex items-center justify-between text-[7px] text-zinc-500">
+                      <span>4 modules • 2.5h</span>
+                      <button class="px-1.5 py-0.5 bg-emerald-500/10 text-emerald-400 rounded text-[7px] border border-emerald-500/20">Review</button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Total Stats Footer -->
+                <div class="px-3 py-2 border-t border-white/10 flex items-center justify-between text-[9px] sm:text-[8px]">
+                  <span class="text-zinc-400">8 Masterclasses Available</span>
+                  <span class="text-cyan-400 font-medium">Total XP: 1,595</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Content -->
+            <div class="">
+              <div class="flex items-center gap-3 mb-4">
+
+                <h3 class="sm:text-3xl text-2xl font-normal text-white tracking-tight font-geist">EchoTrader Academy
+                </h3>
+              </div>
+              <p class="text-zinc-300 text-base leading-relaxed font-sans">Comprehensive trading education from
+                fundamentals to advanced strategies. Interactive courses, real case studies, and masterclasses from top
+                traders. Learn at your own pace with certification programs.</p>
+              <div class="mt-6">
+                <a href="#"
+                  class="inline-flex items-center gap-2 text-sm font-medium text-white hover:text-zinc-300 transition-colors">
+                  Start Learning
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="h-4 w-4">
+                    <path d="M5 12h14"></path>
+                    <path d="m12 5 7 7-7 7"></path>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Small Feature Card - 1/3 width -->
+        <article
+          class="group relative overflow-hidden transition-all duration-300 hover:shadow-xl bg-zinc-900/50 border-white/10 border rounded-2xl backdrop-blur-sm">
+          <div class="p-6">
+            <!-- Illustration -->
+            <div
+              class="relative h-48 rounded-xl bg-gradient-to-br from-zinc-900/90 to-zinc-950/90 ring-1 ring-inset ring-white/5 mb-6">
+              <!-- Mobile Interface -->
+              <div class="absolute inset-0 flex items-center justify-center">
+                <div class="w-24 h-40 bg-zinc-950/90 rounded-2xl border-2 border-white/20 overflow-hidden">
+                  <!-- Phone Header -->
+                  <div class="h-6 bg-zinc-900 flex items-center justify-center">
+                    <div class="w-12 h-1 bg-white/30 rounded-full"></div>
+                  </div>
+
+                  <!-- Content Area -->
+                  <div class="p-2 space-y-2">
+                    <div class="h-3 bg-blue-500/30 rounded"></div>
+                    <div class="space-y-1">
+                      <div class="h-2 bg-white/10 rounded w-3/4"></div>
+                      <div class="h-2 bg-white/10 rounded w-1/2"></div>
+                    </div>
+                    <div class="flex gap-1">
+                      <div class="flex-1 h-8 bg-cyan-500/20 rounded border border-cyan-500/40"></div>
+                      <div class="flex-1 h-8 bg-white/10 rounded"></div>
+                    </div>
+                    <div class="space-y-1">
+                      <div class="h-1 bg-white/10 rounded"></div>
+                      <div class="h-1 bg-white/10 rounded w-2/3"></div>
+                    </div>
+                  </div>
+
+                  <!-- Notification -->
+
+                </div>
+              </div>
+            </div>
+
+            <!-- Content -->
+            <div class="">
+              <div class="flex items-center gap-3 mb-4">
+
+                <h3 class="text-xl font-normal text-white tracking-tight font-geist">Seamless Brokerage Integration</h3>
+              </div>
+              <p class="text-zinc-300 text-sm leading-relaxed font-sans">Connect Interactive Brokers, TD Ameritrade,
+                Alpaca, and more. Sync portfolios in real-time and execute trades directly from EchoTrader with secure,
+                encrypted API connections.</p>
+              <div class="mt-6">
+                <a href="#"
+                  class="inline-flex items-center gap-2 text-sm font-medium text-white hover:text-zinc-300 transition-colors">
+                  Connect Broker
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="h-4 w-4">
+                    <path d="M5 12h14"></path>
+                    <path d="m12 5 7 7-7 7"></path>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Development Timeline Section -->
+  <section id="quantlabs"
+    class="sm:px-6 lg:px-8 sm:mt-24 lg:mt-32 sm:mb-24 lg:mb-32 sm:pt-12 lg:pt-16 sm:pr-6 sm:pb-12 lg:pb-16 sm:pl-6 mt-16 mr-auto mb-16 ml-auto pt-8 pr-4 pb-8 pl-4">
+    <div
+      class="relative overflow-hidden sm:p-8 lg:p-12 bg-zinc-900/50 max-w-7xl ring-white/10 ring-1 rounded-2xl sm:rounded-3xl mx-auto pt-6 sm:pt-8 pr-4 sm:pr-8 pb-6 sm:pb-8 pl-4 sm:pl-8 backdrop-blur-sm">
+      <div class="flex flex-col gap-6 sm:gap-8 mb-8 sm:mb-12">
+        <div class="text-center sm:text-left">
+          <p
+            class="text-[10px] sm:text-[11px] uppercase tracking-[0.16em] sm:tracking-[0.18em] text-zinc-400 font-geist">
+            YOUR JOURNEY</p>
+          <h2
+            class="mt-2 sm:mt-3 text-2xl sm:text-4xl lg:text-5xl text-white tracking-tight sm:tracking-tighter font-geist font-medium">
+            From Beginner to Expert</h2>
+        </div>
+        <p
+          class="text-sm sm:text-base lg:text-lg text-zinc-300 max-w-full sm:max-w-[42ch] font-sans text-center sm:text-left mx-auto sm:mx-0">
+          Whether you're building a long-term portfolio or actively trading, EchoTrader provides the tools and community
+          you need at every stage of your journey.
+        </p>
+      </div>
+
+      <!-- Process Overview -->
+      <div class="mb-12 sm:mb-16">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 mb-8 sm:mb-12">
+          <div class="text-center">
+            <div
+              class="relative p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-zinc-900/40 border-white/5 border hover:border-brand-primary/30 transition-colors duration-300 backdrop-blur-md shadow-glass-sm">
+              <div class="text-2xl sm:text-3xl font-medium text-cyan-400 mb-2 font-geist">01</div>
+              <h3 class="text-base sm:text-lg font-medium text-white mb-2 font-geist">Learn</h3>
+              <p class="text-xs sm:text-sm text-zinc-400 font-sans">Master fundamentals with Academy and creator
+                education</p>
+            </div>
+          </div>
+          <div class="text-center">
+            <div
+              class="relative p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-zinc-900/40 border-white/5 border hover:border-brand-primary/30 transition-colors duration-300 backdrop-blur-md shadow-glass-sm">
+              <div class="text-2xl sm:text-3xl font-medium text-blue-400 mb-2 font-geist">02</div>
+              <h3 class="text-base sm:text-lg font-medium text-white mb-2 font-geist">Grow</h3>
+              <p class="text-xs sm:text-sm text-zinc-400 font-sans">Build strategies with AI insights and professional
+                analytics</p>
+            </div>
+          </div>
+          <div class="text-center">
+            <div
+              class="relative p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-zinc-900/40 border-white/5 border hover:border-brand-primary/30 transition-colors duration-300 backdrop-blur-md shadow-glass-sm">
+              <div class="text-2xl sm:text-3xl font-medium text-cyan-400 mb-2 font-geist">03</div>
+              <h3 class="text-base sm:text-lg font-medium text-white mb-2 font-geist">Excel</h3>
+              <p class="text-xs sm:text-sm text-zinc-400 font-sans">Execute sophisticated approaches with
+                institutional-grade tools</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Timeline -->
+      <div class="mt-6 sm:mt-8">
+        <h3
+          class="text-lg sm:text-xl font-medium text-white font-geist mb-8 sm:mb-12 lg:mb-16 text-center sm:text-left">
+          Your Path to Mastery</h3>
+
+        <!-- Mobile Timeline (vertical) -->
+        <div class="sm:hidden space-y-6">
+          <div class="flex items-start gap-4">
+            <div class="relative">
+              <div class="w-12 h-12 rounded-full overflow-hidden ring-2 ring-cyan-500/50 bg-gradient-to-br from-zinc-900 to-zinc-950 flex-shrink-0 flex items-center justify-center p-1.5">
+                <!-- Academy Icon -->
+                <div class="w-full h-full bg-gradient-to-br from-purple-500/20 to-blue-500/20 rounded-full border border-purple-500/30 flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-purple-400">
+                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                    <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center gap-2 text-[10px] text-zinc-300 mb-2">
+                <span class="h-1.5 w-1.5 rounded-full bg-cyan-500"></span>
+                BEGINNER
+              </div>
+              <p class="text-sm text-zinc-400 font-sans">Learning fundamentals and building knowledge. <strong
+                  class="text-zinc-300">Features:</strong> Academy courses, community insights, basic portfolio
+                tracking.</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-4">
+            <div class="relative">
+              <div class="w-12 h-12 rounded-full overflow-hidden ring-2 ring-cyan-500/50 bg-gradient-to-br from-zinc-900 to-zinc-950 flex-shrink-0 flex items-center justify-center p-1.5">
+                <!-- Intelligence Hub Icon -->
+                <div class="w-full h-full bg-gradient-to-br from-blue-500/20 to-cyan-500/20 rounded-full border border-blue-500/30 flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-blue-400">
+                    <path d="M12 8V4H8"></path>
+                    <rect width="16" height="12" x="4" y="8" rx="2"></rect>
+                    <path d="M2 14h2"></path>
+                    <path d="M20 14h2"></path>
+                    <path d="M15 13v2"></path>
+                    <path d="M9 13v2"></path>
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center gap-2 text-[10px] text-zinc-300 mb-2">
+                <span class="h-1.5 w-1.5 rounded-full bg-cyan-500"></span>
+                DEVELOPING
+              </div>
+              <p class="text-sm text-zinc-400 font-sans">Building portfolios with market intelligence. <strong
+                  class="text-zinc-300">Features:</strong> Market Intelligence Hub, AI Context Engine, paper trading.
+              </p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-4">
+            <div class="relative">
+              <div class="w-12 h-12 rounded-full overflow-hidden ring-2 ring-blue-400/50 bg-gradient-to-br from-zinc-900 to-zinc-950 flex-shrink-0 flex items-center justify-center p-1.5">
+                <!-- Portfolio Analytics Icon -->
+                <div class="w-full h-full bg-gradient-to-br from-emerald-500/20 to-cyan-500/20 rounded-full border border-emerald-500/30 flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-emerald-400">
+                    <path d="M3 3v18h18"></path>
+                    <path d="m19 9-5 5-4-4-3 3"></path>
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center gap-2 text-[10px] text-zinc-300 mb-2">
+                <span class="h-1.5 w-1.5 rounded-full bg-blue-400"></span>
+                COMPETENT
+              </div>
+              <p class="text-sm text-zinc-400 font-sans">Managing portfolios with AI and analytics. <strong
+                  class="text-zinc-300">Features:</strong> AI Market Briefs, portfolio optimization, creator-built
+                tools.</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-4">
+            <div class="relative">
+              <div class="w-12 h-12 rounded-full overflow-hidden ring-2 ring-cyan-500/50 bg-gradient-to-br from-zinc-900 to-zinc-950 flex-shrink-0 flex items-center justify-center p-1.5">
+                <!-- Strategy Testing Icon -->
+                <div class="w-full h-full bg-gradient-to-br from-orange-500/20 to-yellow-500/20 rounded-full border border-orange-500/30 flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-orange-400">
+                    <rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center gap-2 text-[10px] text-zinc-300 mb-2">
+                <span class="h-1.5 w-1.5 rounded-full bg-cyan-500"></span>
+                ADVANCED
+              </div>
+              <p class="text-sm text-zinc-400 font-sans">Building and testing systematic strategies. <strong
+                  class="text-zinc-300">Features:</strong> Desktop TradeLab, strategy backtesting, advanced analytics.
+              </p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-4">
+            <div class="relative">
+              <div class="w-12 h-12 rounded-full overflow-hidden ring-2 ring-blue-400/50 bg-gradient-to-br from-zinc-900 to-zinc-950 flex-shrink-0 flex items-center justify-center p-1.5">
+                <!-- Python/Code Icon -->
+                <div class="w-full h-full bg-gradient-to-br from-yellow-500/20 to-blue-500/20 rounded-full border border-yellow-500/30 flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-yellow-400">
+                    <polyline points="16 18 22 12 16 6"></polyline>
+                    <polyline points="8 6 2 12 8 18"></polyline>
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center gap-2 text-[10px] text-zinc-300 mb-2">
+                <span class="h-1.5 w-1.5 rounded-full bg-blue-400"></span>
+                EXPERT
+              </div>
+              <p class="text-sm text-zinc-400 font-sans">Executing institutional-grade strategies with automation.
+                <strong class="text-zinc-300">Features:</strong> Python scripting, quantitative models, automated
+                portfolio management.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Desktop Timeline (horizontal) -->
+        <div class="hidden sm:block relative">
+          <div
+            class="absolute top-6 sm:top-8 left-0 right-0 h-px bg-gradient-to-r from-white/0 via-white/15 to-white/0">
+          </div>
+
+          <div class="grid grid-cols-5 gap-3 sm:gap-4 lg:gap-6">
+            <div class="flex flex-col gap-3 sm:gap-4 font-sans text-center items-center">
+              <div class="relative">
+                <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-full overflow-hidden ring-2 sm:ring-3 ring-cyan-500/50 bg-gradient-to-br from-zinc-900 to-zinc-950 flex items-center justify-center p-2 sm:p-2.5">
+                  <!-- Academy Icon -->
+                  <div class="w-full h-full bg-gradient-to-br from-purple-500/20 to-blue-500/20 rounded-full border border-purple-500/30 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-purple-400 w-5 h-5 sm:w-6 sm:h-6">
+                      <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                      <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div class="flex items-center gap-2 text-[10px] sm:text-[11px] text-zinc-300">
+                <span class="h-1.5 w-1.5 sm:h-2 sm:w-2 rounded-full bg-cyan-500"></span>
+                BEGINNER
+              </div>
+              <p class="leading-relaxed text-xs sm:text-sm text-zinc-400 px-1 sm:px-2 font-sans">Learning fundamentals.
+                Academy courses, community insights, portfolio tracking.</p>
+            </div>
+
+            <div class="flex flex-col items-center gap-3 sm:gap-4 font-sans text-center">
+              <div class="relative">
+                <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-full overflow-hidden ring-2 sm:ring-3 ring-cyan-500/50 bg-gradient-to-br from-zinc-900 to-zinc-950 flex items-center justify-center p-2 sm:p-2.5">
+                  <!-- Intelligence Hub Icon -->
+                  <div class="w-full h-full bg-gradient-to-br from-blue-500/20 to-cyan-500/20 rounded-full border border-blue-500/30 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-blue-400 w-5 h-5 sm:w-6 sm:h-6">
+                      <path d="M12 8V4H8"></path>
+                      <rect width="16" height="12" x="4" y="8" rx="2"></rect>
+                      <path d="M2 14h2"></path>
+                      <path d="M20 14h2"></path>
+                      <path d="M15 13v2"></path>
+                      <path d="M9 13v2"></path>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div class="flex items-center gap-2 text-[10px] sm:text-[11px] text-zinc-300">
+                <span class="h-1.5 w-1.5 sm:h-2 sm:w-2 rounded-full bg-cyan-500"></span>
+                DEVELOPING
+              </div>
+              <p class="leading-relaxed text-xs sm:text-sm text-zinc-400 px-1 sm:px-2 font-sans">Building portfolios.
+                Market Intelligence Hub, AI Context Engine, paper trading.</p>
+            </div>
+
+            <div class="flex flex-col items-center gap-3 sm:gap-4 font-sans text-center">
+              <div class="relative">
+                <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-full overflow-hidden ring-2 sm:ring-3 ring-blue-400/50 bg-gradient-to-br from-zinc-900 to-zinc-950 flex items-center justify-center p-2 sm:p-2.5">
+                  <!-- Portfolio Analytics Icon -->
+                  <div class="w-full h-full bg-gradient-to-br from-emerald-500/20 to-cyan-500/20 rounded-full border border-emerald-500/30 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-emerald-400 w-5 h-5 sm:w-6 sm:h-6">
+                      <path d="M3 3v18h18"></path>
+                      <path d="m19 9-5 5-4-4-3 3"></path>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div class="flex items-center gap-2 text-[10px] sm:text-[11px] text-zinc-300">
+                <span class="h-1.5 w-1.5 sm:h-2 sm:w-2 rounded-full bg-blue-400"></span>
+                COMPETENT
+              </div>
+              <p class="leading-relaxed text-xs sm:text-sm text-zinc-400 px-1 sm:px-2 font-sans">Managing portfolios. AI
+                Market Briefs, portfolio optimization, creator-built tools.</p>
+            </div>
+
+            <div class="flex flex-col items-center gap-3 sm:gap-4 font-sans text-center">
+              <div class="relative">
+                <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-full overflow-hidden ring-2 sm:ring-3 ring-cyan-500/50 bg-gradient-to-br from-zinc-900 to-zinc-950 flex items-center justify-center p-2 sm:p-2.5">
+                  <!-- Strategy Testing Icon -->
+                  <div class="w-full h-full bg-gradient-to-br from-orange-500/20 to-yellow-500/20 rounded-full border border-orange-500/30 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-orange-400 w-5 h-5 sm:w-6 sm:h-6">
+                      <rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect>
+                      <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div class="flex items-center gap-2 text-[10px] sm:text-[11px] text-zinc-300">
+                <span class="h-1.5 w-1.5 sm:h-2 sm:w-2 rounded-full bg-cyan-500"></span>
+                ADVANCED
+              </div>
+              <p class="leading-relaxed text-xs sm:text-sm text-zinc-400 px-1 sm:px-2 font-sans">Building strategies.
+                Desktop TradeLab, strategy backtesting, advanced analytics.</p>
+            </div>
+
+            <div class="flex flex-col items-center gap-3 sm:gap-4 font-sans text-center">
+              <div class="relative">
+                <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-full overflow-hidden ring-2 sm:ring-3 ring-blue-400/50 bg-gradient-to-br from-zinc-900 to-zinc-950 flex items-center justify-center p-2 sm:p-2.5">
+                  <!-- Python/Code Icon -->
+                  <div class="w-full h-full bg-gradient-to-br from-yellow-500/20 to-blue-500/20 rounded-full border border-yellow-500/30 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-yellow-400 w-5 h-5 sm:w-6 sm:h-6">
+                      <polyline points="16 18 22 12 16 6"></polyline>
+                      <polyline points="8 6 2 12 8 18"></polyline>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div class="flex items-center gap-2 text-[10px] sm:text-[11px] text-zinc-300">
+                <span class="h-1.5 w-1.5 sm:h-2 sm:w-2 rounded-full bg-blue-400"></span>
+                EXPERT
+              </div>
+              <p class="leading-relaxed text-xs sm:text-sm text-zinc-400 px-1 sm:px-2 font-sans">Institutional-grade
+                execution. Python scripting, quantitative models, automation.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Platform Capabilities -->
+      <div class="mt-12 sm:mt-16 lg:mt-20 pt-6 sm:pt-8 border-t border-white/10">
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
+          <div class="text-center">
+            <div class="text-xl sm:text-2xl font-medium text-cyan-400 mb-1 font-geist">6</div>
+            <div class="text-xs text-zinc-400 font-sans">Core platforms</div>
+          </div>
+          <div class="text-center">
+            <div class="text-xl sm:text-2xl font-medium text-blue-400 mb-1 font-geist">50+</div>
+            <div class="text-xs text-zinc-400 font-sans">Data sources</div>
+          </div>
+          <div class="text-center">
+            <div class="text-xl sm:text-2xl font-medium text-cyan-400 mb-1 font-geist">10+</div>
+            <div class="text-xs text-zinc-400 font-sans">QuantLabs tools</div>
+          </div>
+          <div class="text-center">
+            <div class="text-xl sm:text-2xl font-medium text-blue-400 mb-1 font-geist">24/7</div>
+            <div class="text-xs text-zinc-400 font-sans">Market access</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="pricing" class="relative bg-black pt-24 pb-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Section Header -->
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <div
+          class="inline-flex gap-2 text-xs text-zinc-300 bg-white/5 border-white/10 border rounded-full pt-1 pr-3 pb-1 pl-3 items-center mb-6">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3.5 w-3.5">
+            <circle cx="8" cy="21" r="1"></circle>
+            <circle cx="19" cy="21" r="1"></circle>
+            <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path>
+          </svg>
+          <span class="font-medium font-sans">Pricing</span>
+        </div>
+        <h2 class="text-4xl sm:text-5xl font-light tracking-tighter font-geist text-white mb-4">Simple, transparent
+          pricing</h2>
+        <p class="text-lg text-zinc-300 font-sans">Start trading smarter for free. Upgrade to unlock advanced tools, AI
+          insights, and institutional-grade strategy building.</p>
+      </div>
+
+      <!-- Billing Toggle -->
+      <div class="flex justify-center mb-8">
+        <div class="inline-flex items-center bg-zinc-900/50 border border-white/10 rounded-lg p-1">
+          <button onclick="switchBilling('monthly')" id="billing-monthly"
+            class="px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 font-sans bg-white text-black">
+            Monthly
+          </button>
+          <button onclick="switchBilling('semiannual')" id="billing-semiannual"
+            class="px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 font-sans text-zinc-400 hover:text-white">
+            Semi-annual
+          </button>
+          <button onclick="switchBilling('annual')" id="billing-annual"
+            class="px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 font-sans text-zinc-400 hover:text-white">
+            Annual
+          </button>
+        </div>
+      </div>
+
+      <!-- Pricing Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+        <!-- Free Plan -->
+        <div
+          class="relative group rounded-2xl bg-zinc-900/50 border border-white/10 backdrop-blur-sm p-8 flex flex-col">
+          <div class="mb-6">
+            <h3 class="text-xl font-semibold text-white font-geist">Free</h3>
+            <p class="text-zinc-400 text-sm mt-2 font-sans">Perfect for individual investors getting started with
+              intelligent trading tools.</p>
+          </div>
+
+          <div class="mb-8">
+            <div class="flex items-baseline gap-1">
+              <span class="text-4xl font-light text-white font-geist">$0</span>
+              <span class="text-zinc-400 font-sans">/month</span>
+            </div>
+            <p class="text-xs text-zinc-400 mt-1 font-sans">Free forever</p>
+          </div>
+
+          <ul class="space-y-3 mb-8 text-sm flex-1">
+            <li class="flex items-center gap-3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="h-4 w-4 text-cyan-400 flex-shrink-0">
+                <path d="M20 6 9 17l-5-5"></path>
+              </svg>
+              <span class="text-zinc-300 font-sans">Basic portfolio tracking</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="h-4 w-4 text-cyan-400 flex-shrink-0">
+                <path d="M20 6 9 17l-5-5"></path>
+              </svg>
+              <span class="text-zinc-300 font-sans">Limited QuantLabs access (3 tools)</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="h-4 w-4 text-cyan-400 flex-shrink-0">
+                <path d="M20 6 9 17l-5-5"></path>
+              </svg>
+              <span class="text-zinc-300 font-sans">Community creator feed</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="h-4 w-4 text-cyan-400 flex-shrink-0">
+                <path d="M20 6 9 17l-5-5"></path>
+              </svg>
+              <span class="text-zinc-300 font-sans">Basic market alerts</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="h-4 w-4 text-cyan-400 flex-shrink-0">
+                <path d="M20 6 9 17l-5-5"></path>
+              </svg>
+              <span class="text-zinc-300 font-sans">Email support</span>
+            </li>
+          </ul>
+
+          <button onclick="openWaitlistModal()"
+            class="w-full bg-white/10 hover:bg-white/20 text-white border border-white/20 hover:border-white/30 rounded-lg py-3 px-4 text-sm font-medium transition-all duration-200 font-sans mt-auto">
+            Join Waitlist
+          </button>
+        </div>
+
+        <!-- Pro Plan -->
+        <div
+          class="relative group rounded-2xl bg-zinc-900/50 border border-white/10 backdrop-blur-sm p-8 flex flex-col">
+          <div class="mb-6">
+            <h3 class="text-xl font-semibold text-white font-geist">Pro</h3>
+            <p class="text-zinc-400 text-sm mt-2 font-sans">For serious traders who need comprehensive tools and
+              AI-powered insights.</p>
+          </div>
+
+          <div class="mb-8">
+            <div class="flex items-baseline gap-1">
+              <span id="pro-price" class="text-4xl font-light text-white font-geist">$19</span>
+              <span class="text-zinc-400 font-sans">/month</span>
+            </div>
+            <p id="pro-billing" class="text-xs text-zinc-400 mt-1 font-sans">Billed monthly</p>
+          </div>
+
+          <ul class="space-y-3 mb-8 text-sm flex-1">
+            <li class="flex items-center gap-3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="h-4 w-4 text-cyan-400 flex-shrink-0">
+                <path d="M20 6 9 17l-5-5"></path>
+              </svg>
+              <span class="text-zinc-300 font-sans">Everything in Free</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="h-4 w-4 text-cyan-400 flex-shrink-0">
+                <path d="M20 6 9 17l-5-5"></path>
+              </svg>
+              <span class="text-zinc-300 font-sans">Masterclasses (Options, Tax, Algo Trading, ML)</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="h-4 w-4 text-cyan-400 flex-shrink-0">
+                <path d="M20 6 9 17l-5-5"></path>
+              </svg>
+              <span class="text-zinc-300 font-sans">Full QuantLabs Suite (10+ tools)</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="h-4 w-4 text-cyan-400 flex-shrink-0">
+                <path d="M20 6 9 17l-5-5"></path>
+              </svg>
+              <span class="text-zinc-300 font-sans">AI Advisors & Market Interpreters</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="h-4 w-4 text-cyan-400 flex-shrink-0">
+                <path d="M20 6 9 17l-5-5"></path>
+              </svg>
+              <span class="text-zinc-300 font-sans">Insider & Congressional Trading Intelligence</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="h-4 w-4 text-cyan-400 flex-shrink-0">
+                <path d="M20 6 9 17l-5-5"></path>
+              </svg>
+              <span class="text-zinc-300 font-sans">Social Intelligence (Reddit, X/FinTwit)</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="h-4 w-4 text-cyan-400 flex-shrink-0">
+                <path d="M20 6 9 17l-5-5"></path>
+              </svg>
+              <span class="text-zinc-300 font-sans">Tax tools (Harvesting, Wash Sales, Simulator)</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="h-4 w-4 text-cyan-400 flex-shrink-0">
+                <path d="M20 6 9 17l-5-5"></path>
+              </svg>
+              <span class="text-zinc-300 font-sans">Portfolio optimization & stress testing</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="h-4 w-4 text-cyan-400 flex-shrink-0">
+                <path d="M20 6 9 17l-5-5"></path>
+              </svg>
+              <span class="text-zinc-300 font-sans">Brokerage connections (IBKR, Alpaca, TD, E*TRADE)</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="h-4 w-4 text-cyan-400 flex-shrink-0">
+                <path d="M20 6 9 17l-5-5"></path>
+              </svg>
+              <span class="text-zinc-300 font-sans">Macro Strategy Dashboard & analysis</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="h-4 w-4 text-cyan-400 flex-shrink-0">
+                <path d="M20 6 9 17l-5-5"></path>
+              </svg>
+              <span class="text-zinc-300 font-sans">Desktop TradeLab (limited workflows)</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="h-4 w-4 text-cyan-400 flex-shrink-0">
+                <path d="M20 6 9 17l-5-5"></path>
+              </svg>
+              <span class="text-zinc-300 font-sans">Priority support</span>
+            </li>
+          </ul>
+
+          <button type="button" onclick="openWaitlistModal()" role="button" aria-label="Join Waitlist"
+            class="group relative inline-flex w-full shadow-[0_8px_16px_-4px_rgba(255,255,255,0.05)] hover:shadow-[0_12px_20px_-6px_rgba(255,255,255,0.1)] transition duration-300 ease-out select-none cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/60 transform-gpu hover:-translate-y-0.5 text-white rounded-lg pt-[1px] pr-[1px] pb-[1px] pl-[1px] items-center justify-center mt-auto"
+            style="background-image: linear-gradient(144deg,rgba(255,255,255,0.3), rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.2));">
+            <span
+              class="flex items-center justify-center gap-2 leading-none w-full h-full transition-colors duration-300 group-hover:bg-black/50 font-medium bg-black/80 rounded-lg pt-3 pr-4 pb-3 pl-4">
+              <span class="text-sm font-sans">Join Waitlist</span>
+            </span>
+          </button>
+        </div>
+
+        <!-- Builder Plan -->
+        <div
+          class="relative group rounded-2xl bg-zinc-900/50 border border-white/10 backdrop-blur-sm p-8 flex flex-col">
+          <div class="mb-6">
+            <h3 class="text-xl font-semibold text-white font-geist">Builder</h3>
+            <p class="text-zinc-400 text-sm mt-2 font-sans">For quantitative traders building advanced strategies with
+              institutional-grade tools.</p>
+          </div>
+
+          <div class="mb-8">
+            <div class="flex items-baseline gap-1">
+              <span id="builder-price" class="text-4xl font-light text-white font-geist">$89</span>
+              <span class="text-zinc-400 font-sans">/month</span>
+            </div>
+            <p id="builder-billing" class="text-xs text-zinc-400 mt-1 font-sans">Billed monthly</p>
+          </div>
+
+          <ul class="space-y-3 mb-8 text-sm flex-1">
+            <li class="flex items-center gap-3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="h-4 w-4 text-cyan-400 flex-shrink-0">
+                <path d="M20 6 9 17l-5-5"></path>
+              </svg>
+              <span class="text-zinc-300 font-sans">Everything in Pro</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="h-4 w-4 text-cyan-400 flex-shrink-0">
+                <path d="M20 6 9 17l-5-5"></path>
+              </svg>
+              <span class="text-zinc-300 font-sans">Desktop TradeLab (visual workflow builder)</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="h-4 w-4 text-cyan-400 flex-shrink-0">
+                <path d="M20 6 9 17l-5-5"></path>
+              </svg>
+              <span class="text-zinc-300 font-sans">Advanced backtesting &amp; simulations</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="h-4 w-4 text-cyan-400 flex-shrink-0">
+                <path d="M20 6 9 17l-5-5"></path>
+              </svg>
+              <span class="text-zinc-300 font-sans">Cloud GPU access (Nvidia A100s for ML/AI)</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="h-4 w-4 text-cyan-400 flex-shrink-0">
+                <path d="M20 6 9 17l-5-5"></path>
+              </svg>
+              <span class="text-zinc-300 font-sans">AURION-X AI assistant (coming soon)</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="h-4 w-4 text-cyan-400 flex-shrink-0">
+                <path d="M20 6 9 17l-5-5"></path>
+              </svg>
+              <span class="text-zinc-300 font-sans">Custom node creation &amp; Python scripting</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="h-4 w-4 text-cyan-400 flex-shrink-0">
+                <path d="M20 6 9 17l-5-5"></path>
+              </svg>
+              <span class="text-zinc-300 font-sans">Multi-monitor workspace support</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="h-4 w-4 text-cyan-400 flex-shrink-0">
+                <path d="M20 6 9 17l-5-5"></path>
+              </svg>
+              <span class="text-zinc-300 font-sans">Priority support &amp; dedicated success manager</span>
+            </li>
+          </ul>
+
+          <button onclick="openWaitlistModal()"
+            class="w-full bg-white/10 hover:bg-white/20 text-white border border-white/20 hover:border-white/30 rounded-lg py-3 px-4 text-sm font-medium transition-all duration-200 font-sans mt-auto">
+            Join Waitlist
+          </button>
+        </div>
+      </div>
+
+      <script>
+        // Pricing data
+        const pricing = {
+          monthly: {
+            pro: { price: 24.99, total: 24.99, period: 'month' },
+            builder: { price: 89, total: 89, period: 'month' }
+          },
+          semiannual: {
+            pro: { price: 21, total: 124.99, period: '6 months', discount: '17%', savings: '$50/year' },
+            builder: { price: 67, total: 399, period: '6 months' }
+          },
+          annual: {
+            pro: { price: 17, total: 199.99, period: 'year', discount: '33%', savings: '$100/year' },
+            builder: { price: 58, total: 699, period: 'year' }
+          }
+        };
+
+        // Set Annual as default selected
+        document.addEventListener('DOMContentLoaded', function () {
+          switchBilling('annual');
         });
 
-        function showMessage(message, type) {
-            formMessage.textContent = message;
-            formMessage.className = `text-sm font-sans ${type === 'success' ? 'text-green-400' : 'text-red-400'}`;
-            formMessage.classList.remove('hidden');
+        function switchBilling(period) {
+          // Update button states
+          ['monthly', 'semiannual', 'annual'].forEach(p => {
+            const btn = document.getElementById('billing-' + p);
+            if (p === period) {
+              btn.classList.add('bg-white', 'text-black');
+              btn.classList.remove('text-zinc-400', 'hover:text-white');
+            } else {
+              btn.classList.remove('bg-white', 'text-black');
+              btn.classList.add('text-zinc-400', 'hover:text-white');
+            }
+          });
 
-            setTimeout(() => {
-                formMessage.classList.add('hidden');
-            }, 5000);
+          // Update prices
+          const data = pricing[period];
+
+          // Pro pricing
+          document.getElementById('pro-price').textContent = '$' + data.pro.price;
+          if (period === 'monthly') {
+            document.getElementById('pro-billing').textContent = 'Billed monthly';
+          } else {
+            document.getElementById('pro-billing').textContent = '$' + data.pro.total + ' billed per ' + data.pro.period;
+          }
+
+          // Builder pricing
+          document.getElementById('builder-price').textContent = '$' + data.builder.price;
+          if (period === 'monthly') {
+            document.getElementById('builder-billing').textContent = 'Billed monthly';
+          } else {
+            document.getElementById('builder-billing').textContent = '$' + data.builder.total + ' billed per ' + data.builder.period;
+          }
         }
+      </script>
 
-        // Card interaction system
-        const cardsSection = document.querySelector('.cards-section');
-        const cards = document.querySelectorAll('.feature-card');
-        const navButtons = [
-            document.getElementById('nav-1'),
-            document.getElementById('nav-2'),
-            document.getElementById('nav-3'),
-            document.getElementById('nav-4')
-        ];
+      <!-- Echo Creators Program -->
+      <section id="creators" class="relative bg-black py-24 border-t border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <!-- Section Header -->
+          <div class="text-center max-w-3xl mx-auto mb-16">
+            <div
+              class="inline-flex gap-2 text-xs text-zinc-300 bg-white/5 border-white/10 border rounded-full pt-1 pr-3 pb-1 pl-3 items-center mb-6">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="h-3.5 w-3.5">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+              </svg>
+              <span class="font-medium font-sans">Creator Program</span>
+            </div>
+            <h2 class="text-4xl sm:text-5xl font-light tracking-tighter font-geist text-white mb-4">Become an Echo
+              Creator</h2>
+            <p class="text-lg text-zinc-300 font-sans">Build your following, share your expertise, and earn substantial
+              revenue through our creator-friendly platform.</p>
+          </div>
 
-        let currentActive = 1;
-        let isDragging = false;
-        let startX = 0;
-        let currentX = 0;
+          <!-- Revenue Cards -->
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+            <!-- Referral Commission Card -->
+            <div
+              class="relative group rounded-2xl bg-zinc-900/40 border border-white/5 hover:border-brand-primary/30 transition-all duration-500 hover:shadow-glow backdrop-blur-md p-8">
+              <div class="mb-6">
+                <div class="flex items-baseline gap-2 mb-4">
+                  <span class="text-5xl font-light text-white font-geist">40%</span>
+                  <span class="text-2xl font-light text-zinc-400 font-geist">+ 15%</span>
+                </div>
+                <h3 class="text-xl font-semibold text-white mb-3 font-geist">Referral Commission</h3>
+                <p class="text-zinc-400 text-sm leading-relaxed font-sans">Earn 40% on the first payment, then 15%
+                  recurring on every renewal. Strong upfront reward plus ongoing passive income.</p>
+              </div>
 
-        // Update active card and navigation
-        function setActiveCard(index) {
-            currentActive = index;
-            cardsSection.className = 'cards-section feature-' + index + '-active';
+              <ul class="space-y-3 text-sm">
+                <li class="flex items-center gap-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="h-4 w-4 text-cyan-400 flex-shrink-0">
+                    <path d="M20 6 9 17l-5-5"></path>
+                  </svg>
+                  <span class="text-zinc-300 font-sans">40% of first payment</span>
+                </li>
+                <li class="flex items-center gap-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="h-4 w-4 text-cyan-400 flex-shrink-0">
+                    <path d="M20 6 9 17l-5-5"></path>
+                  </svg>
+                  <span class="text-zinc-300 font-sans">15% recurring on all renewals</span>
+                </li>
+                <li class="flex items-center gap-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="h-4 w-4 text-cyan-400 flex-shrink-0">
+                    <path d="M20 6 9 17l-5-5"></path>
+                  </svg>
+                  <span class="text-zinc-300 font-sans">Lifetime attribution on referrals</span>
+                </li>
+                <li class="flex items-center gap-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="h-4 w-4 text-cyan-400 flex-shrink-0">
+                    <path d="M20 6 9 17l-5-5"></path>
+                  </svg>
+                  <span class="text-zinc-300 font-sans">Real-time analytics & monthly Stripe payouts</span>
+                </li>
+              </ul>
+            </div>
 
-            // Update navigation dots
-            navButtons.forEach((btn, i) => {
-                if (i + 1 === index) {
-                    btn.className = 'w-3 h-3 rounded-full bg-white transition-all scale-125';
-                } else {
-                    btn.className = 'w-3 h-3 rounded-full bg-gray-500 hover:bg-gray-300 transition-all';
-                }
-            });
+            <!-- Marketplace Revenue Card -->
+            <div
+              class="relative group rounded-2xl bg-zinc-900/40 border border-white/5 hover:border-brand-primary/30 transition-all duration-500 hover:shadow-glow backdrop-blur-md p-8">
+              <div class="mb-6">
+                <div class="flex items-baseline gap-2 mb-4">
+                  <span class="text-5xl font-light text-white font-geist">90%</span>
+                  <span class="text-2xl font-light text-cyan-400 font-geist">+5%</span>
+                </div>
+                <h3 class="text-xl font-semibold text-white mb-3 font-geist">Marketplace Revenue</h3>
+                <p class="text-zinc-400 text-sm leading-relaxed font-sans">Keep 90% of revenue from custom tools and
+                  content. Earn an additional 5% bonus (95% total) for posting 2x/week and EchoTrader exclusivity.</p>
+              </div>
+
+              <ul class="space-y-3 text-sm">
+                <li class="flex items-center gap-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="h-4 w-4 text-cyan-400 flex-shrink-0">
+                    <path d="M20 6 9 17l-5-5"></path>
+                  </svg>
+                  <span class="text-zinc-300 font-sans">90% base rate (top-tier industry standard)</span>
+                </li>
+                <li class="flex items-center gap-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="h-4 w-4 text-cyan-400 flex-shrink-0">
+                    <path d="M20 6 9 17l-5-5"></path>
+                  </svg>
+                  <span class="text-zinc-300 font-sans">+5% exclusivity bonus (2x/week + platform exclusive)</span>
+                </li>
+                <li class="flex items-center gap-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="h-4 w-4 text-cyan-400 flex-shrink-0">
+                    <path d="M20 6 9 17l-5-5"></path>
+                  </svg>
+                  <span class="text-zinc-300 font-sans">Sell tools, strategies, indicators & premium content</span>
+                </li>
+                <li class="flex items-center gap-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="h-4 w-4 text-cyan-400 flex-shrink-0">
+                    <path d="M20 6 9 17l-5-5"></path>
+                  </svg>
+                  <span class="text-zinc-300 font-sans">You set pricing, we handle payments & delivery</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- What You Get Section -->
+          <div class="rounded-2xl bg-zinc-900/40 border border-white/5 backdrop-blur-md p-8 mb-12">
+            <h3 class="text-2xl font-light text-white mb-6 font-geist">What You Get as a Creator</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div class="flex gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="h-5 w-5 text-cyan-400 flex-shrink-0 mt-0.5">
+                  <path d="M20 6 9 17l-5-5"></path>
+                </svg>
+                <div>
+                  <h4 class="text-white font-medium font-sans mb-1">Creator Badge</h4>
+                  <p class="text-sm text-zinc-400 font-sans">Verified badge on your profile and posts</p>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="h-5 w-5 text-cyan-400 flex-shrink-0 mt-0.5">
+                  <path d="M20 6 9 17l-5-5"></path>
+                </svg>
+                <div>
+                  <h4 class="text-white font-medium font-sans mb-1">Analytics Dashboard</h4>
+                  <p class="text-sm text-zinc-400 font-sans">Track followers, engagement, and earnings</p>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="h-5 w-5 text-cyan-400 flex-shrink-0 mt-0.5">
+                  <path d="M20 6 9 17l-5-5"></path>
+                </svg>
+                <div>
+                  <h4 class="text-white font-medium font-sans mb-1">Content Scheduling</h4>
+                  <p class="text-sm text-zinc-400 font-sans">Plan and automate your posts</p>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="h-5 w-5 text-cyan-400 flex-shrink-0 mt-0.5">
+                  <path d="M20 6 9 17l-5-5"></path>
+                </svg>
+                <div>
+                  <h4 class="text-white font-medium font-sans mb-1">Custom Branding</h4>
+                  <p class="text-sm text-zinc-400 font-sans">Personalize your creator profile</p>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="h-5 w-5 text-cyan-400 flex-shrink-0 mt-0.5">
+                  <path d="M20 6 9 17l-5-5"></path>
+                </svg>
+                <div>
+                  <h4 class="text-white font-medium font-sans mb-1">Priority Support</h4>
+                  <p class="text-sm text-zinc-400 font-sans">Dedicated creator success team</p>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="h-5 w-5 text-cyan-400 flex-shrink-0 mt-0.5">
+                  <path d="M20 6 9 17l-5-5"></path>
+                </svg>
+                <div>
+                  <h4 class="text-white font-medium font-sans mb-1">Marketing Support</h4>
+                  <p class="text-sm text-zinc-400 font-sans">We help promote top creators</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CTA -->
+          <div class="text-center">
+            <a href="mailto:info@echotrader.ai?subject=Creator%20Application&body=Hi%2C%20I%27m%20interested%20in%20becoming%20an%20Echo%20Creator.%0A%0AName%3A%20%0AEmail%3A%20%0A%0APlease%20tell%20us%20about%20your%20trading%20experience%20and%20content%20creation%20background%3A%0A"
+              class="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-white to-zinc-200 text-black font-medium rounded-lg hover:from-zinc-100 hover:to-zinc-300 transition-all duration-200 shadow-lg hover:shadow-xl font-sans">
+              Apply to Become a Creator
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                <path d="M5 12h14"></path>
+                <path d="m12 5 7 7-7 7"></path>
+              </svg>
+            </a>
+            <p class="text-sm text-zinc-400 mt-4 font-sans">No upfront costs. Start earning when your community grows.
+            </p>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </section>
+  <section id="faq" class="py-24 relative">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Section Header -->
+      <div class="text-center mb-16">
+        <div
+          class="inline-flex gap-2 text-xs text-zinc-300 bg-white/5 border-white/10 border rounded-full pt-1 pr-3 pb-1 pl-3 items-center mb-6">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3.5 w-3.5">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+            <path d="M12 17h.01"></path>
+          </svg>
+          <span class="font-medium font-sans">FAQ</span>
+        </div>
+        <h2 class="text-4xl sm:text-5xl font-light tracking-tighter font-geist text-white mb-4">Frequently asked
+          questions</h2>
+        <p class="text-lg text-zinc-300 font-sans">Get answers to common questions about our trading intelligence
+          platform.</p>
+      </div>
+
+      <!-- FAQ Items -->
+      <div class="space-y-4">
+        <!-- FAQ Item 1 -->
+        <div class="group relative overflow-hidden bg-zinc-900/50 border border-white/10 rounded-xl backdrop-blur-sm">
+          <button class="w-full text-left p-6 hover:bg-white/5 transition-colors" onclick="toggleFAQ(this)">
+            <div class="flex items-center justify-between">
+              <h3 class="text-lg font-medium text-white font-geist pr-4">What is EchoTrader and how does it help me
+                trade better?</h3>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="h-5 w-5 text-zinc-400 flex-shrink-0 transition-transform">
+                <path d="M6 9l6 6 6-6"></path>
+              </svg>
+            </div>
+            <div class="mt-4 text-zinc-300 font-sans hidden">
+              <p>EchoTrader is an intelligent trading platform that combines advanced quantitative tools (QuantLabs),
+                real-time market intelligence, and expert creator insights in one unified platform. We aggregate data
+                from insider transactions, congressional trades, institutional flows, earnings, news, and social
+                sentiment to help you make more informed trading decisions. Our AI Context Engine ensures you never miss
+                important market context.</p>
+            </div>
+          </button>
+        </div>
+
+        <!-- FAQ Item 2 -->
+        <div class="group relative overflow-hidden bg-zinc-900/50 border border-white/10 rounded-xl backdrop-blur-sm">
+          <button class="w-full text-left p-6 hover:bg-white/5 transition-colors" onclick="toggleFAQ(this)">
+            <div class="flex items-center justify-between">
+              <h3 class="text-lg font-medium text-white font-geist pr-4">Is EchoTrader suitable for beginners or just
+                experienced traders?</h3>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="h-5 w-5 text-zinc-400 flex-shrink-0 transition-transform">
+                <path d="M6 9l6 6 6-6"></path>
+              </svg>
+            </div>
+            <div class="mt-4 text-zinc-300 font-sans hidden">
+              <p>EchoTrader is designed for all skill levels. Our platform offers progressive complexity with
+                beginner-friendly views and guided tutorials alongside advanced professional tools. Start with our
+                educational content and community creator insights, then progress to QuantLabs tools as your expertise
+                grows. Free tier users get access to basic features, while Pro unlocks comprehensive analytics for
+                serious traders.</p>
+            </div>
+          </button>
+        </div>
+
+        <!-- FAQ Item 3 -->
+        <div class="group relative overflow-hidden bg-zinc-900/50 border border-white/10 rounded-xl backdrop-blur-sm">
+          <button class="w-full text-left p-6 hover:bg-white/5 transition-colors" onclick="toggleFAQ(this)">
+            <div class="flex items-center justify-between">
+              <h3 class="text-lg font-medium text-white font-geist pr-4">What data sources does EchoTrader aggregate?
+              </h3>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="h-5 w-5 text-zinc-400 flex-shrink-0 transition-transform">
+                <path d="M6 9l6 6 6-6"></path>
+              </svg>
+            </div>
+            <div class="mt-4 text-zinc-300 font-sans hidden">
+              <p>Our intelligence engine aggregates data from 50+ trusted sources: SEC EDGAR filings for insider
+                transactions, congressional trading disclosures, 13F institutional holdings, unusual options activity,
+                earnings calendars, financial news APIs, social sentiment from Reddit and Twitter, and macro economic
+                indicators from FRED. All data is verified and cross-referenced to ensure accuracy and reliability.</p>
+            </div>
+          </button>
+        </div>
+
+        <!-- FAQ Item 4 -->
+        <div class="group relative overflow-hidden bg-zinc-900/50 border border-white/10 rounded-xl backdrop-blur-sm">
+          <button class="w-full text-left p-6 hover:bg-white/5 transition-colors" onclick="toggleFAQ(this)">
+            <div class="flex items-center justify-between">
+              <h3 class="text-lg font-medium text-white font-geist pr-4">Is there a free version available?</h3>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="h-5 w-5 text-zinc-400 flex-shrink-0 transition-transform">
+                <path d="M6 9l6 6 6-6"></path>
+              </svg>
+            </div>
+            <div class="mt-4 text-zinc-300 font-sans hidden">
+              <p>Yes! Our Free tier is available forever with basic portfolio tracking, limited QuantLabs access (3
+                tools), community creator feed, and basic market alerts. It's perfect for getting started with
+                intelligent trading. For Pro features, we offer a 14-day free trial with no credit card required. You
+                can upgrade, downgrade, or cancel anytime.</p>
+            </div>
+          </button>
+        </div>
+
+        <!-- FAQ Item 5 -->
+        <div class="group relative overflow-hidden bg-zinc-900/50 border border-white/10 rounded-xl backdrop-blur-sm">
+          <button class="w-full text-left p-6 hover:bg-white/5 transition-colors" onclick="toggleFAQ(this)">
+            <div class="flex items-center justify-between">
+              <h3 class="text-lg font-medium text-white font-geist pr-4">What is the Desktop TradeLab and who is it for?
+              </h3>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="h-5 w-5 text-zinc-400 flex-shrink-0 transition-transform">
+                <path d="M6 9l6 6 6-6"></path>
+              </svg>
+            </div>
+            <div class="mt-4 text-zinc-300 font-sans hidden">
+              <p>Desktop TradeLab is our professional-grade visual workflow builder for quantitative strategy
+                development. It's included in the Builder tier ($99/month) and perfect for traders who want to build,
+                backtest, and deploy sophisticated strategies without code. You get access to real-time market data,
+                custom node creation, advanced backtesting with institutional metrics, cloud GPU compute for machine
+                learning models, and our upcoming AURION-X AI assistant. Think Unreal Engine Blueprints meets Bloomberg
+                Terminal for trading.</p>
+            </div>
+          </button>
+        </div>
+
+        <!-- FAQ Item 6 -->
+        <div class="group relative overflow-hidden bg-zinc-900/50 border border-white/10 rounded-xl backdrop-blur-sm">
+          <button class="w-full text-left p-6 hover:bg-white/5 transition-colors" onclick="toggleFAQ(this)">
+            <div class="flex items-center justify-between">
+              <h3 class="text-lg font-medium text-white font-geist pr-4">What about security and data protection?</h3>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="h-5 w-5 text-zinc-400 flex-shrink-0 transition-transform">
+                <path d="M6 9l6 6 6-6"></path>
+              </svg>
+            </div>
+            <div class="mt-4 text-zinc-300 font-sans hidden">
+              <p>We prioritize security and data protection. EchoTrader uses secure cloud infrastructure with
+                encryption, regular security audits, and follows industry-standard security practices. Your portfolio
+                data and personal information are protected with enterprise-grade security measures. All tools and
+                content are provided for educational and informational purposes only. Users are responsible for ensuring
+                their use of the platform complies with applicable laws and regulations in their jurisdiction. We
+                recommend consulting with qualified legal and financial professionals regarding compliance requirements
+                specific to your situation.</p>
+            </div>
+          </button>
+        </div>
+
+        <!-- FAQ Item 7 -->
+        <div class="group relative overflow-hidden bg-zinc-900/50 border border-white/10 rounded-xl backdrop-blur-sm">
+          <button class="w-full text-left p-6 hover:bg-white/5 transition-colors" onclick="toggleFAQ(this)">
+            <div class="flex items-center justify-between">
+              <h3 class="text-lg font-medium text-white font-geist pr-4">How do I become an Echo Creator and start
+                earning?</h3>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="h-5 w-5 text-zinc-400 flex-shrink-0 transition-transform">
+                <path d="M6 9l6 6 6-6"></path>
+              </svg>
+            </div>
+            <div class="mt-4 text-zinc-300 font-sans hidden">
+              <p>Echo Creators earn revenue through two powerful channels: (1) <strong>Referral commissions</strong> -
+                earn 40% of the first payment plus 15% recurring on all renewals. (2) <strong>Marketplace
+                  revenue</strong> - keep 90% of all sales from custom tools, strategies, and content you create. Earn
+                an additional 5% bonus (95% total) by posting 2x/week and remaining exclusive to EchoTrader. To apply,
+                you should have trading experience, the ability to create educational content or tools, and a desire to
+                build a following. Apply through the "Apply to Become a Creator" button above. Once approved, you'll get
+                access to creator tools, analytics dashboard, and your unique referral link. There's no upfront cost -
+                you only succeed when your community succeeds.</p>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <!-- Contact CTA -->
+      <div class="mt-12 text-center">
+        <p class="text-zinc-300 text-sm mb-4 font-sans">Still have questions?</p>
+        <a href="mailto:support@echotrader.ai?subject=Question%20about%20EchoTrader&body=Hi%2C%20I%20have%20a%20question%20about%20EchoTrader.%0A%0A" class="inline-flex items-center gap-2 text-white hover:text-zinc-300 transition-colors font-sans">
+          <span class="font-medium">Contact our team</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+            <path d="M5 12h14"></path>
+            <path d="m12 5 7 7-7 7"></path>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+  <script>
+    function toggleFAQ(button) {
+      // Get all div elements inside the button
+      const divs = button.querySelectorAll('div');
+      // The content div is the one with text-zinc-300 class (second div)
+      const content = Array.from(divs).find(div => div.classList.contains('text-zinc-300'));
+      const icon = button.querySelector('svg');
+
+      if (content) {
+        if (content.classList.contains('hidden')) {
+          content.classList.remove('hidden');
+          icon.style.transform = 'rotate(180deg)';
+        } else {
+          content.classList.add('hidden');
+          icon.style.transform = 'rotate(0deg)';
         }
+      }
+    }
+  </script>
 
-        // Navigation button click handlers
-        navButtons.forEach((btn, index) => {
-            btn.addEventListener('click', () => {
-                setActiveCard(index + 1);
-            });
+  <!-- Footer -->
+  <footer class="mt-24 border-t border-white/10">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10">
+      <!-- Compliance Disclaimer -->
+      <div class="mb-8 pb-8 border-b border-white/10">
+        <p class="text-xs text-zinc-500 text-center max-w-4xl mx-auto leading-relaxed font-sans">
+          <strong class="text-zinc-400">Important Disclaimer:</strong> EchoTrader provides educational tools and market
+          intelligence for informational purposes only. Nothing on this platform constitutes financial, investment,
+          legal, or tax advice. We are not a registered investment advisor, broker-dealer, or financial institution. All
+          trading and investing involves substantial risk of loss, and past performance does not guarantee future
+          results. Users are solely responsible for their own investment decisions and for ensuring compliance with
+          applicable laws and regulations in their jurisdiction. We strongly recommend consulting with qualified
+          financial, legal, and tax advisors before making any investment decisions. EchoTrader and its creators make no
+          representations or warranties regarding the accuracy, completeness, or timeliness of any information provided.
+          By using this platform, you acknowledge and accept these terms and all associated risks.
+        </p>
+      </div>
+
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-zinc-400">
+        <div class="flex items-center gap-2">
+          <span class="font-medium font-sans">EchoTrader</span>
+          <span class="font-sans">© <span id="y" class="font-sans">2025</span></span>
+        </div>
+        <div class="flex items-center gap-6">
+          <a href="privacy.html" class="hover:text-zinc-200 font-sans">Privacy</a>
+          <a href="terms.html" class="hover:text-zinc-200 font-sans">Terms</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      const y = document.getElementById('y');
+      if (y) y.textContent = new Date().getFullYear();
+
+      // Mobile Menu Toggle
+      const mobileMenuButton = document.getElementById('mobileMenuButton');
+      const mobileMenu = document.getElementById('mobileMenu');
+
+      if (mobileMenuButton && mobileMenu) {
+        mobileMenuButton.addEventListener('click', () => {
+          const isExpanded = mobileMenu.classList.toggle('hidden');
+          mobileMenuButton.setAttribute('aria-expanded', isExpanded ? 'false' : 'true');
         });
 
-        // Card drag interaction
-        cards.forEach(card => {
-            card.addEventListener('mousedown', (e) => {
-                isDragging = true;
-                startX = e.clientX;
-                card.style.cursor = 'grabbing';
-            });
+        // Close menu when clicking on a link
+        const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+        mobileMenuLinks.forEach(link => {
+          link.addEventListener('click', () => {
+            mobileMenu.classList.add('hidden');
+            mobileMenuButton.setAttribute('aria-expanded', 'false');
+          });
+        });
+      }
+    });
+  </script>
 
-            card.addEventListener('touchstart', (e) => {
-                isDragging = true;
-                startX = e.touches[0].clientX;
-            });
+  <!-- Waitlist Modal -->
+  <div id="waitlistModal" class="fixed inset-0 z-50 flex items-center justify-center hidden"
+    style="background-color: rgba(0, 0, 0, 0.8);">
+    <div class="relative bg-zinc-900 border border-white/10 rounded-2xl p-8 max-w-md w-full mx-4 shadow-2xl">
+      <!-- Close button -->
+      <button onclick="closeWaitlistModal()"
+        class="absolute top-4 right-4 text-zinc-400 hover:text-white transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
+          <path d="M18 6 6 18"></path>
+          <path d="m6 6 12 12"></path>
+        </svg>
+      </button>
+
+      <!-- Modal content -->
+      <div id="waitlistForm">
+        <h3 class="text-2xl font-light text-white mb-2 font-geist">Join the Waitlist</h3>
+        <p class="text-zinc-400 text-sm mb-6 font-sans">Be the first to know when EchoTrader launches. Get early access
+          and exclusive benefits.</p>
+
+        <form onsubmit="submitWaitlist(event)" class="space-y-4">
+          <div>
+            <label for="waitlistEmail" class="block text-sm font-medium text-zinc-300 mb-2 font-sans">Email
+              Address</label>
+            <input type="email" id="waitlistEmail" name="email" required placeholder="you@example.com"
+              class="w-full px-4 py-3 bg-black border border-white/10 rounded-lg text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-transparent font-sans" />
+          </div>
+
+          <button type="submit" id="waitlistSubmitBtn"
+            class="w-full bg-gradient-to-r from-white to-zinc-200 text-black font-medium py-3 rounded-lg hover:from-zinc-100 hover:to-zinc-300 transition-all duration-200 shadow-lg hover:shadow-xl font-sans">
+            Join Waitlist
+          </button>
+        </form>
+      </div>
+
+      <!-- Success message (hidden by default) -->
+      <div id="waitlistSuccess" class="hidden text-center">
+        <div class="mb-4">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="h-16 w-16 text-cyan-400 mx-auto">
+            <path d="M20 6 9 17l-5-5"></path>
+          </svg>
+        </div>
+        <h3 class="text-2xl font-light text-white mb-2 font-geist">You're on the list!</h3>
+        <p class="text-zinc-400 text-sm font-sans">We'll notify you as soon as EchoTrader launches.</p>
+      </div>
+
+      <!-- Error message (hidden by default) -->
+      <div id="waitlistError" class="hidden">
+        <div class="bg-red-500/10 border border-red-500/20 rounded-lg p-4 mb-4">
+          <p class="text-red-400 text-sm font-sans" id="errorMessage"></p>
+        </div>
+        <button onclick="resetWaitlistForm()"
+          class="w-full bg-white/10 hover:bg-white/20 text-white border border-white/20 rounded-lg py-3 font-sans">
+          Try Again
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Waitlist JavaScript -->
+  <script>
+    // Google Apps Script Web App URL for waitlist
+    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxBek1G2aZTRTIBJ91_Lpch0F9SyOMOUDA7AOo-AwIxIs0_IO8cVT7uUBVQYkK9chFi/exec';
+
+    function openWaitlistModal() {
+      document.getElementById('waitlistModal').classList.remove('hidden');
+      document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    }
+
+    function closeWaitlistModal() {
+      document.getElementById('waitlistModal').classList.add('hidden');
+      document.body.style.overflow = ''; // Restore scrolling
+      // Reset form after closing
+      setTimeout(resetWaitlistForm, 300);
+    }
+
+    function resetWaitlistForm() {
+      document.getElementById('waitlistForm').classList.remove('hidden');
+      document.getElementById('waitlistSuccess').classList.add('hidden');
+      document.getElementById('waitlistError').classList.add('hidden');
+      document.getElementById('waitlistEmail').value = '';
+    }
+
+    async function submitWaitlist(event) {
+      event.preventDefault();
+
+      const email = document.getElementById('waitlistEmail').value;
+      const submitBtn = document.getElementById('waitlistSubmitBtn');
+
+      // Disable button and show loading state
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Joining...';
+
+      try {
+        const response = await fetch(GOOGLE_SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email: email })
         });
 
-        document.addEventListener('mousemove', (e) => {
-            if (!isDragging) return;
-            currentX = e.clientX;
-            const diff = currentX - startX;
+        // Show success message
+        document.getElementById('waitlistForm').classList.add('hidden');
+        document.getElementById('waitlistSuccess').classList.remove('hidden');
 
-            cards.forEach(card => {
-                if (Math.abs(diff) > 10) {
-                    if (diff < 0) {
-                        card.classList.add('dragging-left');
-                        card.classList.remove('dragging-right');
-                    } else {
-                        card.classList.add('dragging-right');
-                        card.classList.remove('dragging-left');
-                    }
-                }
-            });
-        });
+        // Auto-close modal after 3 seconds
+        setTimeout(closeWaitlistModal, 3000);
 
-        document.addEventListener('touchmove', (e) => {
-            if (!isDragging) return;
-            currentX = e.touches[0].clientX;
-            const diff = currentX - startX;
+      } catch (error) {
+        console.error('Error submitting to waitlist:', error);
 
-            cards.forEach(card => {
-                if (Math.abs(diff) > 10) {
-                    if (diff < 0) {
-                        card.classList.add('dragging-left');
-                        card.classList.remove('dragging-right');
-                    } else {
-                        card.classList.add('dragging-right');
-                        card.classList.remove('dragging-left');
-                    }
-                }
-            });
-        });
+        // Show error message
+        document.getElementById('waitlistForm').classList.add('hidden');
+        document.getElementById('waitlistError').classList.remove('hidden');
+        document.getElementById('errorMessage').textContent = 'Something went wrong. Please try again.';
+      } finally {
+        // Re-enable button
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Join Waitlist';
+      }
+    }
 
-        document.addEventListener('mouseup', (e) => {
-            if (!isDragging) return;
-            isDragging = false;
+    // Close modal when clicking outside
+    document.addEventListener('click', function (event) {
+      const modal = document.getElementById('waitlistModal');
+      if (event.target === modal) {
+        closeWaitlistModal();
+      }
+    });
 
-            const diff = currentX - startX;
+    // Close modal with Escape key
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape') {
+        const modal = document.getElementById('waitlistModal');
+        if (!modal.classList.contains('hidden')) {
+          closeWaitlistModal();
+        }
+      }
+    });
+  </script>
 
-            cards.forEach(card => {
-                card.classList.remove('dragging-left', 'dragging-right');
-                card.style.cursor = 'grab';
-            });
 
-            if (Math.abs(diff) > 50) {
-                if (diff < 0) {
-                    // Swipe left - next card
-                    const nextCard = currentActive < 4 ? currentActive + 1 : 1;
-                    setActiveCard(nextCard);
-                } else {
-                    // Swipe right - previous card
-                    const prevCard = currentActive > 1 ? currentActive - 1 : 4;
-                    setActiveCard(prevCard);
-                }
-            }
-
-            startX = 0;
-            currentX = 0;
-        });
-
-        document.addEventListener('touchend', (e) => {
-            if (!isDragging) return;
-            isDragging = false;
-
-            const diff = currentX - startX;
-
-            cards.forEach(card => {
-                card.classList.remove('dragging-left', 'dragging-right');
-            });
-
-            if (Math.abs(diff) > 50) {
-                if (diff < 0) {
-                    // Swipe left - next card
-                    const nextCard = currentActive < 4 ? currentActive + 1 : 1;
-                    setActiveCard(nextCard);
-                } else {
-                    // Swipe right - previous card
-                    const prevCard = currentActive > 1 ? currentActive - 1 : 4;
-                    setActiveCard(prevCard);
-                }
-            }
-
-            startX = 0;
-            currentX = 0;
-        });
-
-        // Auto-rotate cards every 5 seconds
-        setInterval(() => {
-            const nextCard = currentActive < 4 ? currentActive + 1 : 1;
-            setActiveCard(nextCard);
-        }, 5000);
-    </script>
 </body>
+
 </html>

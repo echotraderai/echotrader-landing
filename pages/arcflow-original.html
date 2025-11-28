@@ -1,0 +1,1378 @@
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0a0a0a">
+<title>Arcflow — Plan, build, ship</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<link id="all-fonts-link-font-geist" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-geist">.font-geist { font-family: 'Geist', sans-serif !important; }</style><link id="all-fonts-link-font-roboto" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-roboto">.font-roboto { font-family: 'Roboto', sans-serif !important; }</style><link id="all-fonts-link-font-montserrat" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-montserrat">.font-montserrat { font-family: 'Montserrat', sans-serif !important; }</style><link id="all-fonts-link-font-poppins" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-poppins">.font-poppins { font-family: 'Poppins', sans-serif !important; }</style><link id="all-fonts-link-font-playfair" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&amp;display=swap"><style id="all-fonts-style-font-playfair">.font-playfair { font-family: 'Playfair Display', serif !important; }</style><link id="all-fonts-link-font-instrument-serif" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:wght@400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-instrument-serif">.font-instrument-serif { font-family: 'Instrument Serif', serif !important; }</style><link id="all-fonts-link-font-merriweather" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&amp;display=swap"><style id="all-fonts-style-font-merriweather">.font-merriweather { font-family: 'Merriweather', serif !important; }</style><link id="all-fonts-link-font-bricolage" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-bricolage">.font-bricolage { font-family: 'Bricolage Grotesque', sans-serif !important; }</style><link id="all-fonts-link-font-jakarta" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-jakarta">.font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif !important; }</style><link id="all-fonts-link-font-manrope" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-manrope">.font-manrope { font-family: 'Manrope', sans-serif !important; }</style><link id="all-fonts-link-font-space-grotesk" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-space-grotesk">.font-space-grotesk { font-family: 'Space Grotesk', sans-serif !important; }</style><link id="all-fonts-link-font-work-sans" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-work-sans">.font-work-sans { font-family: 'Work Sans', sans-serif !important; }</style><link id="all-fonts-link-font-pt-serif" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Serif:wght@400;700&amp;display=swap"><style id="all-fonts-style-font-pt-serif">.font-pt-serif { font-family: 'PT Serif', serif !important; }</style><link id="all-fonts-link-font-geist-mono" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-geist-mono">.font-geist-mono { font-family: 'Geist Mono', monospace !important; }</style><link id="all-fonts-link-font-space-mono" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&amp;display=swap"><style id="all-fonts-style-font-space-mono">.font-space-mono { font-family: 'Space Mono', monospace !important; }</style><link id="all-fonts-link-font-quicksand" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-quicksand">.font-quicksand { font-family: 'Quicksand', sans-serif !important; }</style><link id="all-fonts-link-font-nunito" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-nunito">.font-nunito { font-family: 'Nunito', sans-serif !important; }</style>
+<script>
+// Configure Tailwind to include our custom 3D transform utilities
+tailwind.config = {
+theme: {
+extend: {
+// Add any custom theme extensions here if needed
+}
+},
+plugins: [
+function({ addUtilities }) {
+const rotateXUtilities = {};
+const rotateYUtilities = {};
+const rotateZUtilities = {};
+const rotateValues = [0, 5, 10, 15, 20, 30, 45, 75];
+// Generate rotate-x utilities
+rotateValues.forEach((value) => {
+rotateXUtilities[`.rotate-x-${value}`] = {
+'--tw-rotate-x': `${value}deg`,
+transform: `
+translate3d(var(--tw-translate-x, 0), var(--tw-translate-y, 0), var(--tw-translate-z, 0))
+rotateX(var(--tw-rotate-x, 0))
+rotateY(var(--tw-rotate-y, 0))
+rotateZ(var(--tw-rotate-z, 0))
+skewX(var(--tw-skew-x, 0))
+skewY(var(--tw-skew-y, 0))
+scaleX(var(--tw-scale-x, 1))
+scaleY(var(--tw-scale-y, 1))
+`.replace(/\\s+/g, ' ').trim(),
+};
+if (value !== 0) {
+rotateXUtilities[`.-rotate-x-${value}`] = {
+'--tw-rotate-x': `-${value}deg`,
+transform: `
+translate3d(var(--tw-translate-x, 0), var(--tw-translate-y, 0), var(--tw-translate-z, 0))
+rotateX(var(--tw-rotate-x, 0))
+rotateY(var(--tw-rotate-y, 0))
+rotateZ(var(--tw-rotate-z, 0))
+skewX(var(--tw-skew-x, 0))
+skewY(var(--tw-skew-y, 0))
+scaleX(var(--tw-scale-x, 1))
+scaleY(var(--tw-scale-y, 1))
+`.replace(/\\s+/g, ' ').trim(),
+};
+}
+});
+// Generate rotate-y utilities
+rotateValues.forEach((value) => {
+rotateYUtilities[`.rotate-y-${value}`] = {
+'--tw-rotate-y': `${value}deg`,
+transform: `
+translate3d(var(--tw-translate-x, 0), var(--tw-translate-y, 0), var(--tw-translate-z, 0))
+rotateX(var(--tw-rotate-x, 0))
+rotateY(var(--tw-rotate-y, 0))
+rotateZ(var(--tw-rotate-z, 0))
+skewX(var(--tw-skew-x, 0))
+skewY(var(--tw-skew-y, 0))
+scaleX(var(--tw-scale-x, 1))
+scaleY(var(--tw-scale-y, 1))
+`.replace(/\\s+/g, ' ').trim(),
+};
+if (value !== 0) {
+rotateYUtilities[`.-rotate-y-${value}`] = {
+'--tw-rotate-y': `-${value}deg`,
+transform: `
+translate3d(var(--tw-translate-x, 0), var(--tw-translate-y, 0), var(--tw-translate-z, 0))
+rotateX(var(--tw-rotate-x, 0))
+rotateY(var(--tw-rotate-y, 0))
+rotateZ(var(--tw-rotate-z, 0))
+skewX(var(--tw-skew-x, 0))
+skewY(var(--tw-skew-y, 0))
+scaleX(var(--tw-scale-x, 1))
+scaleY(var(--tw-scale-y, 1))
+`.replace(/\\s+/g, ' ').trim(),
+};
+}
+});
+// Generate rotate-z utilities
+rotateValues.forEach((value) => {
+rotateZUtilities[`.rotate-z-${value}`] = {
+'--tw-rotate-z': `${value}deg`,
+transform: `
+translate3d(var(--tw-translate-x, 0), var(--tw-translate-y, 0), var(--tw-translate-z, 0))
+rotateX(var(--tw-rotate-x, 0))
+rotateY(var(--tw-rotate-y, 0))
+rotateZ(var(--tw-rotate-z, 0))
+skewX(var(--tw-skew-x, 0))
+skewY(var(--tw-skew-y, 0))
+scaleX(var(--tw-scale-x, 1))
+scaleY(var(--tw-scale-y, 1))
+`.replace(/\\s+/g, ' ').trim(),
+};
+if (value !== 0) {
+rotateZUtilities[`.-rotate-z-${value}`] = {
+'--tw-rotate-z': `-${value}deg`,
+transform: `
+translate3d(var(--tw-translate-x, 0), var(--tw-translate-y, 0), var(--tw-translate-z, 0))
+rotateX(var(--tw-rotate-x, 0))
+rotateY(var(--tw-rotate-y, 0))
+rotateZ(var(--tw-rotate-z, 0))
+skewX(var(--tw-skew-x, 0))
+skewY(var(--tw-skew-y, 0))
+scaleX(var(--tw-scale-x, 1))
+scaleY(var(--tw-scale-y, 1))
+`.replace(/\\s+/g, ' ').trim(),
+};
+}
+});
+// Perspective utilities
+const perspectiveUtilities = {
+".perspective-none": { perspective: "none" },
+".perspective-dramatic": { perspective: "100px" },
+".perspective-near": { perspective: "300px" },
+".perspective-normal": { perspective: "500px" },
+".perspective-midrange": { perspective: "800px" },
+".perspective-distant": { perspective: "1200px" },
+};
+// Transform style utilities
+const transformStyleUtilities = {
+".transform-style-preserve-3d": { "transform-style": "preserve-3d" },
+".transform-style-flat": { "transform-style": "flat" },
+};
+addUtilities({
+...rotateXUtilities,
+...rotateYUtilities,
+...rotateZUtilities,
+...perspectiveUtilities,
+...transformStyleUtilities,
+});
+}
+]
+};
+</script>
+<style>
+/* 3D Transform utilities */
+.rotate-x-30 { --tw-rotate-x: 30deg; transform: translate3d(var(--tw-translate-x, 0), var(--tw-translate-y, 0), var(--tw-translate-z, 0)) rotateX(var(--tw-rotate-x, 0)) rotateY(var(--tw-rotate-y, 0)) rotateZ(var(--tw-rotate-z, 0)) skewX(var(--tw-skew-x, 0)) skewY(var(--tw-skew-y, 0)) scaleX(var(--tw-scale-x, 1)) scaleY(var(--tw-scale-y, 1)) !important; }
+.rotate-y-30 { --tw-rotate-y: 30deg; transform: translate3d(var(--tw-translate-x, 0), var(--tw-translate-y, 0), var(--tw-translate-z, 0)) rotateX(var(--tw-rotate-x, 0)) rotateY(var(--tw-rotate-y, 0)) rotateZ(var(--tw-rotate-z, 0)) skewX(var(--tw-skew-x, 0)) skewY(var(--tw-skew-y, 0)) scaleX(var(--tw-scale-x, 1)) scaleY(var(--tw-scale-y, 1)) !important; }
+.rotate-z-20 { --tw-rotate-z: 20deg; transform: translate3d(var(--tw-translate-x, 0), var(--tw-translate-y, 0), var(--tw-translate-z, 0)) rotateX(var(--tw-rotate-x, 0)) rotateY(var(--tw-rotate-y, 0)) rotateZ(var(--tw-rotate-z, 0)) skewX(var(--tw-skew-x, 0)) skewY(var(--tw-skew-y, 0)) scaleX(var(--tw-scale-x, 1)) scaleY(var(--tw-scale-y, 1)) !important; }
+.-rotate-z-20 { --tw-rotate-z: -20deg; transform: translate3d(var(--tw-translate-x, 0), var(--tw-translate-y, 0), var(--tw-translate-z, 0)) rotateX(var(--tw-rotate-x, 0)) rotateY(var(--tw-rotate-y, 0)) rotateZ(var(--tw-rotate-z, 0)) skewX(var(--tw-skew-x, 0)) skewY(var(--tw-skew-y, 0)) scaleX(var(--tw-scale-x, 1)) scaleY(var(--tw-scale-y, 1)) !important; }
+.perspective-none { perspective: none !important; }
+.perspective-dramatic { perspective: 100px !important; }
+.perspective-near { perspective: 300px !important; }
+.perspective-normal { perspective: 500px !important; }
+.perspective-midrange { perspective: 800px !important; }
+.perspective-distant { perspective: 1200px !important; }
+.transform-style-preserve-3d { transform-style: preserve-3d !important; }
+.transform-style-flat { transform-style: flat !important; }
+</style></head>
+  <body class="min-h-screen antialiased selection:bg-white/10 text-zinc-100 bg-zinc-950" style="font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;">
+
+    <!-- Nav -->
+    <header class="w-full">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="flex h-16 items-center justify-between">
+          <a href="#" class="inline-flex items-center gap-2">
+            <span class="inline-flex h-8 w-8 items-center justify-center ring-1 ring-white/10 bg-zinc-800 rounded-full">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="orbit" class="lucide lucide-orbit h-4 w-4 text-zinc-200"><path d="M20.341 6.484A10 10 0 0 1 10.266 21.85"></path><path d="M3.659 17.516A10 10 0 0 1 13.74 2.152"></path><circle cx="12" cy="12" r="3"></circle><circle cx="19" cy="5" r="2"></circle><circle cx="5" cy="19" r="2"></circle></svg>
+            </span>
+            <span class="text-2xl font-semibold tracking-tight font-playfair">Arcflow</span>
+          </a>
+
+          <nav class="hidden md:flex items-center gap-8 text-sm text-zinc-300">
+            <a href="#" class="hover:text-zinc-100 transition-colors font-sans">Platform</a>
+            <a href="#" class="hover:text-zinc-100 transition-colors font-sans">Solutions</a>
+            <a href="#" class="hover:text-zinc-100 transition-colors font-sans">Pricing</a>
+            <a href="#" class="hover:text-zinc-100 transition-colors font-sans">Docs</a>
+            <a href="#" class="hover:text-zinc-100 transition-colors font-sans">Changelog</a>
+          </nav>
+
+          <div class="flex items-center gap-3">
+            <button class="hidden sm:inline-flex gap-2 hover:text-zinc-100 hover:bg-white/5 ring-1 ring-white/5 text-sm text-zinc-300 rounded-md pt-1.5 pr-3 pb-1.5 pl-3 items-center">
+              
+              <span class="font-medium font-sans">Log in</span>
+            </button>
+            <button type="button" role="button" aria-label="Create Account" class="group relative inline-flex shadow-[0_8px_16px_-4px_rgba(255,255,255,0.05)] hover:shadow-[0_12px_20px_-6px_rgba(255,255,255,0.1)] transition duration-300 ease-out select-none cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/60 transform-gpu hover:-translate-y-0.5 text-white rounded-lg pt-[1px] pr-[1px] pb-[1px] pl-[1px] items-center justify-center" style="background-image: linear-gradient(144deg,rgba(255,255,255,0.3), rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.2));">
+  <span class="flex items-center justify-center gap-2 leading-none min-w-[140px] w-full h-full transition-colors duration-300 group-hover:bg-black/50 font-medium bg-black/80 rounded-lg pt-1.5 pr-3 pb-1.5 pl-3">
+    <span class="text-sm">Create Account</span>
+    
+  </span>
+</button>
+            <button class="md:hidden inline-flex h-9 w-9 items-center justify-center rounded-md ring-1 ring-white/10 hover:bg-white/5">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="menu" class="lucide lucide-menu h-5 w-5"><path d="M4 12h16"></path><path d="M4 18h16"></path><path d="M4 6h16"></path></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="relative overflow-hidden h-[850px]">
+    <div data-us-project="X0ErZR3QhPzMHfKgBbJJ" class="absolute top-0 left-0 -z-10 w-full h-full"></div><script type="text/javascript">!function(){if(!window.UnicornStudio){window.UnicornStudio={isInitialized:!1};var i=document.createElement("script");i.src="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.4.29/dist/unicornStudio.umd.js",i.onload=function(){window.UnicornStudio.isInitialized||(UnicornStudio.init(),window.UnicornStudio.isInitialized=!0)},(document.head || document.body).appendChild(i)}}();</script>
+      <div class="max-w-7xl sm:px-6 lg:px-8 sm:pt-20 mr-auto ml-auto pt-14 pr-4 pl-4">
+        <div class="max-w-3xl">
+          <div class="inline-flex gap-2 text-xs text-zinc-300 bg-white/5 border-white/10 border rounded-full pt-1 pr-3 pb-1 pl-3 items-center">
+            
+            <span class="font-medium font-sans">New: Insight Engine</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="arrow-right" class="lucide lucide-arrow-right h-3.5 w-3.5"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+          </div>
+          <h1 class="sm:text-6xl md:text-7xl text-4xl font-light tracking-tighter font-geist mt-6">Arcflow is the system for planning and shipping software</h1>
+          <p class="max-w-2xl sm:text-lg text-base text-zinc-300 mt-5">
+            Streamline issues, projects, and roadmaps in one fast, elegant workspace. Stay focused, automate the busywork, and ship work that matters.
+          </p>
+
+          <div class="mt-8 flex flex-col sm:flex-row items-center gap-3">
+            <button type="button" role="button" aria-label="Create Account" class="group relative inline-flex shadow-[0_8px_16px_-4px_rgba(255,255,255,0.05)] hover:shadow-[0_12px_20px_-6px_rgba(255,255,255,0.1)] transition duration-300 ease-out select-none cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/60 transform-gpu hover:-translate-y-0.5 text-white rounded-lg pt-[1px] pr-[1px] pb-[1px] pl-[1px] items-center justify-center" style="background-image: linear-gradient(144deg,rgba(255,255,255,0.3), rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.2));">
+  <span class="flex items-center justify-center gap-2 text-[15px] leading-none min-w-[140px] w-full h-full transition-colors duration-300 group-hover:bg-black/50 font-medium bg-black/80 rounded-lg pt-3 pr-5 pb-3 pl-5">
+    <span class="">Create Account</span>
+    
+  </span>
+</button>
+            <a href="#" class="inline-flex items-center gap-2 ring-1 ring-white/5 hover:bg-white/5 text-sm font-medium text-zinc-200 rounded-md pt-2.5 pr-4 pb-2.5 pl-4">
+              <span class="font-sans">Tour the product</span>
+              
+            </a>
+          </div>
+        </div>
+
+        <!-- Product preview -->
+        <div class="relative sm:mt-20 mt-16 perspective-none">
+          <div class="absolute inset-x-0 -bottom-8 mx-auto h-40 max-w-6xl bg-gradient-to-t from-black/60 to-transparent blur-2xl"></div>
+
+          <div class="max-w-6xl mr-auto ml-auto">
+            <div class="relative ring-1 ring-black/10 -translate-x-8 -translate-y-16 shadow-[0_2.8px_2.2px_rgba(0,_0,_0,_0.034),_0_6.7px_5.3px_rgba(0,_0,_0,_0.048),_0_12.5px_10px_rgba(0,_0,_0,_0.06),_0_22.3px_17.9px_rgba(0,_0,_0,_0.072),_0_41.8px_33.4px_rgba(0,_0,_0,_0.086),_0_100px_80px_rgba(0,_0,_0,_0.12)] lg:scale-100 md:scale-75 origin-left w-[1200px] bg-gradient-to-b from-zinc-900/70 to-zinc-950/80 border-white/10 border rounded-2xl backdrop-blur-lg translate-x-8 scale-50 rotate-x-30 rotate-y-30 -rotate-z-20 perspective-none">
+              <!-- Window header -->
+              <div class="flex border-white/10 border-b pt-3 pr-4 pb-3 pl-4 items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <span class="h-2.5 w-2.5 rounded-full bg-zinc-600"></span>
+                  <span class="h-2.5 w-2.5 rounded-full bg-zinc-700"></span>
+                  <span class="h-2.5 w-2.5 rounded-full bg-zinc-800"></span>
+                </div>
+                <div class="flex items-center gap-3 text-xs text-zinc-400">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="cloud" class="lucide lucide-cloud w-[16px] h-[16px]" data-icon-replaced="true" style="width: 16px; height: 16px; color: rgb(161, 161, 170);"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"></path></svg>
+                  <span class="font-sans">arcflow.app</span>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-12">
+                <!-- Sidebar -->
+                <aside class="col-span-4 md:col-span-3 sm:p-4 border-white/10 border-r pt-3 pr-3 pb-3 pl-3">
+                  <div class="mb-3 flex items-center gap-2 rounded-md bg-white/5 px-2 py-1.5 text-zinc-300 ring-1 ring-white/10">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="search" class="lucide lucide-search h-4 w-4 text-zinc-400"><path d="m21 21-4.34-4.34"></path><circle cx="11" cy="11" r="8"></circle></svg>
+                    <input placeholder="Search" class="w-full bg-transparent text-xs outline-none placeholder:text-zinc-500">
+                  </div>
+
+                  <div class="space-y-1">
+                    <div class="flex items-center justify-between px-2 py-1.5 rounded-md bg-white/5 text-sm text-zinc-100">
+                      <div class="flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="inbox" class="lucide lucide-inbox h-4 w-4 text-indigo-400"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"></polyline><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"></path></svg>
+                        <span class="font-medium font-sans">Inbox</span>
+                      </div>
+                      <span class="rounded-md bg-indigo-500/20 px-1.5 py-0.5 text-[10px] text-indigo-300 font-sans">24</span>
+                    </div>
+                    <button class="flex w-full items-center gap-2 px-2 py-1.5 rounded-md text-sm text-zinc-300 hover:bg-white/5 font-sans">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle" class="lucide lucide-check-circle h-4 w-4"><path d="M21.801 10A10 10 0 1 1 17 3.335"></path><path d="m9 11 3 3L22 4"></path></svg> My issues
+                    </button>
+                    <button class="flex w-full items-center gap-2 px-2 py-1.5 rounded-md text-sm text-zinc-300 hover:bg-white/5 font-sans">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="flag" class="lucide lucide-flag h-4 w-4"><path d="M4 22V4a1 1 0 0 1 .4-.8A6 6 0 0 1 8 2c3 0 5 2 7.333 2q2 0 3.067-.8A1 1 0 0 1 20 4v10a1 1 0 0 1-.4.8A6 6 0 0 1 16 16c-3 0-5-2-8-2a6 6 0 0 0-4 1.528"></path></svg> Projects
+                    </button>
+                    <button class="flex w-full items-center gap-2 px-2 py-1.5 rounded-md text-sm text-zinc-300 hover:bg-white/5 font-sans">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="calendar" class="lucide lucide-calendar h-4 w-4"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path></svg> Roadmap
+                    </button>
+                    <button class="flex w-full items-center gap-2 px-2 py-1.5 rounded-md text-sm text-zinc-300 hover:bg-white/5 font-sans">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="users" class="lucide lucide-users h-4 w-4"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><path d="M16 3.128a4 4 0 0 1 0 7.744"></path><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><circle cx="9" cy="7" r="4"></circle></svg> Teams
+                    </button>
+                  </div>
+
+                  <div class="mt-4">
+                    <p class="px-2 text-[11px] uppercase tracking-wide text-zinc-500 font-sans">Favorites</p>
+                    <div class="mt-1 space-y-1">
+                      <button class="flex w-full gap-2 hover:bg-white/5 text-sm text-zinc-300 rounded-md pt-1.5 pr-2 pb-1.5 pl-2 items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="smartphone" class="lucide lucide-smartphone h-4 w-4"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"></rect><path d="M12 18h.01"></path></svg> Mobile Core
+                      </button>
+                      <button class="flex w-full items-center gap-2 px-2 py-1.5 rounded-md text-sm text-zinc-300 hover:bg-white/5 font-sans">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="cpu" class="lucide lucide-cpu h-4 w-4"><path d="M12 20v2"></path><path d="M12 2v2"></path><path d="M17 20v2"></path><path d="M17 2v2"></path><path d="M2 12h2"></path><path d="M2 17h2"></path><path d="M2 7h2"></path><path d="M20 12h2"></path><path d="M20 17h2"></path><path d="M20 7h2"></path><path d="M7 20v2"></path><path d="M7 2v2"></path><rect x="4" y="4" width="16" height="16" rx="2"></rect><rect x="8" y="8" width="8" height="8" rx="1"></rect></svg> API Platform
+                      </button>
+                    </div>
+                  </div>
+                </aside>
+
+                <!-- List + Details -->
+                <main class="col-span-8 md:col-span-9">
+                  <div class="grid grid-cols-12">
+                    <!-- Thread list -->
+                    <section class="col-span-6 sm:p-4 border-white/10 border-r pt-3 pr-3 pb-3 pl-3">
+                      <div class="flex items-center justify-between">
+                        <h3 class="text-sm font-medium text-zinc-200 tracking-tight font-sans">Inbox</h3>
+                        <div class="flex items-center gap-2 text-zinc-400">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="refresh-ccw" class="lucide lucide-refresh-ccw h-4 w-4"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"></path><path d="M16 16h5v5"></path></svg>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="bell" class="lucide lucide-bell h-4 w-4"><path d="M10.268 21a2 2 0 0 0 3.464 0"></path><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"></path></svg>
+                        </div>
+                      </div>
+
+                      <ul class="mt-3 space-y-2">
+                        <!-- Item -->
+                        <li class="rounded-lg bg-white/5 p-2 ring-1 ring-white/10 hover:bg-white/10">
+                          <div class="flex items-start gap-3">
+                            <img src="https://hoirqrkdgbmvpwutwuwj-all.supabase.co/storage/v1/object/public/assets/assets/8d3cb9d4-adbe-41e5-a351-a4a6c22d6037_320w.jpg" alt="" class="h-7 w-7 object-cover rounded-full" style="">
+                            <div class="flex-1">
+                              <div class="flex items-center justify-between">
+                                <p class="text-sm font-medium">ENG-241 Improve image processing speed</p>
+                                <span class="text-[10px] text-zinc-400 font-sans">12m</span>
+                              </div>
+                              <p class="mt-0.5 line-clamp-1 text-xs text-zinc-400 font-sans">Prototype SIMD path found 35% faster on arm64. Need QA signoff.</p>
+                              <div class="mt-1 flex items-center gap-2">
+                                <span class="inline-flex items-center gap-1 rounded-md bg-emerald-500/15 px-1.5 py-0.5 text-[10px] text-emerald-300 font-sans">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="zap" class="lucide lucide-zap h-3 w-3"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"></path></svg> Fast Track
+                                </span>
+                                <span class="inline-flex items-center gap-1 rounded-md bg-indigo-500/15 px-1.5 py-0.5 text-[10px] text-indigo-300 font-sans">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="git-branch" class="lucide lucide-git-branch h-3 w-3"><line x1="6" x2="6" y1="3" y2="15"></line><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path></svg> api-media
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+
+                        <!-- Item -->
+                        <li class="rounded-lg p-2 hover:bg-white/5">
+                          <div class="flex items-start gap-3">
+                            <img src="https://hoirqrkdgbmvpwutwuwj-all.supabase.co/storage/v1/object/public/assets/assets/dba30d89-2f48-41ff-b46e-b79d6a8b96ad_320w.jpg" alt="" class="h-7 w-7 object-cover rounded-full" style="">
+                            <div class="flex-1">
+                              <div class="flex items-center justify-between">
+                                <p class="text-sm font-medium text-zinc-200 font-sans">DES-112 Update dashboard empty state</p>
+                                <span class="text-[10px] text-zinc-400 font-sans">47m</span>
+                              </div>
+                              <p class="mt-0.5 line-clamp-1 text-xs text-zinc-400 font-sans">Illustrations replaced with minimal 3D renders and fewer steps.</p>
+                            </div>
+                          </div>
+                        </li>
+
+                        <!-- Item -->
+                        <li class="rounded-lg p-2 hover:bg-white/5">
+                          <div class="flex items-start gap-3">
+                            <img src="https://hoirqrkdgbmvpwutwuwj-all.supabase.co/storage/v1/object/public/assets/assets/f7f6feef-fd3e-4901-bce6-7271aa74dc87_320w.jpg" alt="" class="h-7 w-7 object-cover rounded-full" style="">
+                            <div class="flex-1">
+                              <div class="flex items-center justify-between">
+                                <p class="text-sm font-medium text-zinc-200 font-sans">OPS-58 Incident: degraded CDN in eu-west</p>
+                                <span class="text-[10px] text-zinc-400 font-sans">2h</span>
+                              </div>
+                              <p class="mt-0.5 line-clamp-1 text-xs text-zinc-400 font-sans">Traffic rerouted. Postmortem draft prepared.</p>
+                            </div>
+                          </div>
+                        </li>
+                      </ul>
+                    </section>
+
+                    <!-- Details panel -->
+                    <section class="col-span-6 sm:p-4 pt-3 pr-3 pb-3 pl-3">
+                      <div class="flex gap-2 text-xs text-zinc-400 items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="folder-tree" class="lucide lucide-folder-tree h-4 w-4"><path d="M20 10a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1h-2.5a1 1 0 0 1-.8-.4l-.9-1.2A1 1 0 0 0 15 3h-2a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1Z"></path><path d="M20 21a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1h-2.9a1 1 0 0 1-.88-.55l-.42-.85a1 1 0 0 0-.92-.6H13a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1Z"></path><path d="M3 5a2 2 0 0 0 2 2h3"></path><path d="M3 3v13a2 2 0 0 0 2 2h3"></path></svg>
+                        <span class="font-sans">Engineering</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-3 w-3"><path d="m9 18 6-6-6-6"></path></svg>
+                        <span class="font-sans">Media</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right h-3 w-3"><path d="m9 18 6-6-6-6"></path></svg>
+                        <span class="font-sans">ENG-241</span>
+                      </div>
+
+                      <h4 class="text-lg font-semibold tracking-tight mt-2">Refactor image pipeline</h4>
+
+                      <div class="mt-3 space-y-2">
+                        <div class="rounded-md bg-black/30 p-3 ring-1 ring-white/10">
+                          <div class="mb-2 flex flex-wrap gap-2">
+                            <span class="rounded bg-white/10 px-2 py-0.5 text-[10px] text-zinc-300 font-sans">comment.documentContent</span>
+                            <span class="rounded bg-white/10 px-2 py-0.5 text-[10px] text-zinc-300 font-sans">CachePromise</span>
+                            <span class="rounded bg-white/10 px-2 py-0.5 text-[10px] text-zinc-300 font-sans">lazyMany</span>
+                          </div>
+                          <pre class="overflow-x-auto text-[11px] leading-5 text-zinc-300"><code class="font-sans">// pseudo-code
+export async function optimize(input) {
+  const src = await read(input)
+  const sizes = [640, 1280, 1920]
+  const variants = await Promise.all(sizes.map(s =&gt; resize(src, s)))
+  return await write('optimized', variants)
+}</code></pre>
+                        </div>
+
+                        <div class="flex items-center justify-between">
+                          <div class="flex items-center gap-2 text-xs text-zinc-400">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="link" class="lucide lucide-link h-4 w-4"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+                            <span class="font-sans">Links</span>
+                          </div>
+                          <div class="flex items-center gap-2">
+                            <span class="inline-flex items-center gap-1 rounded-md bg-amber-500/15 px-1.5 py-0.5 text-[10px] text-amber-300 font-sans">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="timer" class="lucide lucide-timer h-3 w-3"><line x1="10" x2="14" y1="2" y2="2"></line><line x1="12" x2="15" y1="14" y2="11"></line><circle cx="12" cy="14" r="8"></circle></svg> In review
+                            </span>
+                            <button class="inline-flex items-center gap-1 rounded-md px-2 py-1 text-xs ring-1 ring-white/10 hover:bg-white/5">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="send" class="lucide lucide-send h-4 w-4"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"></path><path d="m21.854 2.147-10.94 10.939"></path></svg>
+                              <span class="font-sans">Notify</span>
+                            </button>
+                          </div>
+                        </div>
+
+                        <div class="mt-2 grid grid-cols-3 gap-2">
+                          <img src="https://hoirqrkdgbmvpwutwuwj-all.supabase.co/storage/v1/object/public/assets/assets/74356e5b-a09c-458d-8481-ba40b9398881_320w.jpg" class="h-16 w-full object-cover rounded-md" alt="" style="">
+                          <img src="https://hoirqrkdgbmvpwutwuwj-all.supabase.co/storage/v1/object/public/assets/assets/19f52620-723f-4d8e-8c88-42365d783cc5_320w.jpg" class="h-16 w-full object-cover rounded-md" alt="" style="">
+                          <img src="https://hoirqrkdgbmvpwutwuwj-all.supabase.co/storage/v1/object/public/assets/assets/f2e8fff7-47a1-4d3b-b92a-eb9a07fb90f8_320w.jpg" class="h-16 w-full object-cover rounded-md" alt="" style="">
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </main>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section><section class="py-24 relative">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Section Header -->
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <div class="inline-flex gap-2 text-xs text-zinc-300 bg-white/5 border-white/10 border rounded-full pt-1 pr-3 pb-1 pl-3 items-center mb-6">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3.5 w-3.5">
+          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+        </svg>
+        <span class="font-medium font-sans">Platform Features</span>
+      </div>
+      <h2 class="text-4xl sm:text-5xl font-light tracking-tighter font-geist text-white mb-4">Everything you need to ship faster</h2>
+      <p class="text-lg text-zinc-300 font-sans">Powerful tools that adapt to your workflow, from initial planning to final deployment.</p>
+    </div>
+
+    <!-- Bento Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+      <!-- Large Feature Card - 2/3 width -->
+      <article class="lg:col-span-2 group relative overflow-hidden transition-all duration-300 hover:shadow-2xl bg-zinc-900/50 border-white/10 border rounded-2xl backdrop-blur-sm">
+        <div class="p-6 sm:p-8">
+          <!-- Illustration -->
+          <div class="relative h-64 sm:h-80 rounded-xl bg-gradient-to-br from-zinc-900/90 to-zinc-950/90 ring-1 ring-inset ring-white/5 mb-6">
+            <!-- Main Dashboard -->
+            <div class="absolute inset-4 rounded-lg bg-zinc-950/90 backdrop-blur border border-white/10">
+              <!-- Header -->
+              <div class="flex items-center justify-between px-4 py-3 border-b border-white/10">
+                <div class="flex items-center gap-3">
+                  <span class="h-2 w-2 rounded-full bg-red-500/60"></span>
+                  <span class="h-2 w-2 rounded-full bg-yellow-500/60"></span>
+                  <span class="h-2 w-2 rounded-full bg-green-500/60"></span>
+                </div>
+                <span class="text-xs text-zinc-400 font-sans">Insight Engine</span>
+              </div>
+              
+              <!-- Content Grid -->
+              <div class="grid grid-cols-12 gap-3 p-4 h-full">
+                <!-- Velocity Chart -->
+                <div class="col-span-8 bg-white/5 rounded-lg p-3 border border-white/5">
+                  <div class="flex items-center justify-between mb-3">
+                    <span class="text-xs text-zinc-300 font-medium">Team Velocity</span>
+                    <span class="text-xs text-emerald-400">↗ +23%</span>
+                  </div>
+                  <svg viewBox="0 0 200 60" class="w-full h-12 text-zinc-700">
+                    <defs>
+                      
+                    </defs>
+                    <path d="M 0 50 Q 25 45 50 40 T 100 25 T 150 20 T 200 15" stroke="#10B981" stroke-width="2" fill="none" stroke-linecap="round"></path>
+                    <path d="M 0 50 Q 25 45 50 40 T 100 25 T 150 20 T 200 15 L 200 60 L 0 60 Z" fill="url(#velocityGradient)"></path>
+                  </svg>
+                </div>
+
+                <!-- Stats -->
+                <div class="col-span-4 space-y-2">
+                  <div class="bg-white/5 rounded-lg p-3 border border-white/5">
+                    <div class="text-xs text-zinc-400 mb-1">Active Issues</div>
+                    <div class="text-lg font-semibold text-white">127</div>
+                  </div>
+                  <div class="bg-white/5 rounded-lg p-3 border border-white/5">
+                    <div class="text-xs text-zinc-400 mb-1">Cycle Time</div>
+                    <div class="text-lg font-semibold text-emerald-400">2.4d</div>
+                  </div>
+                </div>
+
+                <!-- Progress Bars -->
+                <div class="col-span-12 space-y-2">
+                  <div class="flex items-center gap-3">
+                    <span class="text-xs text-zinc-400 w-20">Frontend</span>
+                    <div class="flex-1 bg-zinc-800 rounded-full h-1.5">
+                      <div class="bg-blue-500 h-1.5 rounded-full w-3/4"></div>
+                    </div>
+                    <span class="text-xs text-blue-400">75%</span>
+                  </div>
+                  <div class="flex items-center gap-3">
+                    <span class="text-xs text-zinc-400 w-20">Backend</span>
+                    <div class="flex-1 bg-zinc-800 rounded-full h-1.5">
+                      <div class="bg-emerald-500 h-1.5 rounded-full w-4/5"></div>
+                    </div>
+                    <span class="text-xs text-emerald-400">80%</span>
+                  </div>
+                  <div class="flex items-center gap-3">
+                    <span class="text-xs text-zinc-400 w-20">Design</span>
+                    <div class="flex-1 bg-zinc-800 rounded-full h-1.5">
+                      <div class="bg-purple-500 h-1.5 rounded-full w-1/2"></div>
+                    </div>
+                    <span class="text-xs text-purple-400">50%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Floating notifications -->
+            <div class="absolute top-6 right-6 w-48 space-y-2">
+              <div class="bg-zinc-900/95 border border-emerald-500/30 rounded-lg p-2 backdrop-blur">
+                <div class="flex items-center gap-2">
+                  <div class="h-2 w-2 bg-emerald-500 rounded-full"></div>
+                  <span class="text-xs text-emerald-300">Deploy completed</span>
+                </div>
+              </div>
+              <div class="bg-zinc-900/95 border border-blue-500/30 rounded-lg p-2 backdrop-blur">
+                <div class="flex items-center gap-2">
+                  <div class="h-2 w-2 bg-blue-500 rounded-full"></div>
+                  <span class="text-xs text-blue-300">PR merged</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Content -->
+          <div class="">
+            <div class="flex items-center gap-3 mb-4">
+              
+              <h3 class="sm:text-3xl text-2xl font-normal text-white tracking-tight font-geist">Advanced Analytics</h3>
+            </div>
+            <p class="text-zinc-300 text-base leading-relaxed font-sans">Get deep insights into your team's performance with automated metrics, cycle time analysis, and predictive forecasting to optimize your workflow.</p>
+            <div class="mt-6">
+              <a href="#" class="inline-flex items-center gap-2 text-sm font-medium text-white hover:text-zinc-300 transition-colors">
+                Explore analytics
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                  <path d="M5 12h14"></path>
+                  <path d="m12 5 7 7-7 7"></path>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Small Feature Card - 1/3 width -->
+      <article class="group relative overflow-hidden transition-all duration-300 hover:shadow-xl bg-zinc-900/50 border-white/10 border rounded-2xl backdrop-blur-sm">
+        <div class="p-6">
+          <!-- Illustration -->
+          <div class="relative h-48 rounded-xl bg-gradient-to-br from-zinc-900/90 to-zinc-950/90 ring-1 ring-inset ring-white/5 mb-6">
+            <!-- Code Editor Mock -->
+            <div class="absolute inset-3 rounded-lg bg-zinc-950/90 backdrop-blur border border-white/10 overflow-hidden">
+              <div class="flex items-center justify-between px-3 py-2 border-b border-white/10">
+                <div class="flex items-center gap-2">
+                  <div class="h-2 w-2 bg-red-500/60 rounded-full"></div>
+                  <div class="h-2 w-2 bg-yellow-500/60 rounded-full"></div>
+                  <div class="h-2 w-2 bg-green-500/60 rounded-full"></div>
+                </div>
+                <span class="text-xs text-zinc-400">main.js</span>
+              </div>
+              <div class="p-3 space-y-1">
+                <div class="flex">
+                  <span class="text-xs text-zinc-500 w-4">1</span>
+                  <span class="text-xs text-blue-400">import</span>
+                  <span class="text-xs text-zinc-300 ml-1">{ createIssue }</span>
+                </div>
+                <div class="flex">
+                  <span class="text-xs text-zinc-500 w-4">2</span>
+                  <span class="text-xs text-purple-400">const</span>
+                  <span class="text-xs text-zinc-300 ml-1">issue =</span>
+                  <span class="text-xs text-yellow-400 ml-1">'ENG-241'</span>
+                </div>
+                <div class="flex">
+                  <span class="text-xs text-zinc-500 w-4">3</span>
+                  <span class="text-xs text-emerald-400">await</span>
+                  <span class="text-xs text-zinc-300 ml-1">deploy()</span>
+                </div>
+                <div class="flex">
+                  <span class="text-xs text-zinc-500 w-4">4</span>
+                  <span class="text-xs text-zinc-600"># Auto-linked to PR</span>
+                </div>
+              </div>
+            </div>
+            <!-- Link indicator -->
+            
+          </div>
+
+          <!-- Content -->
+          <div class="">
+            <div class="flex gap-3 mb-4 items-center">
+              
+              <h3 class="text-xl font-normal text-white tracking-tight font-geist">Smart Linking</h3>
+            </div>
+            <p class="text-zinc-300 text-sm leading-relaxed font-sans">Automatically connect commits, PRs, and deployments to issues. Never lose context across your development workflow.</p>
+            <div class="mt-6">
+              <a href="#" class="inline-flex items-center gap-2 text-sm font-medium text-white hover:text-zinc-300 transition-colors">
+                View integrations
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                  <path d="M5 12h14"></path>
+                  <path d="m12 5 7 7-7 7"></path>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <!-- Second Row - Reversed Layout -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+      <!-- Small Feature Card - 1/3 width -->
+      <article class="group relative overflow-hidden transition-all duration-300 hover:shadow-xl bg-zinc-900/50 border-white/10 border rounded-2xl backdrop-blur-sm">
+        <div class="p-6">
+          <!-- Illustration -->
+          <div class="relative h-48 rounded-xl bg-gradient-to-br from-zinc-900/90 to-zinc-950/90 ring-1 ring-inset ring-white/5 mb-6">
+            <!-- Team Avatars -->
+            <div class="absolute inset-0 flex items-center justify-center">
+              <div class="relative">
+                <!-- Center hub -->
+                <div class="w-16 h-16 flex ring-1 ring-white/20 bg-gradient-to-r from-slate-900 to-slate-700 rounded-full items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-[24px] h-[24px]" data-icon-replaced="true" style="width: 24px; height: 24px; color: rgb(255, 255, 255);">
+                    <path d="M3 7v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2z" class=""></path>
+                    <polyline points="3,7 12,13 21,7" class=""></polyline>
+                  </svg>
+                </div>
+                
+                <!-- Orbiting avatars -->
+                <img class="absolute -top-8 -left-4 w-10 h-10 object-cover border-white/30 border rounded-full" alt="" src="https://hoirqrkdgbmvpwutwuwj-all.supabase.co/storage/v1/object/public/assets/assets/5fe82ca0-ec91-4df3-b0fb-d97b643f2178_320w.jpg">
+                <img class="absolute -top-6 -right-6 w-8 h-8 object-cover border-white/30 border rounded-full" alt="" src="https://hoirqrkdgbmvpwutwuwj-all.supabase.co/storage/v1/object/public/assets/assets/ec17a2e2-e4f4-4164-b631-f074e640a0c1_320w.jpg">
+                <img class="absolute -bottom-8 -right-2 w-10 h-10 object-cover border-white/30 border rounded-full" alt="" src="https://hoirqrkdgbmvpwutwuwj-all.supabase.co/storage/v1/object/public/assets/assets/e08496f1-bdba-4cb4-83c1-96ac5be57ace_320w.jpg">
+                <img class="absolute -bottom-6 -left-6 w-8 h-8 object-cover border-white/30 border-1 rounded-full" alt="" src="https://hoirqrkdgbmvpwutwuwj-all.supabase.co/storage/v1/object/public/assets/assets/c1bfea42-f5c9-4b52-974e-36fe36212b17_320w.jpg">
+                
+                <!-- Connection lines -->
+                <div class="absolute inset-0 pointer-events-none">
+                  <svg class="w-full h-full" viewBox="0 0 100 100">
+                    <line x1="50" y1="50" x2="25" y2="25" stroke="rgba(255,255,255,0.1)" stroke-width="1" stroke-dasharray="2,2"></line>
+                    <line x1="50" y1="50" x2="75" y2="20" stroke="rgba(255,255,255,0.1)" stroke-width="1" stroke-dasharray="2,2"></line>
+                    <line x1="50" y1="50" x2="80" y2="80" stroke="rgba(255,255,255,0.1)" stroke-width="1" stroke-dasharray="2,2"></line>
+                    <line x1="50" y1="50" x2="20" y2="75" stroke="rgba(255,255,255,0.1)" stroke-width="1" stroke-dasharray="2,2"></line>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Content -->
+          <div class="">
+            <div class="flex items-center gap-3 mb-4">
+              
+              <h3 class="text-xl font-normal text-white tracking-tight font-geist">Team Collaboration</h3>
+            </div>
+            <p class="text-zinc-300 text-sm leading-relaxed font-sans">Real-time updates, smart notifications, and seamless handoffs keep everyone synchronized across time zones.</p>
+            <div class="mt-6">
+              <a href="#" class="inline-flex items-center gap-2 text-sm font-medium text-white hover:text-zinc-300 transition-colors">
+                See team features
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                  <path d="M5 12h14"></path>
+                  <path d="m12 5 7 7-7 7"></path>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Large Feature Card - 2/3 width -->
+      <article class="lg:col-span-2 group relative overflow-hidden transition-all duration-300 hover:shadow-2xl bg-zinc-900/50 border-white/10 border rounded-2xl backdrop-blur-sm">
+        <div class="p-6 sm:p-8">
+          <!-- Illustration -->
+          <div class="relative h-64 sm:h-80 rounded-xl bg-gradient-to-br from-zinc-900/90 to-zinc-950/90 ring-1 ring-inset ring-white/5 mb-6">
+            <!-- Automation Flow -->
+            <div class="absolute inset-4">
+              <!-- Nodes -->
+              <div class="absolute top-4 left-8 w-16 h-12 bg-blue-500/20 border border-blue-500/40 rounded-lg flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-blue-400">
+                  <polyline points="16 18 22 12 16 6"></polyline>
+                  <polyline points="8 6 2 12 8 18"></polyline>
+                </svg>
+              </div>
+              
+              <div class="absolute top-4 right-8 w-16 h-12 bg-emerald-500/20 border border-emerald-500/40 rounded-lg flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-emerald-400">
+                  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                  <polyline points="7.5 4.21 12 6.81 16.5 4.21"></polyline>
+                  <polyline points="7.5 19.79 7.5 14.6 3 12"></polyline>
+                  <polyline points="21 12 16.5 14.6 16.5 19.79"></polyline>
+                </svg>
+              </div>
+              
+              <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 w-16 h-12 bg-purple-500/20 border border-purple-500/40 rounded-lg flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-purple-400">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"></path>
+                  <path d="m9 12 2 2 4-4"></path>
+                </svg>
+              </div>
+
+              <!-- Connection Lines -->
+              <svg class="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 300 200">
+                <defs>
+                  <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+                    <polygon points="0 0, 10 3.5, 0 7" fill="rgba(255,255,255,0.4)"></polygon>
+                  </marker>
+                </defs>
+                <path d="M 80 25 Q 150 15 220 25" stroke="rgba(255,255,255,0.3)" stroke-width="2" fill="none" marker-end="url(#arrowhead)" stroke-dasharray="4,4">
+                  <animate attributeName="stroke-dashoffset" values="0;-8" dur="2s" repeatCount="indefinite"></animate>
+                </path>
+                <path d="M 220 40 Q 200 100 150 150" stroke="rgba(255,255,255,0.3)" stroke-width="2" fill="none" marker-end="url(#arrowhead)" stroke-dasharray="4,4">
+                  <animate attributeName="stroke-dashoffset" values="0;-8" dur="2s" repeatCount="indefinite"></animate>
+                </path>
+                <path d="M 140 150 Q 100 100 80 40" stroke="rgba(255,255,255,0.3)" stroke-width="2" fill="none" marker-end="url(#arrowhead)" stroke-dasharray="4,4">
+                  <animate attributeName="stroke-dashoffset" values="0;-8" dur="2s" repeatCount="indefinite"></animate>
+                </path>
+              </svg>
+
+              <!-- Status Indicators -->
+              <div class="absolute top-20 left-4 space-y-1">
+                <div class="flex items-center gap-2 text-xs">
+                  <div class="h-2 w-2 bg-emerald-500 rounded-full animate-pulse"></div>
+                  <span class="text-emerald-400">Tests passed</span>
+                </div>
+                <div class="flex items-center gap-2 text-xs">
+                  <div class="h-2 w-2 bg-blue-500 rounded-full animate-pulse"></div>
+                  <span class="text-blue-400">Building...</span>
+                </div>
+                <div class="flex items-center gap-2 text-xs">
+                  <div class="h-2 w-2 bg-yellow-500 rounded-full"></div>
+                  <span class="text-yellow-400">Deploy queued</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Content -->
+          <div class="">
+            <div class="flex items-center gap-3 mb-4">
+              
+              <h3 class="sm:text-3xl text-2xl font-normal text-white tracking-tight font-geist">Automated Workflows</h3>
+            </div>
+            <p class="text-zinc-300 text-base leading-relaxed font-sans">Streamline your pipeline with intelligent automation. From code to deployment, reduce manual work and eliminate bottlenecks with smart triggers and actions.</p>
+            <div class="mt-6">
+              <a href="#" class="inline-flex items-center gap-2 text-sm font-medium text-white hover:text-zinc-300 transition-colors">
+                Build workflows
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                  <path d="M5 12h14"></path>
+                  <path d="m12 5 7 7-7 7"></path>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <!-- Third Row - Standard Layout -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <!-- Large Feature Card - 2/3 width -->
+      <article class="lg:col-span-2 group relative overflow-hidden transition-all duration-300 hover:shadow-2xl bg-zinc-900/50 border-white/10 border rounded-2xl backdrop-blur-sm">
+        <div class="p-6 sm:p-8">
+          <!-- Illustration -->
+          <div class="relative h-64 sm:h-80 rounded-xl bg-gradient-to-br from-zinc-900/90 to-zinc-950/90 ring-1 ring-inset ring-white/5 mb-6">
+            <!-- Security Dashboard -->
+            <div class="absolute inset-4 rounded-lg bg-zinc-950/90 backdrop-blur border border-white/10 overflow-hidden">
+              <div class="flex items-center justify-between px-4 py-3 border-b border-white/10">
+                <span class="text-sm text-zinc-300 font-medium">Security Overview</span>
+                <span class="text-xs px-2 py-1 bg-emerald-500/20 text-emerald-400 rounded-full border border-emerald-500/30">All Clear</span>
+              </div>
+              
+              <div class="p-4 grid grid-cols-2 gap-4 h-full">
+                <!-- Vulnerability Scanner -->
+                <div class="space-y-3">
+                  <div class="text-xs text-zinc-400 mb-2">Vulnerability Scan</div>
+                  <div class="space-y-2">
+                    <div class="flex items-center justify-between">
+                      <span class="text-xs text-zinc-300">Dependencies</span>
+                      <span class="text-xs text-emerald-400">✓ Clean</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                      <span class="text-xs text-zinc-300">Code Quality</span>
+                      <span class="text-xs text-emerald-400">✓ A+</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                      <span class="text-xs text-zinc-300">Secrets</span>
+                      <span class="text-xs text-emerald-400">✓ Secure</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Access Control -->
+                <div class="space-y-3">
+                  <div class="text-xs text-zinc-400 mb-2">Access Control</div>
+                  <div class="space-y-2">
+                    <div class="flex items-center gap-2">
+                      <div class="h-6 w-6 bg-blue-500/20 rounded border border-blue-500/40 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 text-blue-400">
+                          <rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect>
+                          <circle cx="12" cy="16" r="1"></circle>
+                          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                        </svg>
+                      </div>
+                      <span class="text-xs text-zinc-300">2FA Enabled</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <div class="h-6 w-6 bg-emerald-500/20 rounded border border-emerald-500/40 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 text-emerald-400">
+                          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"></path>
+                        </svg>
+                      </div>
+                      <span class="text-xs text-zinc-300">SSO Active</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Audit Log -->
+                <div class="col-span-2 mt-2">
+                  <div class="text-xs text-zinc-400 mb-2">Recent Activity</div>
+                  <div class="space-y-1 text-xs">
+                    <div class="flex items-center justify-between p-2 bg-white/5 rounded border border-white/5">
+                      <span class="text-zinc-300">Admin access granted</span>
+                      <span class="text-zinc-500">2m ago</span>
+                    </div>
+                    <div class="flex items-center justify-between p-2 bg-white/5 rounded border border-white/5">
+                      <span class="text-zinc-300">Permissions updated</span>
+                      <span class="text-zinc-500">5m ago</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Content -->
+          <div class="">
+            <div class="flex items-center gap-3 mb-4">
+              
+              <h3 class="sm:text-3xl text-2xl font-normal text-white tracking-tight font-geist">Enterprise Security</h3>
+            </div>
+            <p class="text-zinc-300 text-base leading-relaxed font-sans">SOC2 compliant with advanced security controls, automated vulnerability scanning, and comprehensive audit trails to keep your data safe.</p>
+            <div class="mt-6">
+              <a href="#" class="inline-flex items-center gap-2 text-sm font-medium text-white hover:text-zinc-300 transition-colors">
+                Security details
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                  <path d="M5 12h14"></path>
+                  <path d="m12 5 7 7-7 7"></path>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Small Feature Card - 1/3 width -->
+      <article class="group relative overflow-hidden transition-all duration-300 hover:shadow-xl bg-zinc-900/50 border-white/10 border rounded-2xl backdrop-blur-sm">
+        <div class="p-6">
+          <!-- Illustration -->
+          <div class="relative h-48 rounded-xl bg-gradient-to-br from-zinc-900/90 to-zinc-950/90 ring-1 ring-inset ring-white/5 mb-6">
+            <!-- Mobile Interface -->
+            <div class="absolute inset-0 flex items-center justify-center">
+              <div class="w-24 h-40 bg-zinc-950/90 rounded-2xl border-2 border-white/20 overflow-hidden">
+                <!-- Phone Header -->
+                <div class="h-6 bg-zinc-900 flex items-center justify-center">
+                  <div class="w-12 h-1 bg-white/30 rounded-full"></div>
+                </div>
+                
+                <!-- Content Area -->
+                <div class="p-2 space-y-2">
+                  <div class="h-3 bg-blue-500/30 rounded"></div>
+                  <div class="space-y-1">
+                    <div class="h-2 bg-white/10 rounded w-3/4"></div>
+                    <div class="h-2 bg-white/10 rounded w-1/2"></div>
+                  </div>
+                  <div class="flex gap-1">
+                    <div class="flex-1 h-8 bg-emerald-500/20 rounded border border-emerald-500/40"></div>
+                    <div class="flex-1 h-8 bg-white/10 rounded"></div>
+                  </div>
+                  <div class="space-y-1">
+                    <div class="h-1 bg-white/10 rounded"></div>
+                    <div class="h-1 bg-white/10 rounded w-2/3"></div>
+                  </div>
+                </div>
+
+                <!-- Notification -->
+                
+              </div>
+            </div>
+          </div>
+
+          <!-- Content -->
+          <div class="">
+            <div class="flex items-center gap-3 mb-4">
+              
+              <h3 class="text-xl font-normal text-white tracking-tight font-geist">Mobile Ready</h3>
+            </div>
+            <p class="text-zinc-300 text-sm leading-relaxed font-sans">Stay productive anywhere with our native mobile apps. Full feature parity with offline sync and push notifications.</p>
+            <div class="mt-6">
+              <a href="#" class="inline-flex items-center gap-2 text-sm font-medium text-white hover:text-zinc-300 transition-colors">
+                Download apps
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                  <path d="M5 12h14"></path>
+                  <path d="m12 5 7 7-7 7"></path>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section><section class="relative bg-black pt-24 pb-24">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Section Header -->
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <div class="inline-flex gap-2 text-xs text-zinc-300 bg-white/5 border-white/10 border rounded-full pt-1 pr-3 pb-1 pl-3 items-center mb-6">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3.5 w-3.5">
+          <circle cx="8" cy="21" r="1"></circle>
+          <circle cx="19" cy="21" r="1"></circle>
+          <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path>
+        </svg>
+        <span class="font-medium font-sans">Pricing</span>
+      </div>
+      <h2 class="text-4xl sm:text-5xl font-light tracking-tighter font-geist text-white mb-4">Simple, transparent pricing</h2>
+      <p class="text-lg text-zinc-300 font-sans">Start building for free, then add a site plan to go live. Account plans unlock additional features.</p>
+    </div>
+
+    <!-- Pricing Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+      <!-- Starter Plan -->
+      <div class="relative group rounded-2xl bg-zinc-900/50 border border-white/10 backdrop-blur-sm p-8">
+        <div class="mb-6">
+          <h3 class="text-xl font-semibold text-white font-geist">Starter</h3>
+          <p class="text-zinc-400 text-sm mt-2 font-sans">Perfect for personal projects and small teams getting started.</p>
+        </div>
+        
+        <div class="mb-8">
+          <div class="flex items-baseline gap-1">
+            <span class="text-4xl font-light text-white font-geist">$0</span>
+            <span class="text-zinc-400 font-sans">/month</span>
+          </div>
+          <p class="text-xs text-zinc-400 mt-1 font-sans">Free forever</p>
+        </div>
+
+        <ul class="space-y-3 mb-8 text-sm">
+          <li class="flex items-center gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-emerald-400 flex-shrink-0">
+              <path d="M20 6 9 17l-5-5"></path>
+            </svg>
+            <span class="text-zinc-300 font-sans">Up to 5 team members</span>
+          </li>
+          <li class="flex items-center gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-emerald-400 flex-shrink-0">
+              <path d="M20 6 9 17l-5-5"></path>
+            </svg>
+            <span class="text-zinc-300 font-sans">Unlimited personal projects</span>
+          </li>
+          <li class="flex items-center gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-emerald-400 flex-shrink-0">
+              <path d="M20 6 9 17l-5-5"></path>
+            </svg>
+            <span class="text-zinc-300 font-sans">Basic analytics</span>
+          </li>
+          <li class="flex items-center gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-emerald-400 flex-shrink-0">
+              <path d="M20 6 9 17l-5-5"></path>
+            </svg>
+            <span class="text-zinc-300 font-sans">Email support</span>
+          </li>
+          <li class="flex items-center gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-emerald-400 flex-shrink-0">
+              <path d="M20 6 9 17l-5-5"></path>
+            </svg>
+            <span class="text-zinc-300 font-sans">Community integrations</span>
+          </li>
+        </ul>
+
+        <button class="w-full bg-white/10 hover:bg-white/20 text-white border border-white/20 hover:border-white/30 rounded-lg py-3 px-4 text-sm font-medium transition-all duration-200 font-sans">
+          Get Started
+        </button>
+      </div>
+
+      <!-- Pro Plan - Featured -->
+      <div class="relative group rounded-2xl bg-zinc-900/50 border-2 border-white/30 backdrop-blur-sm p-8">
+        <!-- Popular badge -->
+        <div class="absolute -top-3 left-1/2 transform -translate-x-1/2">
+          <span class="bg-white text-black text-xs font-semibold px-3 py-1 rounded-full font-sans">Most Popular</span>
+        </div>
+
+        <div class="mb-6">
+          <h3 class="text-xl font-semibold text-white font-geist">Pro</h3>
+          <p class="text-zinc-400 text-sm mt-2 font-sans">For growing teams that need more power and collaboration features.</p>
+        </div>
+        
+        <div class="mb-8">
+          <div class="flex items-baseline gap-1">
+            <span class="text-4xl font-light text-white font-geist">$19</span>
+            <span class="text-zinc-400 font-sans">/member/month</span>
+          </div>
+          <p class="text-xs text-zinc-400 mt-1 font-sans">Billed annually or $24 monthly</p>
+        </div>
+
+        <ul class="space-y-3 mb-8 text-sm">
+          <li class="flex items-center gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-emerald-400 flex-shrink-0">
+              <path d="M20 6 9 17l-5-5"></path>
+            </svg>
+            <span class="text-zinc-300 font-sans">Everything in Starter</span>
+          </li>
+          <li class="flex items-center gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-emerald-400 flex-shrink-0">
+              <path d="M20 6 9 17l-5-5"></path>
+            </svg>
+            <span class="text-zinc-300 font-sans">Unlimited team members</span>
+          </li>
+          <li class="flex items-center gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-emerald-400 flex-shrink-0">
+              <path d="M20 6 9 17l-5-5"></path>
+            </svg>
+            <span class="text-zinc-300 font-sans">Advanced analytics &amp; insights</span>
+          </li>
+          <li class="flex items-center gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-emerald-400 flex-shrink-0">
+              <path d="M20 6 9 17l-5-5"></path>
+            </svg>
+            <span class="text-zinc-300 font-sans">Custom workflows &amp; automation</span>
+          </li>
+          <li class="flex items-center gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-emerald-400 flex-shrink-0">
+              <path d="M20 6 9 17l-5-5"></path>
+            </svg>
+            <span class="text-zinc-300 font-sans">Priority support</span>
+          </li>
+          <li class="flex items-center gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-emerald-400 flex-shrink-0">
+              <path d="M20 6 9 17l-5-5"></path>
+            </svg>
+            <span class="text-zinc-300 font-sans">Advanced integrations</span>
+          </li>
+        </ul>
+
+        <button type="button" role="button" aria-label="Start Pro Trial" class="group relative inline-flex w-full shadow-[0_8px_16px_-4px_rgba(255,255,255,0.05)] hover:shadow-[0_12px_20px_-6px_rgba(255,255,255,0.1)] transition duration-300 ease-out select-none cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/60 transform-gpu hover:-translate-y-0.5 text-white rounded-lg pt-[1px] pr-[1px] pb-[1px] pl-[1px] items-center justify-center" style="background-image: linear-gradient(144deg,rgba(255,255,255,0.3), rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.2));">
+          <span class="flex items-center justify-center gap-2 leading-none w-full h-full transition-colors duration-300 group-hover:bg-black/50 font-medium bg-black/80 rounded-lg pt-3 pr-4 pb-3 pl-4">
+            <span class="text-sm font-sans">Start Free Trial</span>
+          </span>
+        </button>
+      </div>
+
+      <!-- Enterprise Plan -->
+      <div class="relative group rounded-2xl bg-zinc-900/50 border border-white/10 backdrop-blur-sm p-8">
+        <div class="mb-6">
+          <h3 class="text-xl font-semibold text-white font-geist">Enterprise</h3>
+          <p class="text-zinc-400 text-sm mt-2 font-sans">Advanced security and compliance features for large organizations.</p>
+        </div>
+        
+        <div class="mb-8">
+          <div class="flex items-baseline gap-1">
+            <span class="text-4xl font-light text-white font-geist">$49</span>
+            <span class="text-zinc-400 font-sans">/member/month</span>
+          </div>
+          <p class="text-xs text-zinc-400 mt-1 font-sans">Custom pricing available</p>
+        </div>
+
+        <ul class="space-y-3 mb-8 text-sm">
+          <li class="flex items-center gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-emerald-400 flex-shrink-0">
+              <path d="M20 6 9 17l-5-5"></path>
+            </svg>
+            <span class="text-zinc-300 font-sans">Everything in Pro</span>
+          </li>
+          <li class="flex items-center gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-emerald-400 flex-shrink-0">
+              <path d="M20 6 9 17l-5-5"></path>
+            </svg>
+            <span class="text-zinc-300 font-sans">SOC2 compliance</span>
+          </li>
+          <li class="flex items-center gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-emerald-400 flex-shrink-0">
+              <path d="M20 6 9 17l-5-5"></path>
+            </svg>
+            <span class="text-zinc-300 font-sans">SSO &amp; advanced security</span>
+          </li>
+          <li class="flex items-center gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-emerald-400 flex-shrink-0">
+              <path d="M20 6 9 17l-5-5"></path>
+            </svg>
+            <span class="text-zinc-300 font-sans">Dedicated success manager</span>
+          </li>
+          <li class="flex items-center gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-emerald-400 flex-shrink-0">
+              <path d="M20 6 9 17l-5-5"></path>
+            </svg>
+            <span class="text-zinc-300 font-sans">Custom integrations</span>
+          </li>
+          <li class="flex items-center gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-emerald-400 flex-shrink-0">
+              <path d="M20 6 9 17l-5-5"></path>
+            </svg>
+            <span class="text-zinc-300 font-sans">99.9% SLA guarantee</span>
+          </li>
+        </ul>
+
+        <button class="w-full bg-white/10 hover:bg-white/20 text-white border border-white/20 hover:border-white/30 rounded-lg py-3 px-4 text-sm font-medium transition-all duration-200 font-sans">
+          Contact Sales
+        </button>
+      </div>
+    </div>
+
+    <!-- Trust indicators -->
+    <section class="relative z-10 sm:py-24 fade-in fade-in-delay-4 pt-8 pb-8" style="opacity: 1; transform: translateY(0px);">
+        <div class="max-w-7xl sm:px-6 lg:px-8 mr-auto ml-auto pr-4 pl-4">
+            <div class="text-center mb-12">
+                <p class="uppercase text-xs font-medium text-zinc-500 tracking-wide">Trusted by teams at</p>
+            </div>
+            
+            <!-- Ticker Container -->
+            <div class="relative overflow-hidden">
+                <!-- Gradient Overlays -->
+                <div class="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-black via-black/80 to-transparent z-10 pointer-events-none"></div>
+                <div class="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-black via-black/80 to-transparent z-10 pointer-events-none"></div>
+                
+                <!-- Animated Ticker -->
+                <div class="ticker-track flex gap-16 pt-2 pb-2 items-center">
+                    <!-- First set of logos -->
+                    <div class="flex gap-16 shrink-0 items-center">
+                        <div class="flex items-center gap-3 text-zinc-400 hover:text-white transition-colors duration-300">
+                            
+                            <span class="text-lg font-normal tracking-tighter">TechFlow</span>
+                        </div>
+                        
+                        <div class="flex items-center gap-3 text-zinc-400 hover:text-white transition-colors duration-300">
+                            
+                            <span class="text-lg font-bold tracking-tighter font-bricolage">Nexus Labs</span>
+                        </div>
+                        
+                        <div class="flex items-center gap-3 text-zinc-400 hover:text-white transition-colors duration-300">
+                            
+                            <span class="text-lg font-semibold tracking-tighter font-merriweather">DataSync</span>
+                        </div>
+                        
+                        <div class="flex items-center gap-3 text-zinc-400 hover:text-white transition-colors duration-300">
+                            
+                            <span class="text-lg font-normal tracking-tighter font-instrument-serif">VisionCorp</span>
+                        </div>
+                        
+                        <div class="flex items-center gap-3 text-zinc-400 hover:text-white transition-colors duration-300">
+                            
+                            <span class="text-lg font-semibold tracking-tighter font-playfair">CloudBase</span>
+                        </div>
+                        
+                        <div class="flex items-center gap-3 text-zinc-400 hover:text-white transition-colors duration-300">
+                            
+                            <span class="text-lg font-normal tracking-tighter">InnovateTech</span>
+                        </div>
+                        
+                        <div class="flex items-center gap-3 text-zinc-400 hover:text-white transition-colors duration-300">
+                            
+                            <span class="text-lg font-bold tracking-tighter">FlowState</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Duplicate set for seamless loop -->
+                    <div class="flex items-center gap-16 shrink-0">
+                        <div class="flex items-center gap-3 text-zinc-400 hover:text-white transition-colors duration-300">
+                            
+                            <span class="text-lg font-normal tracking-tighter">TechFlow</span>
+                        </div>
+                        
+                        <div class="flex items-center gap-3 text-zinc-400 hover:text-white transition-colors duration-300">
+                            
+                            <span class="text-lg font-bold tracking-tighter font-bricolage">Nexus Labs</span>
+                        </div>
+                        
+                        <div class="flex items-center gap-3 text-zinc-400 hover:text-white transition-colors duration-300">
+                            
+                            <span class="text-lg font-semibold tracking-tighter font-merriweather">DataSync</span>
+                        </div>
+                        
+                        <div class="flex items-center gap-3 text-zinc-400 hover:text-white transition-colors duration-300">
+                            
+                            <span class="text-lg font-normal tracking-tighter font-instrument-serif">VisionCorp</span>
+                        </div>
+                        
+                        <div class="flex items-center gap-3 text-zinc-400 hover:text-white transition-colors duration-300">
+                            
+                            <span class="text-lg font-semibold tracking-tighter font-playfair">CloudBase</span>
+                        </div>
+                        
+                        <div class="flex items-center gap-3 text-zinc-400 hover:text-white transition-colors duration-300">
+                            
+                            <span class="text-lg font-normal tracking-tighter">InnovateTech</span>
+                        </div>
+                        
+                        <div class="flex items-center gap-3 text-zinc-400 hover:text-white transition-colors duration-300">
+                            
+                            <span class="text-lg font-bold tracking-tighter">FlowState</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <style>
+            @keyframes ticker {
+                0% {
+                    transform: translateX(0);
+                }
+                100% {
+                    transform: translateX(-100%);
+                }
+            }
+            
+            .ticker-track {
+                animation: ticker 40s linear infinite;
+                width: calc(200% + 16px);
+            }
+            
+            .ticker-track:hover {
+                animation-play-state: paused;
+            }
+        </style>
+    </section>
+  </div>
+</section><section class="py-24 relative">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Section Header -->
+    <div class="text-center mb-16">
+      <div class="inline-flex gap-2 text-xs text-zinc-300 bg-white/5 border-white/10 border rounded-full pt-1 pr-3 pb-1 pl-3 items-center mb-6">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3.5 w-3.5">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+          <path d="M12 17h.01"></path>
+        </svg>
+        <span class="font-medium font-sans">FAQ</span>
+      </div>
+      <h2 class="text-4xl sm:text-5xl font-light tracking-tighter font-geist text-white mb-4">Frequently asked questions</h2>
+      <p class="text-lg text-zinc-300 font-sans">Everything you need to know about Arcflow and how it works.</p>
+    </div>
+
+    <!-- FAQ Items -->
+    <div class="space-y-4">
+      <!-- FAQ Item 1 -->
+      <div class="group relative overflow-hidden bg-zinc-900/50 border border-white/10 rounded-xl backdrop-blur-sm">
+        <button class="w-full text-left p-6 hover:bg-white/5 transition-colors" onclick="toggleFAQ(this)">
+          <div class="flex items-center justify-between">
+            <h3 class="text-lg font-medium text-white font-geist pr-4">How does Arcflow compare to Linear or Jira?</h3>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-zinc-400 flex-shrink-0 transition-transform">
+              <path d="M6 9l6 6 6-6"></path>
+            </svg>
+          </div>
+          <div class="mt-4 text-zinc-300 font-sans hidden">
+            <p>Arcflow combines the speed and simplicity of Linear with enterprise features comparable to Jira. We focus on intelligent automation, predictive analytics, and seamless integration across your development workflow. Unlike Linear, we offer advanced reporting and custom workflows. Unlike Jira, we maintain a clean, fast interface that doesn't slow your team down.</p>
+          </div>
+        </button>
+      </div>
+
+      <!-- FAQ Item 2 -->
+      <div class="group relative overflow-hidden bg-zinc-900/50 border border-white/10 rounded-xl backdrop-blur-sm">
+        <button class="w-full text-left p-6 hover:bg-white/5 transition-colors" onclick="toggleFAQ(this)">
+          <div class="flex items-center justify-between">
+            <h3 class="text-lg font-medium text-white font-geist pr-4">Can I migrate my existing data from other tools?</h3>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-zinc-400 flex-shrink-0 transition-transform">
+              <path d="M6 9l6 6 6-6"></path>
+            </svg>
+          </div>
+          <div class="mt-4 text-zinc-300 font-sans hidden">
+            <p>Yes! We provide comprehensive migration tools for Linear, Jira, GitHub Issues, Asana, and more. Our migration service preserves your issue history, comments, attachments, and project structure. For Enterprise customers, we offer white-glove migration assistance to ensure a smooth transition with zero data loss.</p>
+          </div>
+        </button>
+      </div>
+
+      <!-- FAQ Item 3 -->
+      <div class="group relative overflow-hidden bg-zinc-900/50 border border-white/10 rounded-xl backdrop-blur-sm">
+        <button class="w-full text-left p-6 hover:bg-white/5 transition-colors" onclick="toggleFAQ(this)">
+          <div class="flex items-center justify-between">
+            <h3 class="text-lg font-medium text-white font-geist pr-4">What integrations do you support?</h3>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-zinc-400 flex-shrink-0 transition-transform">
+              <path d="M6 9l6 6 6-6"></path>
+            </svg>
+          </div>
+          <div class="mt-4 text-zinc-300 font-sans hidden">
+            <p>Arcflow integrates with your entire development stack: GitHub, GitLab, Bitbucket, Slack, Discord, Figma, Notion, and dozens more. We support webhooks, REST APIs, and custom integrations. Our Smart Linking automatically connects commits, PRs, and deployments to relevant issues without manual work.</p>
+          </div>
+        </button>
+      </div>
+
+      <!-- FAQ Item 4 -->
+      <div class="group relative overflow-hidden bg-zinc-900/50 border border-white/10 rounded-xl backdrop-blur-sm">
+        <button class="w-full text-left p-6 hover:bg-white/5 transition-colors" onclick="toggleFAQ(this)">
+          <div class="flex items-center justify-between">
+            <h3 class="text-lg font-medium text-white font-geist pr-4">Is there a free trial available?</h3>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-zinc-400 flex-shrink-0 transition-transform">
+              <path d="M6 9l6 6 6-6"></path>
+            </svg>
+          </div>
+          <div class="mt-4 text-zinc-300 font-sans hidden">
+            <p>Yes! Our Starter plan is free forever for up to 5 team members. For Pro and Enterprise features, we offer a 14-day free trial with no credit card required. You can upgrade, downgrade, or cancel anytime. We also provide demo environments for Enterprise customers to test advanced features.</p>
+          </div>
+        </button>
+      </div>
+
+      <!-- FAQ Item 5 -->
+      <div class="group relative overflow-hidden bg-zinc-900/50 border border-white/10 rounded-xl backdrop-blur-sm">
+        <button class="w-full text-left p-6 hover:bg-white/5 transition-colors" onclick="toggleFAQ(this)">
+          <div class="flex items-center justify-between">
+            <h3 class="text-lg font-medium text-white font-geist pr-4">How secure is my data?</h3>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-zinc-400 flex-shrink-0 transition-transform">
+              <path d="M6 9l6 6 6-6"></path>
+            </svg>
+          </div>
+          <div class="mt-4 text-zinc-300 font-sans hidden">
+            <p>Security is our top priority. We're SOC2 Type II certified with end-to-end encryption, regular security audits, and compliance with GDPR, CCPA, and other privacy regulations. Your data is stored in secure cloud infrastructure with automated backups and 99.9% uptime SLA. Enterprise customers get additional security controls including SSO, advanced permissions, and audit logs.</p>
+          </div>
+        </button>
+      </div>
+
+      <!-- FAQ Item 6 -->
+      <div class="group relative overflow-hidden bg-zinc-900/50 border border-white/10 rounded-xl backdrop-blur-sm">
+        <button class="w-full text-left p-6 hover:bg-white/5 transition-colors" onclick="toggleFAQ(this)">
+          <div class="flex items-center justify-between">
+            <h3 class="text-lg font-medium text-white font-geist pr-4">Can I customize workflows for my team?</h3>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-zinc-400 flex-shrink-0 transition-transform">
+              <path d="M6 9l6 6 6-6"></path>
+            </svg>
+          </div>
+          <div class="mt-4 text-zinc-300 font-sans hidden">
+            <p>Absolutely! Pro and Enterprise plans include powerful workflow automation. Create custom statuses, automated transitions, smart notifications, and triggered actions. Set up rules for auto-assignment, label management, and cross-project dependencies. Our visual workflow builder makes it easy to design processes that match your team's unique needs.</p>
+          </div>
+        </button>
+      </div>
+    </div>
+
+    <!-- Contact CTA -->
+    <div class="mt-12 text-center">
+      <p class="text-zinc-400 text-sm mb-4 font-sans">Still have questions?</p>
+      <a href="#" class="inline-flex items-center gap-2 text-white hover:text-zinc-300 transition-colors font-sans">
+        <span class="font-medium">Contact our team</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+          <path d="M5 12h14"></path>
+          <path d="m12 5 7 7-7 7"></path>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section><script>
+function toggleFAQ(button) {
+  const content = button.querySelector('.hidden');
+  const icon = button.querySelector('svg');
+  
+  if (content.classList.contains('hidden')) {
+    content.classList.remove('hidden');
+    icon.style.transform = 'rotate(180deg)';
+  } else {
+    content.classList.add('hidden');
+    icon.style.transform = 'rotate(0deg)';
+  }
+}
+</script>
+
+    <!-- Footer -->
+    <footer class="mt-24 border-t border-white/10">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-zinc-400">
+          <div class="flex items-center gap-2">
+            <span class="inline-flex h-7 w-7 items-center justify-center ring-1 ring-white/10 bg-zinc-800 rounded-full">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="orbit" class="lucide lucide-orbit h-4 w-4 text-zinc-200"><path d="M20.341 6.484A10 10 0 0 1 10.266 21.85"></path><path d="M3.659 17.516A10 10 0 0 1 13.74 2.152"></path><circle cx="12" cy="12" r="3"></circle><circle cx="19" cy="5" r="2"></circle><circle cx="5" cy="19" r="2"></circle></svg>
+            </span>
+            <span class="font-medium font-sans">Arcflow</span>
+            <span class="font-sans">© <span id="y" class="font-sans">2025</span></span>
+          </div>
+          <div class="flex items-center gap-6">
+            <a href="#" class="hover:text-zinc-200 font-sans">Privacy</a>
+            <a href="#" class="hover:text-zinc-200 font-sans">Terms</a>
+            <a href="#" class="hover:text-zinc-200 font-sans">Status</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      window.addEventListener('DOMContentLoaded', () => {
+        lucide.createIcons();
+        const y = document.getElementById('y');
+        if (y) y.textContent = new Date().getFullYear();
+      });
+    </script>
+  
+</body></html>
