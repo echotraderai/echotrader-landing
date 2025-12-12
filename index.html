@@ -22,6 +22,31 @@
   <meta name="twitter:image" content="https://www.echotrader.ai/icon-192.png">
 
   <title>EchoTrader — Intelligent Trading Platform</title>
+
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-BQ1S00JHM0"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-BQ1S00JHM0');
+
+    // Track waitlist signups as conversion events
+    window.trackWaitlistSignup = function(email) {
+      gtag('event', 'sign_up', {
+        method: 'waitlist',
+        email_domain: email.split('@')[1]
+      });
+    };
+
+    // Track CTA button clicks
+    window.trackCTAClick = function(buttonName) {
+      gtag('event', 'cta_click', {
+        button_name: buttonName
+      });
+    };
+  </script>
+
   <link rel="icon" type="image/png" href="icon-192.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
@@ -325,7 +350,7 @@ scaleY(var(--tw-scale-y, 1))
           <a href="#quantlabs" class="hover:text-zinc-100 transition-colors font-sans">Journey</a>
           <a href="#creators" class="hover:text-zinc-100 transition-colors font-sans">Creators</a>
           <a href="#pricing" class="hover:text-zinc-100 transition-colors font-sans">Pricing</a>
-          <a href="#faq" class="hover:text-zinc-100 transition-colors font-sans">Docs</a>
+          <a href="#" class="hover:text-zinc-100 transition-colors font-sans">Docs</a>
         </nav>
 
         <div class="flex items-center gap-3">
@@ -353,7 +378,7 @@ scaleY(var(--tw-scale-y, 1))
         <a href="#quantlabs" class="block py-2.5 px-3 text-sm text-zinc-300 hover:text-zinc-100 hover:bg-white/5 rounded-lg transition-colors font-sans">Journey</a>
         <a href="#creators" class="block py-2.5 px-3 text-sm text-zinc-300 hover:text-zinc-100 hover:bg-white/5 rounded-lg transition-colors font-sans">Creators</a>
         <a href="#pricing" class="block py-2.5 px-3 text-sm text-zinc-300 hover:text-zinc-100 hover:bg-white/5 rounded-lg transition-colors font-sans">Pricing</a>
-        <a href="#faq" class="block py-2.5 px-3 text-sm text-zinc-300 hover:text-zinc-100 hover:bg-white/5 rounded-lg transition-colors font-sans">Docs</a>
+        <a href="#" class="block py-2.5 px-3 text-sm text-zinc-300 hover:text-zinc-100 hover:bg-white/5 rounded-lg transition-colors font-sans">Docs</a>
       </div>
     </div>
   </header>
@@ -804,6 +829,18 @@ scaleY(var(--tw-scale-y, 1))
               <p class="text-zinc-300 text-base leading-relaxed font-sans">AI-powered intelligence aggregating 50+ data
                 sources: real-time news, earnings, social sentiment, and macro indicators. Get comprehensive market
                 context and AI-generated briefs instantly.</p>
+              <div class="mt-6">
+                <a href="#"
+                  class="inline-flex items-center gap-2 text-sm font-medium text-white hover:text-zinc-300 transition-colors">
+                  Explore Context Engine
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="h-4 w-4">
+                    <path d="M5 12h14"></path>
+                    <path d="m12 5 7 7-7 7"></path>
+                  </svg>
+                </a>
+              </div>
             </div>
           </div>
         </article>
@@ -956,6 +993,18 @@ scaleY(var(--tw-scale-y, 1))
               <p class="text-zinc-300 text-sm leading-relaxed font-sans">Follow verified expert traders, access
                 exclusive research and analysis, and learn from proven track records. Community-driven intelligence with
                 transparent performance metrics and creator insights.</p>
+              <div class="mt-6">
+                <a href="#"
+                  class="inline-flex items-center gap-2 text-sm font-medium text-white hover:text-zinc-300 transition-colors">
+                  Discover Creators
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="h-4 w-4">
+                    <path d="M5 12h14"></path>
+                    <path d="m12 5 7 7-7 7"></path>
+                  </svg>
+                </a>
+              </div>
             </div>
           </div>
         </article>
@@ -1055,6 +1104,18 @@ scaleY(var(--tw-scale-y, 1))
               <p class="text-zinc-300 text-base leading-relaxed font-sans">Professional-grade terminal with advanced
                 charting, strategy backtesting, and quantitative tools. Build and test trading strategies with
                 institutional-quality analytics and paper trading.</p>
+              <div class="mt-6">
+                <a href="#"
+                  class="inline-flex items-center gap-2 text-sm font-medium text-white hover:text-zinc-300 transition-colors">
+                  Get Desktop App
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="h-4 w-4">
+                    <path d="M5 12h14"></path>
+                    <path d="m12 5 7 7-7 7"></path>
+                  </svg>
+                </a>
+              </div>
             </div>
           </div>
         </article>
@@ -1196,6 +1257,18 @@ scaleY(var(--tw-scale-y, 1))
               <p class="text-zinc-300 text-base leading-relaxed font-sans">Comprehensive trading education from
                 fundamentals to advanced strategies. Interactive courses, real case studies, and masterclasses from top
                 traders. Learn at your own pace with certification programs.</p>
+              <div class="mt-6">
+                <a href="#"
+                  class="inline-flex items-center gap-2 text-sm font-medium text-white hover:text-zinc-300 transition-colors">
+                  Start Learning
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="h-4 w-4">
+                    <path d="M5 12h14"></path>
+                    <path d="m12 5 7 7-7 7"></path>
+                  </svg>
+                </a>
+              </div>
             </div>
           </div>
         </article>
@@ -1245,7 +1318,19 @@ scaleY(var(--tw-scale-y, 1))
                 <h3 class="text-xl font-normal text-white tracking-tight font-geist">Seamless Brokerage Integration</h3>
               </div>
               <p class="text-zinc-300 text-sm leading-relaxed font-sans">Connect Interactive Brokers, TD Ameritrade,
-                Alpaca, and more. Sync your portfolio in real-time and receive intelligent analysis and learning insights to help you understand your holdings and improve your investment strategy with secure, encrypted API connections.</p>
+                Alpaca, and more. Sync your portfolio in real-time to analyze your holdings, understand your positions, and learn from your investment decisions with secure, encrypted API connections.</p>
+              <div class="mt-6">
+                <a href="#"
+                  class="inline-flex items-center gap-2 text-sm font-medium text-white hover:text-zinc-300 transition-colors">
+                  Connect Broker
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="h-4 w-4">
+                    <path d="M5 12h14"></path>
+                    <path d="m12 5 7 7-7 7"></path>
+                  </svg>
+                </a>
+              </div>
             </div>
           </div>
         </article>
@@ -1691,7 +1776,7 @@ scaleY(var(--tw-scale-y, 1))
 
           <div class="mb-8">
             <div class="flex items-baseline gap-1">
-              <span id="pro-price" class="text-4xl font-light text-white font-geist">$25</span>
+              <span id="pro-price" class="text-4xl font-light text-white font-geist">$19</span>
               <span class="text-zinc-400 font-sans">/month</span>
             </div>
             <p id="pro-billing" class="text-xs text-zinc-400 mt-1 font-sans">Billed monthly</p>
@@ -1901,15 +1986,15 @@ scaleY(var(--tw-scale-y, 1))
         // Pricing data
         const pricing = {
           monthly: {
-            pro: { price: 25, total: 25, period: 'month' },
+            pro: { price: 19, total: 19, period: 'month' },
             builder: { price: 89, total: 89, period: 'month' }
           },
           semiannual: {
-            pro: { price: 21, total: 124.99, period: '6 months', discount: '17%', savings: '$50/year' },
+            pro: { price: 16, total: 96, period: '6 months', discount: '16%', savings: '$36/year' },
             builder: { price: 67, total: 399, period: '6 months' }
           },
           annual: {
-            pro: { price: 17, total: 199.99, period: 'year', discount: '33%', savings: '$100/year' },
+            pro: { price: 13, total: 156, period: 'year', discount: '32%', savings: '$72/year' },
             builder: { price: 58, total: 699, period: 'year' }
           }
         };
@@ -2290,7 +2375,7 @@ scaleY(var(--tw-scale-y, 1))
             </div>
             <div class="mt-4 text-zinc-300 font-sans hidden">
               <p>Desktop TradeLab is our professional-grade visual workflow builder for quantitative strategy
-                development. It's included in the Builder tier and perfect for traders who want to build,
+                development. It's included in the Builder tier ($99/month) and perfect for traders who want to build,
                 backtest, and deploy sophisticated strategies without code. You get access to real-time market data,
                 custom node creation, advanced backtesting with institutional metrics, cloud GPU compute for machine
                 learning models, and our upcoming AURION-X AI assistant. Think Unreal Engine Blueprints meets Bloomberg
